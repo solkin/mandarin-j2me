@@ -1,4 +1,4 @@
-mandarin_j2me
-=============
+Mandarin (J2ME)
+===============
 
-Mandarin IM is a J2ME mobile IM client for Molecus and it's services (ICQ, Mail.Ru, etc.)
+Mandarin IM is a J2ME mobile IM client for Molecus and its services (ICQ, Mail.Ru, etc.)
