@@ -1,0 +1,16 @@
+<iq type="get">
+<query xmlns="jabber:iq:private">
+<storage xmlns="http://miranda-im.org/storage#notes" />
+</query>
+</iq>
+
+<iq from="solkin@xmpp.ru" to="solkin@xmpp.ru/Native" type="result">
+<query xmlns="jabber:iq:private">
+<storage xmlns="http://miranda-im.org/storage#notes">
+<note tags="заметкатекстслова">
+<title>Заметка</title>
+<text>Текст заметки</text>
+</note>
+</storage>
+</query>
+</iq>

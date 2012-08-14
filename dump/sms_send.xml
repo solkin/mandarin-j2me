@@ -1,0 +1,44 @@
+<iq type="set" to="mrim.molecus.ru" id="aac1a">
+<command xmlns="http://jabber.org/protocol/commands" node="sms"/>
+</iq>
+
+
+<iq from="mrim.molecus.ru" type="result" to="burova@molecus.ru/solkin-laptop" id="aac1a">
+<command xmlns="http://jabber.org/protocol/commands" status="executing" node="sms" sessionid="sms:1334671097.87">
+<x xmlns="jabber:x:data" type="form">
+<title>Отправка SMS</title>
+<instructions>Формат номера: [страна][код][номер]. Например, +74951112233.</instructions>
+<field type="text-single" label="Номер" var="number"/>
+<field type="text-multi" label="Текст" var="text"/>
+<field type="boolean" label="Автотранслит" var="translit">
+<value>0</value>
+</field>
+</x>
+</command>
+</iq>
+
+
+<iq type="set" to="mrim.molecus.ru" id="aac2a">
+<command xmlns="http://jabber.org/protocol/commands" node="sms" sessionid="sms:1334671097.87">
+<x xmlns="jabber:x:data" type="submit">
+<field type="text-single" var="number">
+<value>+79645740840</value>
+</field>
+<field type="text-multi" var="text">
+<value>Текст сообщения</value>
+</field>
+<field type="boolean" var="translit">
+<value>0</value>
+</field>
+</x>
+</command>
+</iq>
+
+
+<iq from="mrim.molecus.ru" type="result" to="burova@molecus.ru/solkin-laptop" id="aac2a">
+<command xmlns="http://jabber.org/protocol/commands" status="completed" node="sms" sessionid="sms:1334671097.87">
+<note type="info">SMS отправлено</note>
+</command>
+</iq>
+
+

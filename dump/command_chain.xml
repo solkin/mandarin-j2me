@@ -1,0 +1,122 @@
+<iq type="get" to="icq.jabber.mipt.ru" id="qip_2033598">
+<query xmlns="http://jabber.org/protocol/disco#items" node="http://jabber.org/protocol/commands" />
+</iq>
+­
+<iq from="icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="qip_2033598" type="result">
+<query xmlns="http://jabber.org/protocol/disco#items" node="http://jabber.org/protocol/commands">
+<item node="emaillookup" jid="icq.jabber.mipt.ru" name="Поиск ICQ пользователей через email" />
+<item node="confirmaccount" jid="icq.jabber.mipt.ru" name="Подтвердить ICQ аккаунт" />
+<item node="stats" jid="icq.jabber.mipt.ru" name="Статистика PyICQt" />
+<item node="help" jid="icq.jabber.mipt.ru" name="Помощь" />
+<item node="settings" jid="icq.jabber.mipt.ru" name="Настройки" />
+<item node="retrieveroster" jid="icq.jabber.mipt.ru" name="Получить содержимое контакт-листа" />
+<item node="setxstatus" jid="icq.jabber.mipt.ru" name="Задать Х-статус" />
+<item node="updatemyvcard" jid="icq.jabber.mipt.ru" name="Обновить VCard" />
+</query>
+</iq>
+­
+<iq type="set" to="icq.jabber.mipt.ru" id="qip_2033598">
+<command xmlns="http://jabber.org/protocol/commands" node="settings" action="execute" />
+</iq>
+­
+<iq from="icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="qip_2033598" type="result">
+<command xmlns="http://jabber.org/protocol/commands" node="settings" status="executing" sessionid="130963">
+<actions execute="next">
+<next />
+</actions>
+<x xmlns="jabber:x:data" type="form">
+<title>Настройки</title>
+<instructions>Выберите категорию настроек</instructions>
+<field var="settings_page" type="list-single" label="Категория">
+<desc>Внимание: Вам нужно переподключиться чтобы настройки отмеченные звёздочкой (*) вступили в силу</desc>
+<option label="Настройки списка контактов">
+<value>clist_settings</value>
+</option>
+<option label="Настройки X-статуса">
+<value>xstatus_settings</value>
+</option>
+<option label="Настройки сообщений">
+<value>message_settings</value>
+</option>
+<option label="Настройки оповещений">
+<value>personal_events_settings</value>
+</option>
+<option label="Автоответчик">
+<value>autoanswer_settings</value>
+</option>
+</field>
+<field var="stage" type="hidden">
+<value>1</value>
+</field>
+</x>
+</command>
+</iq>
+­
+<iq type="set" to="icq.jabber.mipt.ru" id="qip_2033598">
+<command xmlns="http://jabber.org/protocol/commands" sessionid="130963" node="settings" action="next">
+<x xmlns="jabber:x:data" type="submit">
+<field var="settings_page">
+<value>clist_settings</value>
+</field>
+<field var="stage">
+<value>1</value>
+</field>
+</x>
+</command>
+</iq>
+­
+<iq from="icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="qip_2033598" type="result">
+<command xmlns="http://jabber.org/protocol/commands" node="settings" status="executing" sessionid="130963">
+<actions execute="complete">
+<prev />
+<complete />
+</actions>
+<x xmlns="jabber:x:data" type="form">
+<title>Настройки списка контактов</title>
+<field var="clist_show_phantombuddies" type="boolean" label="* Показать временные ICQ контакты в ростере (найдено: 12)">
+<value>0</value>
+<desc>Полезно если Вы удалили нужный контакт и желаете его восстановить</desc>
+</field>
+<field var="clist_deny_all_auth_requests" type="boolean" label="Блокировать запросы авторизации">
+<value>0</value>
+<desc>Транспорт будет отвечать отказом на все входящие запросы авторизации</desc>
+</field>
+<field var="settings_page" type="hidden">
+<value>clist_settings</value>
+</field>
+<field var="stage" type="hidden">
+<value>2</value>
+</field>
+</x>
+</command>
+</iq>
+­
+<iq type="set" to="icq.jabber.mipt.ru" id="qip_2033598">
+<command xmlns="http://jabber.org/protocol/commands" sessionid="130963" node="settings" action="complete">
+<x xmlns="jabber:x:data" type="submit">
+<field var="clist_show_phantombuddies">
+<value>0</value>
+</field>
+<field var="clist_deny_all_auth_requests">
+<value>1</value>
+</field>
+<field var="settings_page">
+<value>clist_settings</value>
+</field>
+<field var="stage">
+<value>2</value>
+</field>
+</x>
+</command>
+</iq>
+­
+<iq from="icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="qip_2033598" type="result">
+<command xmlns="http://jabber.org/protocol/commands" node="settings" status="completed" sessionid="130963">
+<note type="info">Настройки изменены успешно</note>
+<x xmlns="jabber:x:data" type="form">
+<title>Настройки</title>
+<instructions>Настройки изменены успешно</instructions>
+</x>
+</command>
+</iq>
+­

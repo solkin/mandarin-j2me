@@ -1,0 +1,36 @@
+<iq type="set" to="icq.jabber.mipt.ru" id="qip_657058">
+<command xmlns="http://jabber.org/protocol/commands" node="settings" action="execute" />
+</iq>
+
+<iq from="icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="qip_657058" type="result">
+<command xmlns="http://jabber.org/protocol/commands" node="settings" status="executing" sessionid="110783">
+<actions execute="next">
+<next />
+</actions>
+<x xmlns="jabber:x:data" type="form">
+<title>Настройки</title>
+<instructions>Выберите категорию настроек</instructions>
+<field var="settings_page" type="list-single" label="Категория">
+<desc>Внимание: Вам нужно переподключиться чтобы настройки отмеченные звёздочкой (*) вступили в силу</desc>
+<option label="Настройки списка контактов">
+<value>clist_settings</value>
+</option>
+<option label="Настройки X-статуса">
+<value>xstatus_settings</value>
+</option>
+<option label="Настройки сообщений">
+<value>message_settings</value>
+</option>
+<option label="Настройки оповещений">
+<value>personal_events_settings</value>
+</option>
+<option label="Автоответчик">
+<value>autoanswer_settings</value>
+</option>
+</field>
+<field var="stage" type="hidden">
+<value>1</value>
+</field>
+</x>
+</command>
+</iq>

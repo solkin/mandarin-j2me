@@ -1,0 +1,179 @@
+[1320 KiB / 2048 KiB] (17365 fs-ms.) --> <iq type='get' from='kkx@localhost/Mandarin' to='conference.localhost' id='rkbathbd'><query xmlns='http://jabber.org/protocol/disco#items'/></iq>
+[1309 KiB / 2048 KiB] (17380 fs-ms.) <-- <iq from='conference.localhost' to='kkx@localhost/Mandarin' id='rkbathbd' type='result'>
+[1299 KiB / 2048 KiB] (17383 fs-ms.) <-- <query xmlns='http://jabber.org/protocol/disco#items'>
+[1292 KiB / 2048 KiB] (17384 fs-ms.) <-- <item jid='2@conference.localhost' name='ÐÐ¾Ð¼Ð½Ð°ÑÐ° â2 (0)'/>
+[1282 KiB / 2048 KiB] (17385 fs-ms.) <-- <item jid='1@conference.localhost' name='ÐÐ¾Ð¼Ð½Ð°ÑÐ° Ñ ÐÐ°Ð½Ð´Ð°ÑÐ¸Ð½Ð°Ð¼Ð¸ (0)'/>
+[1273 KiB / 2048 KiB] (17386 fs-ms.) <-- <item jid='breuki@conference.localhost' name='ÐÐ±ÑÑÐ¶Ð´ÐµÐ½Ð¸Ðµ Ð±ÑÑÐº (0)'/>
+[1270 KiB / 2048 KiB] (17387 fs-ms.) <-- </query>
+[1269 KiB / 2048 KiB] (17387 fs-ms.) QueueAction not null
+[1267 KiB / 2048 KiB] (17387 fs-ms.) Info received
+[1265 KiB / 2048 KiB] (17387 fs-ms.) Invalid room title: breuki
+[1264 KiB / 2048 KiB] (17388 fs-ms.) Room is available: 3
+[1257 KiB / 2048 KiB] (17389 fs-ms.) --> <presence from='kkx@localhost/Mandarin' id='fszriBBs' to='3@conference.localhost/kkx'><x xmlns='http://jabber.org/protocol/muc'><history maxstanzas='5'/></x></presence>
+[1254 KiB / 2048 KiB] (17390 fs-ms.) <-- </iq>
+[1243 KiB / 2048 KiB] (17391 fs-ms.) <-- <presence from='3@conference.localhost/kkx' to='kkx@localhost/Mandarin' xml:lang='ru' id='fszriBBs'>
+[1241 KiB / 2048 KiB] (17391 fs-ms.) Presence tag
+[1239 KiB / 2048 KiB] (17391 fs-ms.) from = 3@conference.localhost/kkx id = fszriBBs type = 
+[1231 KiB / 2048 KiB] (17392 fs-ms.) <-- <x xmlns='http://jabber.org/protocol/muc#user'>
+[1224 KiB / 2048 KiB] (17393 fs-ms.) <-- <item jid='kkx@localhost/Mandarin' affiliation='owner' role='moderator'/>
+[1220 KiB / 2048 KiB] (17393 fs-ms.) <-- <status code='110'/>
+[1217 KiB / 2048 KiB] (17394 fs-ms.) <-- <status code='201'/>
+[1215 KiB / 2048 KiB] (17394 fs-ms.) <-- </x>
+[1213 KiB / 2048 KiB] (17394 fs-ms.) <-- </presence>
+[1211 KiB / 2048 KiB] (17394 fs-ms.) Presence received: from = 3@conference.localhost/kkx show = online priority = 0 status = null
+[1209 KiB / 2048 KiB] (17395 fs-ms.) Presence: 3@conference.localhost/kkx
+[1206 KiB / 2048 KiB] (17395 fs-ms.) Buddy exists
+[1495 KiB / 2048 KiB] (17402 fs-ms.) --> <iq type='get' to='3@conference.localhost' id='enzfseib'><query xmlns='http://jabber.org/protocol/muc#owner'/></iq>
+[1486 KiB / 2048 KiB] (17402 fs-ms.) Buddy presence OK
+[1476 KiB / 2048 KiB] (17560 fs-ms.) <-- <iq from='3@conference.localhost' to='kkx@localhost/Mandarin' id='enzfseib' type='result'>
+[1467 KiB / 2048 KiB] (17562 fs-ms.) <-- <query xmlns='http://jabber.org/protocol/muc#owner'>
+[1459 KiB / 2048 KiB] (17565 fs-ms.) <-- <instructions>
+[1436 KiB / 2048 KiB] (17577 fs-ms.) <-- Ð§ÑÐ¾Ð±Ñ ÑÐºÐ¾Ð½ÑÐ¸Ð³ÑÑÐ¸ÑÐ¾Ð²Ð°ÑÑ ÐºÐ¾Ð¼Ð½Ð°ÑÑ, ÑÑÐµÐ±ÑÐµÑÑÑ x:data-ÑÐ¾Ð²Ð¼ÐµÑÑÐ¸Ð¼ÑÐ¹ ÐºÐ»Ð¸ÐµÐ½Ñ</instructions>
+[1428 KiB / 2048 KiB] (17595 fs-ms.) <-- <x xmlns='jabber:x:data' type='form'>
+[1425 KiB / 2048 KiB] (17596 fs-ms.) <-- <title>
+[1415 KiB / 2048 KiB] (17597 fs-ms.) <-- ÐÐ¾Ð½ÑÐ¸Ð³ÑÑÐ°ÑÐ¸Ñ ÐºÐ¾Ð¼Ð½Ð°ÑÑ 3@conference.localhost</title>
+[1408 KiB / 2048 KiB] (17607 fs-ms.) <-- <field type='hidden' var='FORM_TYPE'>
+[1406 KiB / 2048 KiB] (17608 fs-ms.) <-- <value>
+[1396 KiB / 2048 KiB] (17609 fs-ms.) <-- http://jabber.org/protocol/muc#roomconfig</value>
+[1391 KiB / 2048 KiB] (17635 fs-ms.) <-- </field>
+[1383 KiB / 2048 KiB] (17637 fs-ms.) <-- <field type='text-single' label='ÐÐ°Ð·Ð²Ð°Ð½Ð¸Ðµ ÐºÐ¾Ð¼Ð½Ð°ÑÑ' var='muc#roomconfig_roomname'>
+[1379 KiB / 2048 KiB] (17640 fs-ms.) <-- <value>
+[1377 KiB / 2048 KiB] (17643 fs-ms.) <-- </value>
+[1375 KiB / 2048 KiB] (17644 fs-ms.) <-- </field>
+[1366 KiB / 2048 KiB] (17645 fs-ms.) <-- <field type='text-single' label='ÐÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ ÐºÐ¾Ð¼Ð½Ð°ÑÑ' var='muc#roomconfig_roomdesc'>
+[1363 KiB / 2048 KiB] (17648 fs-ms.) <-- <value>
+[1361 KiB / 2048 KiB] (17650 fs-ms.) <-- </value>
+[1358 KiB / 2048 KiB] (17651 fs-ms.) <-- </field>
+[1347 KiB / 2048 KiB] (17659 fs-ms.) <-- <field type='boolean' label='Ð¡Ð´ÐµÐ»Ð°ÑÑ ÐºÐ¾Ð¼Ð½Ð°ÑÑ Ð¿Ð¾ÑÑÐ¾ÑÐ½Ð½Ð¾Ð¹' var='muc#roomconfig_persistentroom'>
+[1342 KiB / 2048 KiB] (17677 fs-ms.) <-- <value>
+[1340 KiB / 2048 KiB] (17685 fs-ms.) <-- 0</value>
+[1338 KiB / 2048 KiB] (17686 fs-ms.) <-- </field>
+[1327 KiB / 2048 KiB] (17689 fs-ms.) <-- <field type='boolean' label='Ð¡Ð´ÐµÐ»Ð°ÑÑ ÐºÐ¾Ð¼Ð½Ð°ÑÑ Ð²Ð¸Ð´Ð¸Ð¼Ð¾Ð¹ Ð²ÑÐµÐ¼' var='muc#roomconfig_publicroom'>
+[1322 KiB / 2048 KiB] (17696 fs-ms.) <-- <value>
+[1320 KiB / 2048 KiB] (17697 fs-ms.) <-- 1</value>
+[1318 KiB / 2048 KiB] (17697 fs-ms.) <-- </field>
+[1307 KiB / 2048 KiB] (17700 fs-ms.) <-- <field type='boolean' label='Ð¡Ð´ÐµÐ»Ð°ÑÑ ÑÐ¿Ð¸ÑÐ¾Ðº ÑÑÐ°ÑÑÐ½Ð¸ÐºÐ¾Ð² Ð²Ð¸Ð´Ð¸Ð¼ÑÐ¼ Ð²ÑÐµÐ¼' var='public_list'>
+[1301 KiB / 2048 KiB] (17710 fs-ms.) <-- <value>
+[1299 KiB / 2048 KiB] (17711 fs-ms.) <-- 1</value>
+[1297 KiB / 2048 KiB] (17711 fs-ms.) <-- </field>
+[1282 KiB / 2048 KiB] (17733 fs-ms.) <-- <field type='boolean' label='Ð¡Ð´ÐµÐ»Ð°ÑÑ ÐºÐ¾Ð¼Ð½Ð°ÑÑ Ð·Ð°ÑÐ¸ÑÑÐ½Ð½Ð¾Ð¹ Ð¿Ð°ÑÐ¾Ð»ÐµÐ¼' var='muc#roomconfig_passwordprotectedroom'>
+[1277 KiB / 2048 KiB] (17739 fs-ms.) <-- <value>
+[1275 KiB / 2048 KiB] (17739 fs-ms.) <-- 0</value>
+[1273 KiB / 2048 KiB] (17740 fs-ms.) <-- </field>
+[1265 KiB / 2048 KiB] (17742 fs-ms.) <-- <field type='text-private' label='ÐÐ°ÑÐ¾Ð»Ñ' var='muc#roomconfig_roomsecret'>
+[1262 KiB / 2048 KiB] (17743 fs-ms.) <-- <value>
+[1260 KiB / 2048 KiB] (17744 fs-ms.) <-- </value>
+[1257 KiB / 2048 KiB] (17744 fs-ms.) <-- </field>
+[1245 KiB / 2048 KiB] (17746 fs-ms.) <-- <field type='list-single' label='ÐÐ°ÐºÑÐ¸Ð¼Ð°Ð»ÑÐ½Ð¾Ðµ ÐºÐ¾Ð»Ð¸ÑÐµÑÑÐ²Ð¾ ÑÑÐ°ÑÑÐ½Ð¸ÐºÐ¾Ð²' var='muc#roomconfig_maxusers'>
+[1488 KiB / 2048 KiB] (17767 fs-ms.) <-- <value>
+[1486 KiB / 2048 KiB] (17767 fs-ms.) <-- 200</value>
+[1484 KiB / 2048 KiB] (17768 fs-ms.) <-- <option label='5'>
+[1481 KiB / 2048 KiB] (17768 fs-ms.) <-- <value>
+[1479 KiB / 2048 KiB] (17769 fs-ms.) <-- 5</value>
+[1475 KiB / 2048 KiB] (17774 fs-ms.) <-- </option>
+[1473 KiB / 2048 KiB] (17775 fs-ms.) <-- <option label='10'>
+[1470 KiB / 2048 KiB] (17782 fs-ms.) <-- <value>
+[1468 KiB / 2048 KiB] (17785 fs-ms.) <-- 10</value>
+[1464 KiB / 2048 KiB] (17789 fs-ms.) <-- </option>
+[1461 KiB / 2048 KiB] (17791 fs-ms.) <-- <option label='20'>
+[1459 KiB / 2048 KiB] (17791 fs-ms.) <-- <value>
+[1457 KiB / 2048 KiB] (17792 fs-ms.) <-- 20</value>
+[1453 KiB / 2048 KiB] (17797 fs-ms.) <-- </option>
+[1450 KiB / 2048 KiB] (17800 fs-ms.) <-- <option label='30'>
+[1448 KiB / 2048 KiB] (17803 fs-ms.) <-- <value>
+[1446 KiB / 2048 KiB] (17807 fs-ms.) <-- 30</value>
+[1442 KiB / 2048 KiB] (17814 fs-ms.) <-- </option>
+[1439 KiB / 2048 KiB] (17815 fs-ms.) <-- <option label='50'>
+[1437 KiB / 2048 KiB] (17816 fs-ms.) <-- <value>
+[1435 KiB / 2048 KiB] (17818 fs-ms.) <-- 50</value>
+[1430 KiB / 2048 KiB] (17828 fs-ms.) <-- </option>
+[1428 KiB / 2048 KiB] (17829 fs-ms.) <-- <option label='100'>
+[1425 KiB / 2048 KiB] (17830 fs-ms.) <-- <value>
+[1423 KiB / 2048 KiB] (17831 fs-ms.) <-- 100</value>
+[1419 KiB / 2048 KiB] (17839 fs-ms.) <-- </option>
+[1416 KiB / 2048 KiB] (17841 fs-ms.) <-- <option label='200'>
+[1414 KiB / 2048 KiB] (17842 fs-ms.) <-- <value>
+[1411 KiB / 2048 KiB] (17843 fs-ms.) <-- 200</value>
+[1407 KiB / 2048 KiB] (17859 fs-ms.) <-- </option>
+[1405 KiB / 2048 KiB] (17860 fs-ms.) <-- </field>
+[1389 KiB / 2048 KiB] (17863 fs-ms.) <-- <field type='list-single' label='Ð¡Ð´ÐµÐ»Ð°ÑÑ ÑÐµÐ°Ð»ÑÐ½ÑÐµ Jabber ID ÑÑÐ°ÑÑÐ½Ð¸ÐºÐ¾Ð² Ð²Ð¸Ð´Ð¸Ð¼ÑÐ¼Ð¸' var='muc#roomconfig_whois'>
+[1383 KiB / 2048 KiB] (17871 fs-ms.) <-- <value>
+[1380 KiB / 2048 KiB] (17872 fs-ms.) <-- moderators</value>
+[1375 KiB / 2048 KiB] (17873 fs-ms.) <-- <option label='ÑÐ¾Ð»ÑÐºÐ¾ Ð¼Ð¾Ð´ÐµÑÐ°ÑÐ¾ÑÐ°Ð¼'>
+[1373 KiB / 2048 KiB] (17875 fs-ms.) <-- <value>
+[1369 KiB / 2048 KiB] (17888 fs-ms.) <-- moderators</value>
+[1364 KiB / 2048 KiB] (17892 fs-ms.) <-- </option>
+[1360 KiB / 2048 KiB] (17892 fs-ms.) <-- <option label='Ð²ÑÐµÐ¼ ÑÑÐ°ÑÑÐ½Ð¸ÐºÐ°Ð¼'>
+[1358 KiB / 2048 KiB] (17894 fs-ms.) <-- <value>
+[1355 KiB / 2048 KiB] (17895 fs-ms.) <-- anyone</value>
+[1350 KiB / 2048 KiB] (17906 fs-ms.) <-- </option>
+[1348 KiB / 2048 KiB] (17907 fs-ms.) <-- </field>
+[1330 KiB / 2048 KiB] (17911 fs-ms.) <-- <field type='boolean' label='ÐÐ¾Ð¼Ð½Ð°ÑÐ° ÑÐ¾Ð»ÑÐºÐ¾ Ð´Ð»Ñ Ð·Ð°ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ¾Ð²Ð°Ð½Ð½ÑÑ ÑÑÐ°ÑÑÐ½Ð¸ÐºÐ¾Ð²' var='muc#roomconfig_membersonly'>
+[1325 KiB / 2048 KiB] (17918 fs-ms.) <-- <value>
+[1322 KiB / 2048 KiB] (17921 fs-ms.) <-- 0</value>
+[1320 KiB / 2048 KiB] (17922 fs-ms.) <-- </field>
+[1309 KiB / 2048 KiB] (17923 fs-ms.) <-- <field type='boolean' label='Ð¡Ð´ÐµÐ»Ð°ÑÑ ÐºÐ¾Ð¼Ð½Ð°ÑÑ Ð¼Ð¾Ð´ÐµÑÐ¸ÑÑÐµÐ¼Ð¾Ð¹' var='muc#roomconfig_moderatedroom'>
+[1304 KiB / 2048 KiB] (17931 fs-ms.) <-- <value>
+[1302 KiB / 2048 KiB] (17935 fs-ms.) <-- 1</value>
+[1299 KiB / 2048 KiB] (17936 fs-ms.) <-- </field>
+[1283 KiB / 2048 KiB] (17940 fs-ms.) <-- <field type='boolean' label='Ð¡Ð´ÐµÐ»Ð°ÑÑ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»ÐµÐ¹ ÑÑÐ°ÑÑÐ½Ð¸ÐºÐ°Ð¼Ð¸ Ð¿Ð¾ ÑÐ¼Ð¾Ð»ÑÐ°Ð½Ð¸Ñ' var='members_by_default'>
+[1278 KiB / 2048 KiB] (17950 fs-ms.) <-- <value>
+[1276 KiB / 2048 KiB] (17950 fs-ms.) <-- 1</value>
+[1274 KiB / 2048 KiB] (17951 fs-ms.) <-- </field>
+[1260 KiB / 2048 KiB] (17955 fs-ms.) <-- <field type='boolean' label='Ð Ð°Ð·ÑÐµÑÐ¸ÑÑ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»ÑÐ¼ Ð¸Ð·Ð¼ÐµÐ½ÑÑÑ ÑÐµÐ¼Ñ' var='muc#roomconfig_changesubject'>
+[1255 KiB / 2048 KiB] (17964 fs-ms.) <-- <value>
+[1252 KiB / 2048 KiB] (17965 fs-ms.) <-- 1</value>
+[1250 KiB / 2048 KiB] (17965 fs-ms.) <-- </field>
+[1240 KiB / 2048 KiB] (17968 fs-ms.) <-- <field type='boolean' label='Ð Ð°Ð·ÑÐµÑÐ¸ÑÑ Ð¿ÑÐ¸Ð²Ð°ÑÐ½ÑÐµ ÑÐ¾Ð¾Ð±ÑÐµÐ½Ð¸Ñ' var='allow_private_messages'>
+[1235 KiB / 2048 KiB] (17974 fs-ms.) <-- <value>
+[1232 KiB / 2048 KiB] (17974 fs-ms.) <-- 1</value>
+[1230 KiB / 2048 KiB] (17975 fs-ms.) <-- </field>
+[1208 KiB / 2048 KiB] (17981 fs-ms.) <-- <field type='list-single' label='Ð Ð°Ð·ÑÐµÑÐ¸ÑÑ Ð¿Ð¾ÑÐµÑÐ¸ÑÐµÐ»ÑÐ¼ Ð¿Ð¾ÑÑÐ»Ð°ÑÑ Ð¿ÑÐ¸Ð²Ð°ÑÐ½ÑÐµ ÑÐ¾Ð¾Ð±ÑÐµÐ½Ð¸Ñ' var='allow_private_messages_from_visitors'>
+[1202 KiB / 2048 KiB] (17992 fs-ms.) <-- <value>
+[1200 KiB / 2048 KiB] (17993 fs-ms.) <-- anyone</value>
+[1197 KiB / 2048 KiB] (17994 fs-ms.) <-- <option label='Ð½Ð¸ÐºÑÐ¾'>
+[1194 KiB / 2048 KiB] (17995 fs-ms.) <-- <value>
+[1192 KiB / 2048 KiB] (17995 fs-ms.) <-- nobody</value>
+[1187 KiB / 2048 KiB] (18000 fs-ms.) <-- </option>
+[1182 KiB / 2048 KiB] (18002 fs-ms.) <-- <option label='ÑÐ¾Ð»ÑÐºÐ¾ Ð¼Ð¾Ð´ÐµÑÐ°ÑÐ¾ÑÐ°Ð¼'>
+[1180 KiB / 2048 KiB] (18004 fs-ms.) <-- <value>
+[1177 KiB / 2048 KiB] (18004 fs-ms.) <-- moderators</value>
+[1172 KiB / 2048 KiB] (18009 fs-ms.) <-- </option>
+[1168 KiB / 2048 KiB] (18009 fs-ms.) <-- <option label='Ð²ÑÐµÐ¼ ÑÑÐ°ÑÑÐ½Ð¸ÐºÐ°Ð¼'>
+[1165 KiB / 2048 KiB] (18013 fs-ms.) <-- <value>
+[1163 KiB / 2048 KiB] (18014 fs-ms.) <-- anyone</value>
+[1158 KiB / 2048 KiB] (18019 fs-ms.) <-- </option>
+[1156 KiB / 2048 KiB] (18019 fs-ms.) <-- </field>
+[1145 KiB / 2048 KiB] (18022 fs-ms.) <-- <field type='boolean' label='Ð Ð°Ð·ÑÐµÑÐ¸ÑÑ iq-Ð·Ð°Ð¿ÑÐ¾ÑÑ Ðº Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»ÑÐ¼' var='allow_query_users'>
+[1139 KiB / 2048 KiB] (18028 fs-ms.) <-- <value>
+[1137 KiB / 2048 KiB] (18029 fs-ms.) <-- 1</value>
+[1135 KiB / 2048 KiB] (18030 fs-ms.) <-- </field>
+[1118 KiB / 2048 KiB] (18031 fs-ms.) <-- <field type='boolean' label='Ð Ð°Ð·ÑÐµÑÐ¸ÑÑ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»ÑÐ¼ Ð¿Ð¾ÑÑÐ»Ð°ÑÑ Ð¿ÑÐ¸Ð³Ð»Ð°ÑÐµÐ½Ð¸Ñ' var='muc#roomconfig_allowinvites'>
+[1113 KiB / 2048 KiB] (18035 fs-ms.) <-- <value>
+[1111 KiB / 2048 KiB] (18035 fs-ms.) <-- 0</value>
+[1109 KiB / 2048 KiB] (18036 fs-ms.) <-- </field>
+[1078 KiB / 2048 KiB] (18038 fs-ms.) <-- <field type='boolean' label='Ð Ð°Ð·ÑÐµÑÐ¸ÑÑ Ð¿Ð¾ÑÐµÑÐ¸ÑÐµÐ»ÑÐ¼ Ð²ÑÑÐ°Ð²Ð»ÑÑÑ ÑÐµÐºcÑ ÑÑÐ°ÑÑÑÐ° Ð² ÑÐ¾Ð¾Ð±ÑÐµÐ½Ð¸Ñ Ð¾ Ð¿ÑÐ¸ÑÑÑÑÑÐ²Ð¸Ð¸' var='muc#roomconfig_allowvisitorstatus'>
+[1071 KiB / 2048 KiB] (18046 fs-ms.) <-- <value>
+[1069 KiB / 2048 KiB] (18048 fs-ms.) <-- 1</value>
+[1067 KiB / 2048 KiB] (18048 fs-ms.) <-- </field>
+[1049 KiB / 2048 KiB] (18051 fs-ms.) <-- <field type='boolean' label='Ð Ð°Ð·ÑÐµÑÐ¸ÑÑ Ð¿Ð¾ÑÐµÑÐ¸ÑÐµÐ»ÑÐ¼ Ð¸Ð·Ð¼ÐµÐ½ÑÑÑ Ð¿ÑÐµÐ²Ð´Ð¾Ð½Ð¸Ð¼' var='muc#roomconfig_allowvisitornickchange'>
+[1043 KiB / 2048 KiB] (18059 fs-ms.) <-- <value>
+[1041 KiB / 2048 KiB] (18060 fs-ms.) <-- 1</value>
+[1039 KiB / 2048 KiB] (18063 fs-ms.) <-- </field>
+[1020 KiB / 2048 KiB] (18070 fs-ms.) <-- <field type='boolean' label='Ð Ð°Ð·ÑÐµÑÐ¸ÑÑ Ð¿Ð¾ÑÐµÑÐ¸ÑÐµÐ»ÑÐ¼ Ð·Ð°Ð¿ÑÐ°ÑÐ¸Ð²Ð°ÑÑ Ð¿ÑÐ°Ð²Ð¾ Ð³Ð¾Ð»Ð¾ÑÐ°' var='muc#roomconfig_allowvoicerequests'>
+[1015 KiB / 2048 KiB] (18077 fs-ms.) <-- <value>
+[1012 KiB / 2048 KiB] (18085 fs-ms.) <-- 1</value>
+[1010 KiB / 2048 KiB] (18086 fs-ms.) <-- </field>
+[987 KiB / 2048 KiB] (18089 fs-ms.) <-- <field type='text-single' label='ÐÐ¸Ð½Ð¸Ð¼Ð°Ð»ÑÐ½ÑÐ¹ Ð¸Ð½ÑÐµÑÐ²Ð°Ð» Ð¼ÐµÐ¶Ð´Ñ Ð·Ð°Ð¿ÑÐ¾ÑÐ°Ð¼Ð¸ Ð½Ð° Ð¿ÑÐ°Ð²Ð¾ Ð³Ð¾Ð»Ð¾ÑÐ°' var='muc#roomconfig_voicerequestmininterval'>
+[981 KiB / 2048 KiB] (18094 fs-ms.) <-- <value>
+[978 KiB / 2048 KiB] (18095 fs-ms.) <-- 1800</value>
+[976 KiB / 2048 KiB] (18097 fs-ms.) <-- </field>
+[959 KiB / 2048 KiB] (18100 fs-ms.) <-- <field type='jid-multi' label='ÐÑÐºÐ»ÑÑÐ¸ÑÑ Ð¿Ð¾ÐºÐ°Ð· ÐºÐ°Ð¿ÑÐ¸ Ð´Ð»Ñ ÑÐ¿Ð¸ÑÐºÐ° Jabber ID' var='muc#roomconfig_captcha_whitelist'/>
+[954 KiB / 2048 KiB] (18104 fs-ms.) <-- </x>
+[952 KiB / 2048 KiB] (18105 fs-ms.) <-- </query>
+[950 KiB / 2048 KiB] (18105 fs-ms.) QueueAction not null
+[949 KiB / 2048 KiB] (18106 fs-ms.) Configuring room ack received
+[941 KiB / 2048 KiB] (18116 fs-ms.) Left soft present
+[923 KiB / 2048 KiB] (18266 fs-ms.) Form objects count: 1
+[921 KiB / 2048 KiB] (18278 fs-ms.) <-- </iq>
+

@@ -1,0 +1,65 @@
+<iq type="set" id="aad8a">
+<query xmlns="jabber:iq:roster">
+<item name="bartelbu" jid="259127167@icq.jabber.mipt.ru"/>
+</query>
+</iq>
+
+
+<presence type="subscribe" to="259127167@icq.jabber.mipt.ru">
+<nick xmlns="http://jabber.org/protocol/nick">burova</nick>
+</presence>
+
+
+<presence type="subscribed" to="259127167@icq.jabber.mipt.ru"/>
+
+
+<iq from="burova@jabber.mipt.ru" type="set" to="burova@jabber.mipt.ru/solkin-laptop" id="push1747984868">
+<query xmlns="jabber:iq:roster" ver="ed4b3f580f7d18316923e2d3acd9c9419244182a">
+<item subscription="none" name="bartelbu" jid="259127167@icq.jabber.mipt.ru"/>
+</query>
+</iq>
+
+
+<iq type="result" to="burova@jabber.mipt.ru" id="push1747984868"/>
+
+
+<iq from="burova@jabber.mipt.ru" type="set" to="burova@jabber.mipt.ru/solkin-laptop" id="push4237259944">
+<query xmlns="jabber:iq:roster" ver="ed4b3f580f7d18316923e2d3acd9c9419244182a">
+<item subscription="none" ask="subscribe" jid="259127167@icq.jabber.mipt.ru"/>
+</query>
+</iq>
+
+
+<iq type="result" to="burova@jabber.mipt.ru" id="push4237259944"/>
+
+
+<iq from="burova@jabber.mipt.ru" type="result" to="burova@jabber.mipt.ru/solkin-laptop" id="aad8a"/>
+
+
+<iq from="burova@jabber.mipt.ru" type="set" to="burova@jabber.mipt.ru/solkin-laptop" id="push249759453">
+<query xmlns="jabber:iq:roster" ver="5a126d8cb7a9c0a18c914681645712645a0b9517">
+<item subscription="from" ask="subscribe" jid="259127167@icq.jabber.mipt.ru"/>
+</query>
+</iq>
+
+
+<iq type="result" to="burova@jabber.mipt.ru" id="push249759453"/>
+
+
+<iq from="burova@jabber.mipt.ru" type="set" to="burova@jabber.mipt.ru/solkin-laptop" id="push4109394403">
+<query xmlns="jabber:iq:roster" ver="6780a70c76942996210b6d671f18d93c6ab9935a">
+<item subscription="both" jid="259127167@icq.jabber.mipt.ru"/>
+</query>
+</iq>
+
+
+<iq type="result" to="burova@jabber.mipt.ru" id="push4109394403"/>
+
+
+<presence from="259127167@icq.jabber.mipt.ru" type="subscribed" to="burova@jabber.mipt.ru/solkin-laptop"/>
+
+
+<presence from="259127167@icq.jabber.mipt.ru" type="unavailable" to="burova@jabber.mipt.ru/solkin-laptop">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5"/>
+</presence>
+

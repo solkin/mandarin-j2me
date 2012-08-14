@@ -1,0 +1,35 @@
+<iq type="set" to="icq.jabber.mipt.ru" id="qip_984804">
+<command xmlns="http://jabber.org/protocol/commands" node="stats" action="execute" />
+</iq>
+
+<iq from="icq.jabber.mipt.ru" to="mandarin@jabber.mipt.ru/Офис" id="qip_984804" type="result">
+<command xmlns="http://jabber.org/protocol/commands" status="completed" sessionid="49068">
+<x xmlns="jabber:x:data" type="result">
+<title>Статистика PyICQt</title>
+<field var="OnlineSessions" type="text-single" label="В сети">
+<value>92</value>
+<desc>Количество пользователей, которые сейчас подключены к сервису.</desc>
+</field>
+<field var="IncomingMessages" type="text-single" label="Входящих сообщений">
+<value>20252</value>
+<desc>Количество сообщений, принятых из ICQ сети.</desc>
+</field>
+<field var="Uptime" type="text-single" label="Время работы">
+<value>226440</value>
+<desc>Время работы сервиса, в секундах.</desc>
+</field>
+<field var="TotalSessions" type="text-single" label="Всего сессий">
+<value>3199</value>
+<desc>Количество подключений с момента запуска сервиса.</desc>
+</field>
+<field var="MaxConcurrentSessions" type="text-single" label="Сессий одновременно">
+<value>142</value>
+<desc>Максимальное количество одновременных подключений к сервису.</desc>
+</field>
+<field var="OutgoingMessages" type="text-single" label="Исходящих сообщений">
+<value>21767</value>
+<desc>Количество сообщений, отправленных в ICQ сеть.</desc>
+</field>
+</x>
+</command>
+</iq>

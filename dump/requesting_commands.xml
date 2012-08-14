@@ -1,0 +1,10 @@
+<iq type="get" to="icq.jabber.mipt.ru" id="658002">
+<query xmlns="http://jabber.org/protocol/disco#items" node="http://jabber.org/protocol/commands" />
+</iq>
+
+<iq from="icq.jabber.mipt.ru" to="mandarin@jabber.mipt.ru/Офис" id="658002" type="result">
+<query xmlns="http://jabber.org/protocol/disco#items" node="http://jabber.org/protocol/commands">
+<item node="stats" jid="icq.jabber.mipt.ru" name="Статистика PyICQt" />
+<item node="help" jid="icq.jabber.mipt.ru" name="Помощь" />
+</query>
+</iq>

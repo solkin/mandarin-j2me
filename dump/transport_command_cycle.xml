@@ -1,0 +1,203 @@
+<iq type="get" to="icq.jabber.mipt.ru" id="aac3a">
+<query xmlns="http://jabber.org/protocol/disco#items" node="http://jabber.org/protocol/commands"/>
+</iq>
+
+
+<iq from="icq.jabber.mipt.ru" type="result" to="kkx@jabber.mipt.ru/solkin-laptop" id="aac3a">
+<query xmlns="http://jabber.org/protocol/disco#items" node="http://jabber.org/protocol/commands">
+<item node="emaillookup" name="Look up ICQ users via email" jid="icq.jabber.mipt.ru"/>
+<item node="confirmaccount" name="Confirm ICQ account" jid="icq.jabber.mipt.ru"/>
+<item node="stats" name="Statistics for PyICQt" jid="icq.jabber.mipt.ru"/>
+<item node="help" name="Help" jid="icq.jabber.mipt.ru"/>
+<item node="settings" name="Settings" jid="icq.jabber.mipt.ru"/>
+<item node="retrieveroster" name="Retrieve Roster Contents" jid="icq.jabber.mipt.ru"/>
+<item node="setxstatus" name="Set x-status" jid="icq.jabber.mipt.ru"/>
+<item node="updatemyvcard" name="Update my VCard" jid="icq.jabber.mipt.ru"/>
+</query>
+</iq>
+
+
+<iq type="set" to="icq.jabber.mipt.ru" id="aac4a">
+<command xmlns="http://jabber.org/protocol/commands" node="settings"/>
+</iq>
+
+
+<iq from="icq.jabber.mipt.ru" type="result" to="kkx@jabber.mipt.ru/solkin-laptop" id="aac4a">
+<command xmlns="http://jabber.org/protocol/commands" status="executing" node="settings" sessionid="201051">
+<actions execute="next">
+<next/>
+</actions>
+<x xmlns="jabber:x:data" type="form">
+<title>Настройки</title>
+<instructions>Выберите категорию настроек</instructions>
+<field type="list-single" label="Категория" var="settings_page">
+<desc>Внимание: Вам нужно переподключиться чтобы настройки отмеченные звёздочкой (*) вступили в силу</desc>
+<option label="Настройки списка контактов">
+<value>clist_settings</value>
+</option>
+<option label="Настройки X-статуса">
+<value>xstatus_settings</value>
+</option>
+<option label="Настройки сообщений">
+<value>message_settings</value>
+</option>
+<option label="Настройки оповещений">
+<value>personal_events_settings</value>
+</option>
+<option label="Автоответчик">
+<value>autoanswer_settings</value>
+</option>
+</field>
+<field type="hidden" var="stage">
+<value>1</value>
+</field>
+</x>
+</command>
+</iq>
+
+
+<iq type="set" to="icq.jabber.mipt.ru" id="aac5a">
+<command xmlns="http://jabber.org/protocol/commands" node="settings" sessionid="201051">
+<x xmlns="jabber:x:data" type="submit">
+<field type="list-single" var="settings_page">
+<value>xstatus_settings</value>
+</field>
+<field type="hidden" var="stage">
+<value>1</value>
+</field>
+</x>
+</command>
+</iq>
+
+
+<iq from="icq.jabber.mipt.ru" type="result" to="kkx@jabber.mipt.ru/solkin-laptop" id="aac5a">
+<command xmlns="http://jabber.org/protocol/commands" status="executing" node="settings" sessionid="201051">
+<actions execute="complete">
+<prev/>
+<complete/>
+</actions>
+<x xmlns="jabber:x:data" type="form">
+<title>Настройки X-статуса</title>
+<field type="boolean" label="Посылать сообщения об отстуствии" var="away_messages_sending">
+<value>1</value>
+<desc>Посылать статус-сообщения пользователям ICQ в режиме 'Отсутствует' или 'Не доступен'</desc>
+</field>
+<field type="boolean" label="Принимать сообщения об отстуствии" var="away_messages_receiving">
+<value>1</value>
+<desc>Принимать статус-сообщения от пользователей ICQ в режиме 'Отсутствует' или 'Не доступен'</desc>
+</field>
+<field type="list-single" label="* Режим отправки X-статуса" var="xstatus_sending_mode">
+<option label="ICQ 6 (меньше трафика)">
+<value>2</value>
+</option>
+<option label="Отключено">
+<value>0</value>
+</option>
+<option label="ICQ 5.1 (наиболее популярно)">
+<value>1</value>
+</option>
+<option label="ICQ 5.1+6 (максимальная совместимость)">
+<value>3</value>
+</option>
+<value>3</value>
+<desc>Посылать Х-статус пользователям ICQ в новом (ICQ6) или в старом (ICQ5.1) формате</desc>
+</field>
+<field type="boolean" label="Восстанавливать X-статус после отключения" var="xstatus_saving_enabled">
+<value>1</value>
+<desc>Автоматически устанавливать Х-статус который использовался до отключения</desc>
+</field>
+<field type="list-single" label="Режим приёма X-статуса" var="xstatus_receiving_mode">
+<option label="Отключено">
+<value>0</value>
+</option>
+<option label="ICQ 5.1 (наиболее популярно)">
+<value>1</value>
+</option>
+<option label="ICQ 6 (меньше трафика)">
+<value>2</value>
+</option>
+<option label="ICQ 5.1+6 (максимальная совместимость)">
+<value>3</value>
+</option>
+<value>3</value>
+<desc>Принимать Х-статус от пользователей ICQ в новом (ICQ6) или в старом (ICQ5.1) формате</desc>
+</field>
+<field type="boolean" label="Получать статус-иконки по протоколам  5.1 и 6" var="xstatus_option_smooth">
+<value>1</value>
+<desc>Устраняет проблемы между старыми и новыми ICQ клиентами в области отображения Х-статусов</desc>
+</field>
+<field type="boolean" label="Отображать статус-иконку как событие" var="xstatus_display_icon_as_PEP">
+<value>1</value>
+<desc>Отображать иконку Х-статуса, если Ваш XMPP клиент поддерживает PEP</desc>
+</field>
+<field type="boolean" label=" Отображать текст статуса как событие" var="xstatus_display_text_as_PEP">
+<value>1</value>
+<desc>Отображать текст Х-статуса и иконку для него (если возможно)</desc>
+</field>
+<field type="boolean" label=" Отображать статус-иконку для транспорта" var="xstatus_icon_for_transport">
+<value>1</value>
+<desc>Возможность видеть иконку собственного Х-статуса если XMPP-клиент это поддерживает</desc>
+</field>
+<field type="hidden" var="settings_page">
+<value>xstatus_settings</value>
+</field>
+<field type="hidden" var="stage">
+<value>2</value>
+</field>
+</x>
+</command>
+</iq>
+
+
+<iq type="set" to="icq.jabber.mipt.ru" id="aac6a">
+<command xmlns="http://jabber.org/protocol/commands" node="settings" sessionid="201051">
+<x xmlns="jabber:x:data" type="submit">
+<field type="boolean" var="away_messages_sending">
+<value>1</value>
+</field>
+<field type="boolean" var="away_messages_receiving">
+<value>1</value>
+</field>
+<field type="list-single" var="xstatus_sending_mode">
+<value>3</value>
+</field>
+<field type="boolean" var="xstatus_saving_enabled">
+<value>1</value>
+</field>
+<field type="list-single" var="xstatus_receiving_mode">
+<value>3</value>
+</field>
+<field type="boolean" var="xstatus_option_smooth">
+<value>1</value>
+</field>
+<field type="boolean" var="xstatus_display_icon_as_PEP">
+<value>1</value>
+</field>
+<field type="boolean" var="xstatus_display_text_as_PEP">
+<value>1</value>
+</field>
+<field type="boolean" var="xstatus_icon_for_transport">
+<value>1</value>
+</field>
+<field type="hidden" var="settings_page">
+<value>xstatus_settings</value>
+</field>
+<field type="hidden" var="stage">
+<value>2</value>
+</field>
+</x>
+</command>
+</iq>
+
+
+<iq from="icq.jabber.mipt.ru" type="result" to="kkx@jabber.mipt.ru/solkin-laptop" id="aac6a">
+<command xmlns="http://jabber.org/protocol/commands" status="completed" node="settings" sessionid="201051">
+<note type="info">Настройки изменены успешно</note>
+<x xmlns="jabber:x:data" type="form">
+<title>Настройки</title>
+<instructions>Настройки изменены успешно</instructions>
+</x>
+</command>
+</iq>
+
+

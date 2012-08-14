@@ -1,0 +1,21 @@
+<iq type="get" to="icq.jabber.mipt.ru" id="23">
+<query xmlns="http://jabber.org/protocol/disco#info" />
+</iq>
+
+<iq from="icq.jabber.mipt.ru" to="mandarin@jabber.mipt.ru/ќфис" type="result" id="23">
+<query xmlns="http://jabber.org/protocol/disco#info">
+<identity category="gateway" type="icq" name="ICQ Transport" />
+<feature var="http://jabber.org/protocol/disco" />
+<feature var="jabber:x:delay" />
+<feature var="urn:xmpp:receipts" />
+<feature var="jabber:x:conference" />
+<feature var="http://jabber.org/protocol/commands" />
+<feature var="jabber:iq:register" />
+<feature var="vcard-temp" />
+<feature var="urn:xmpp:ping" />
+<feature var="jabber:iq:last" />
+<feature var="urn:xmpp:time" />
+<feature var="jabber:iq:version" />
+<feature var="jabber:iq:gateway" />
+</query>
+</iq>

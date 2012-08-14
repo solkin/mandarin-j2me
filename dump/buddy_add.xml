@@ -1,0 +1,87 @@
+<!-- Out -->
+<iq xmlns="jabber:client" to="icq.jabber.mipt.ru" type="set" id="145">
+<query xmlns="jabber:iq:gateway">
+<prompt>1234567</prompt>
+</query>
+</iq>
+
+<!-- In -->
+<iq from='icq.jabber.mipt.ru' to='kkx@jabber.mipt.ru/Gajim' type='result' id='145'>
+<query xmlns='jabber:iq:gateway'>
+<prompt>1234567@icq.jabber.mipt.ru</prompt>
+<jid>1234567@icq.jabber.mipt.ru</jid>
+</query>
+</iq>
+
+<!-- Out -->
+<iq xmlns="jabber:client" type="set" id="146">
+<query xmlns="jabber:iq:roster">
+<item jid="1234567@icq.jabber.mipt.ru" name="Rerb">
+<group>ICQ</group>
+</item>
+</query>
+</iq>
+
+<!-- Out -->
+<presence xmlns="jabber:client" to="1234567@icq.jabber.mipt.ru" type="subscribe" id="147">
+<nick xmlns="http://jabber.org/protocol/nick">kkx</nick>
+<x xmlns="vcard-temp:x:update">
+<photo>327bb32b9d3802b229de84db8869cf46f3eb8206</photo>
+</x>
+<c xmlns="http://jabber.org/protocol/caps" node="http://gajim.org" ver="7bILkSCC1Xe4s8ryYu32ehyaB+c=" hash="sha-1" />
+</presence>
+
+<!-- In -->
+<iq from='kkx@jabber.mipt.ru' to='kkx@jabber.mipt.ru/Gajim' id='push228407823' type='set'>
+<query xmlns='jabber:iq:roster' ver='4b98105faf1b366d63d97170ce425f0d202bca93'>
+<item subscription='none' name='Rerb' jid='1234567@icq.jabber.mipt.ru'>
+<group>ICQ</group>
+</item>
+</query>
+</iq>
+
+<!-- In -->
+<iq from='kkx@jabber.mipt.ru' to='kkx@jabber.mipt.ru/Gajim' id='146' type='result'/>
+
+<!-- In -->
+<iq from='kkx@jabber.mipt.ru' to='kkx@jabber.mipt.ru/Gajim' id='push1181903090' type='set'>
+<query xmlns='jabber:iq:roster' ver='b840ff9b1382a7b06327026c18058c0f782971d9'>
+<item ask='subscribe' subscription='none' name='Rerb' jid='1234567@icq.jabber.mipt.ru'>
+<group>ICQ</group>
+</item>
+</query>
+</iq>
+
+<!-- In -->
+<iq from='kkx@jabber.mipt.ru' to='kkx@jabber.mipt.ru/Gajim' id='push540309259' type='set'>
+<query xmlns='jabber:iq:roster' ver='b7c63c4d460e2a5f8d7c26275485b00c19db27b0'>
+<item ask='subscribe' subscription='none' name='Rerb' jid='1234567@icq.jabber.mipt.ru'>
+<group>ICQ</group>
+</item>
+</query>
+</iq>
+
+<!-- In -->
+<presence from='1234567@icq.jabber.mipt.ru' to='kkx@jabber.mipt.ru/Gajim' type='subscribe'>
+<x xmlns='http://delx.cjb.net/protocol/roster-subsync'>
+<item subscription='both'/>
+</x>
+<nick xmlns='http://jabber.org/protocol/nick'>1234567</nick>
+</presence>
+
+<!-- In -->
+<iq from='kkx@jabber.mipt.ru' to='kkx@jabber.mipt.ru/Gajim' id='push3172802044' type='set'>
+<query xmlns='jabber:iq:roster' ver='dd76c49ac3a64289a47f3032d72e8fbfe0aed8fd'>
+<item subscription='to' name='Rerb' jid='1234567@icq.jabber.mipt.ru'>
+<group>ICQ</group>
+</item>
+</query>
+</iq>
+
+<!-- In -->
+<presence from='1234567@icq.jabber.mipt.ru' to='kkx@jabber.mipt.ru/Gajim' type='subscribed'/>
+
+<!-- In -->
+<presence from='1234567@icq.jabber.mipt.ru' to='kkx@jabber.mipt.ru/Gajim' type='unavailable'>
+<c xmlns='http://jabber.org/protocol/caps' node='http://pyicqt.googlecode.com//protocol/caps' ver='0.8.1.5'/>
+</presence>

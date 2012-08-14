@@ -1,0 +1,440 @@
+<iq type="get" to="icq.jabber.mipt.ru" id="qip_26">
+<query xmlns="jabber:iq:register" />
+</iq>
+­
+<iq from="icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="qip_26" type="result">
+<query xmlns="jabber:iq:register">
+<instructions>Напишите ICQ-номер в поле <Имя пользователя> и пароль.</instructions>
+<username />
+<password />
+</query>
+</iq>
+­
+<iq type="set" to="icq.jabber.mipt.ru" id="qip_27">
+<query xmlns="jabber:iq:register">
+<username>475576699</username>
+<password>380349</password>
+</query>
+</iq>
+­
+<iq from="icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="result" id="qip_27" />
+­
+<presence from="icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe" />
+­
+<presence to="icq.jabber.mipt.ru" type="subscribed" />
+­
+<presence to="icq.jabber.mipt.ru" type="subscribe" />
+­
+<iq from="kkx@jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="push1559435571" type="set">
+<query xmlns="jabber:iq:roster" ver="0fb5a44739d2539b76700dd1a1c5910763b6d20e">
+<item subscription="from" jid="icq.jabber.mipt.ru" />
+</query>
+</iq>
+­
+<iq from="kkx@jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="push3516926999" type="set">
+<query xmlns="jabber:iq:roster" ver="3651f03a7958970fd9d12de515785c5a0423b157">
+<item ask="subscribe" subscription="from" jid="icq.jabber.mipt.ru" />
+</query>
+</iq>
+­
+<presence from="icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable" />
+­
+<iq from="kkx@jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="push2525251363" type="set">
+<query xmlns="jabber:iq:roster" ver="2e3934b38ce64f1eac6cdfe48ac645ede5ad4c59">
+<item subscription="both" jid="icq.jabber.mipt.ru" />
+</query>
+</iq>
+­
+<presence from="icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribed" />
+­
+<presence from="+79645740840@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="+79645740840@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">+79645740840</nick>
+</presence>
+­
+<presence from="413829755@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="413829755@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Neon_VGlass</nick>
+</presence>
+­
+<presence from="4770130@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="4770130@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Trielvlad</nick>
+</presence>
+­
+<presence from="399919056@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="399919056@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">trieL-[R]</nick>
+</presence>
+­
+<presence from="610334831@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="610334831@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Игорь Солкин</nick>
+</presence>
+­
+<presence from="7068514@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="7068514@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Solkin</nick>
+</presence>
+­
+<presence from="247043687@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="247043687@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Duke Nuken</nick>
+</presence>
+­
+<presence from="565355850@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="565355850@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">IgoR</nick>
+</presence>
+­
+<presence from="250761544@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="250761544@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Craig_Mabbitt</nick>
+</presence>
+­
+<presence from="172545722@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="172545722@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Georg</nick>
+</presence>
+­
+<presence from="456416407@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="456416407@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">AK-87</nick>
+</presence>
+­
+<presence from="445841285@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="445841285@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Foreigner</nick>
+</presence>
+­
+<presence from="440800896@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="440800896@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">IGRYM</nick>
+</presence>
+­
+<presence from="385707583@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="385707583@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Unknown</nick>
+</presence>
+­
+<presence from="387070006@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="387070006@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Alexey_86</nick>
+</presence>
+­
+<presence from="449346292@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="449346292@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Foreigner</nick>
+</presence>
+­
+<presence from="380234488@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="380234488@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">m1kc</nick>
+</presence>
+­
+<presence from="396300090@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="396300090@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Mandarin</nick>
+</presence>
+­
+<presence from="7931157@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="7931157@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">-MIX-</nick>
+</presence>
+­
+<presence from="5917782@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="5917782@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Q-Bot Информатор</nick>
+</presence>
+­
+<presence from="636346540@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="636346540@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">nick</nick>
+</presence>
+­
+<presence from="598400370@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="598400370@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Foreigner</nick>
+</presence>
+­
+<presence from="321463400@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="321463400@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">George</nick>
+</presence>
+­
+<presence from="8808780@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="8808780@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">ARX-Bot #5</nick>
+</presence>
+­
+<presence from="475576699@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="475576699@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="subscribe">
+<x xmlns="http://delx.cjb.net/protocol/roster-subsync">
+<item subscription="both" />
+</x>
+<nick xmlns="http://jabber.org/protocol/nick">Someone</nick>
+</presence>
+­
+<presence from="icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" />
+­
+<presence from="475576699@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP">
+<x xmlns="vcard-temp:x:update">
+<photo>e94db0da7a929a821529d9486d54ea3269ec429f</photo>
+</x>
+<x xmlns="vcard-temp:x:update">
+<nickname>Someone</nickname>
+</x>
+<x xmlns="jabber:x:avatar">
+<hash>e94db0da7a929a821529d9486d54ea3269ec429f</hash>
+</x>
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<iq type="get" to="475576699@icq.jabber.mipt.ru" id="qip_28">
+<query xmlns="jabber:iq:avatar" />
+</iq>
+­
+<presence from="456416407@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="7068514@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="565355850@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="250761544@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="247043687@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="380234488@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="4770130@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="598400370@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="7931157@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="399919056@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="8808780@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP">
+<x xmlns="vcard-temp:x:update">
+<photo>e94db0da7a929a821529d9486d54ea3269ec429f</photo>
+</x>
+<x xmlns="vcard-temp:x:update">
+<nickname>ARX-Bot #5</nickname>
+</x>
+<x xmlns="jabber:x:avatar">
+<hash>e94db0da7a929a821529d9486d54ea3269ec429f</hash>
+</x>
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<iq type="get" to="8808780@icq.jabber.mipt.ru" id="qip_29">
+<query xmlns="jabber:iq:avatar" />
+</iq>
+­
+<iq from="475576699@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="qip_28" type="result">
+<query xmlns="jabber:iq:avatar">
+<data mimetype="image/png">iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAA3NCSVQICAjb4U/gAAABgFBMVEUAAADXeRZaSC4RxQDvsn0DjQDplkt7ww4AZgAtLS2wr6+Ih4f+pRk66ADa2toARwCO5mswih27eBT82n791Vv+tRoNvQBra2sh1gD+lhhmy0wAJQA6cxX+s1b98r0EtQDMzMz9vRpM3SBmZmZKTEhdXFth/xgBeAD97bIEoQA5ryv9yiDm5uZfWFHljxnM/5mgoJ8UFBRK/wD+zVtezkEiISCI4ma9/47tpmjCwsJKUBMhvQD97aAw5ACZbidl5Tj+qyD93Fz92iI9PT0ZzADzjxkBFQG1e0r+xVoTpgH77N8AWgByeRIDgwBC9wD44Mqq/nJ4eHj4yEf207Rd+An+mxnnhSDyw5mZmZknqh5QdC39xzR2/zMUjQn+rRkAMwC3nRH+tCbx8fEo3wD942YZbA1PxTutsjb+vVqi7Xz954Bj4gUjywAUtAD9vyX7pTHnijBGsDR11Fc77wAICAiETh7wmSQFrQCW/1ozvRkAmQAAUgByaFGbrg5SUlLmfRz0ttSPAAAAgHRSTlP//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wD//////////////////////////////////////yAlTQ4AAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAfdEVYdFNvZnR3YXJlAE1hY3JvbWVkaWEgRmlyZXdvcmtzIDi1aNJ4AAAOwElEQVR4nMWb/1sS+RbHx9UxYFRCU0zclYRxRImgJCUkM4KaaChoQ9AQC/VuLqgpCwl74V+/53yGLzMwMzDY7j3PfZ677Q+9X5/z/Ywu9fX/bNRP+5vefxwb2yI2vvfx/ft/F+Dj2NZ4Cq1MLNVIpcb39t7+SwDvx8YvPeXywUEyuStaMnnwpZxKXY4N4IdbA7wdA/WD5O7x8dnZ2TYa/P/x8TFQXKQut/oi3BIAXp8qH+wen22vrq7+1rZVpABPXFxebn38BwHe7l16viRR/TcF2wZHgBdS45oItwF4j68/JurwfuJ+mR9EhC8eTYJbAMDzz3fPUFqM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</data>
+</query>
+</iq>
+­
+<iq from="8808780@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="qip_29" type="result">
+<query xmlns="jabber:iq:avatar">
+<data mimetype="image/png">iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAA3NCSVQICAjb4U/gAAABgFBMVEUAAADXeRZaSC4RxQDvsn0DjQDplkt7ww4AZgAtLS2wr6+Ih4f+pRk66ADa2toARwCO5mswih27eBT82n791Vv+tRoNvQBra2sh1gD+lhhmy0wAJQA6cxX+s1b98r0EtQDMzMz9vRpM3SBmZmZKTEhdXFth/xgBeAD97bIEoQA5ryv9yiDm5uZfWFHljxnM/5mgoJ8UFBRK/wD+zVtezkEiISCI4ma9/47tpmjCwsJKUBMhvQD97aAw5ACZbidl5Tj+qyD93Fz92iI9PT0ZzADzjxkBFQG1e0r+xVoTpgH77N8AWgByeRIDgwBC9wD44Mqq/nJ4eHj4yEf207Rd+An+mxnnhSDyw5mZmZknqh5QdC39xzR2/zMUjQn+rRkAMwC3nRH+tCbx8fEo3wD942YZbA1PxTutsjb+vVqi7Xz954Bj4gUjywAUtAD9vyX7pTHnijBGsDR11Fc77wAICAiETh7wmSQFrQCW/1ozvRkAmQAAUgByaFGbrg5SUlLmfRz0ttSPAAAAgHRSTlP//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wD//////////////////////////////////////yAlTQ4AAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAfdEVYdFNvZnR3YXJlAE1hY3JvbWVkaWEgRmlyZXdvcmtzIDi1aNJ4AAAOwElEQVR4nMWb/1sS+RbHx9UxYFRCU0zclYRxRImgJCUkM4KaaChoQ9AQC/VuLqgpCwl74V+/53yGLzMwMzDY7j3PfZ677Q+9X5/z/Ywu9fX/bNRP+5vefxwb2yI2vvfx/ft/F+Dj2NZ4Cq1MLNVIpcb39t7+SwDvx8YvPeXywUEyuStaMnnwpZxKXY4N4IdbA7wdA/WD5O7x8dnZ2TYa/P/x8TFQXKQut/oi3BIAXp8qH+wen22vrq7+1rZVpABPXFxebn38BwHe7l16viRR/TcF2wZHgBdS45oItwF4j68/JurwfuJ+mR9EhC8eTYJbAMDzz3fPUFqM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</data>
+</query>
+</iq>
+­
+<presence from="413829755@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" type="unavailable">
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<presence from="413829755@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP">
+<show>away</show>
+<x xmlns="vcard-temp:x:update">
+<photo>1bcc4b321a6f02d2bc282a67177a1a18f2d1bc4f</photo>
+</x>
+<x xmlns="vcard-temp:x:update">
+<nickname>Neon_VGlass</nickname>
+</x>
+<x xmlns="jabber:x:avatar">
+<hash>1bcc4b321a6f02d2bc282a67177a1a18f2d1bc4f</hash>
+</x>
+<c xmlns="http://jabber.org/protocol/caps" node="http://pyicqt.googlecode.com//protocol/caps" ver="0.8.1.5" />
+</presence>
+­
+<iq type="get" to="413829755@icq.jabber.mipt.ru" id="qip_30">
+<query xmlns="jabber:iq:avatar" />
+</iq>
+­
+<iq from="413829755@icq.jabber.mipt.ru" to="kkx@jabber.mipt.ru/QIP" id="qip_30" type="result">
+<query xmlns="jabber:iq:avatar">
+<data mimetype="image/png">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</data>
+</query>
+</iq>
+­

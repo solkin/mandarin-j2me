@@ -1,0 +1,61 @@
+<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' id='3365748480' from='xmpp.ru' version='1.0' xml:lang='ru'>
+        <stream:features>
+                <starttls xmlns='urn:ietf:params:xml:ns:xmpp-tls'/>
+                <compression xmlns='http://jabber.org/features/compress'>
+                        <method>zlib</method>
+                </compression>
+                <mechanisms xmlns='urn:ietf:params:xml:ns:xmpp-sasl'>
+                        <mechanism>PLAIN</mechanism>
+                        <mechanism>DIGEST-MD5</mechanism>
+                        <mechanism>SCRAM-SHA-1</mechanism>
+                </mechanisms>
+                <c xmlns='http://jabber.org/protocol/caps' hash='sha-1' node='http://www.process-one.net/en/ejabberd/' ver='rvAR01fKsc40hT0hOLGDuG25y9o='/>
+                <register xmlns='http://jabber.org/features/iq-register'/>
+        </stream:features>
+        <iq type='get' id='bdekAzbn' to='xmpp.ru'>
+                <query xmlns='jabber:iq:register'/>
+        </iq>
+        <iq from='xmpp.ru' id='bdekAzbn' type='result'>
+                <query xmlns='jabber:iq:register'>
+                        <instructions>.......... ...................................., .................. x:data-...................... ............</instructions>
+                        <x xmlns='jabber:x:data' type='form'>
+                                <field type='hidden' var='FORM_TYPE'>
+                                        <value>urn:xmpp:captcha</value>
+                                </field>
+                                <instructions>................ ...... ........................ ...... ...................... .... ........ ............... .............. ...................... .......... ...... .......... .................... ................ .... .............. ...... .......... ............ ............</instructions>
+                                <field type='text-single' label='........................' var='username'>
+                                        <required/>
+                                </field>
+                                <field type='text-single' label='...................... ..........' var='email'/>
+                                <field type='text-single' label='..............' var='phone'>
+                                        <value>+</value>
+                                </field>
+                                <field type='fixed'>
+                                        <value>........ .... .... ............ ...................... .........., .................. .... .............</value>
+                                </field>
+                                <field type='hidden' var='captchahidden'>
+                                        <value>workaround-for-psi</value>
+                                </field>
+                                <field type='text-single' label='............ .... ..........' var='url'>
+                                        <value>http://captcha.jabber.ru/captcha/708404363-11839301/image</value>
+                                </field>
+                                <field type='hidden' var='from'>
+                                        <value>xmpp.ru</value>
+                                </field>
+                                <field type='hidden' var='challenge'>
+                                        <value>708404363-11839301</value>
+                                </field>
+                                <field type='hidden' var='sid'>
+                                        <value>bdekAzbn</value>
+                                </field>
+                                <field var='ocr' label='.............. .................. ..........'>
+                                        <required/>
+                                        <media xmlns='urn:xmpp:media-element'>
+                                                <uri type='image/png'>cid:sha1+43d7f763b3cf348fa2d0f39afcc6d873acc7029a@bob.xmpp.org</uri>
+                                        </media>
+                                </field>
+                        </x>
+                        <data xmlns='urn:xmpp:bob' cid='sha1+43d7f763b3cf348fa2d0f39afcc6d873acc7029a@bob.xmpp.org' max-age='0' type='image/png'>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</data>
+                </query>
+        </iq>
+</stream:stream>

@@ -1,0 +1,46 @@
+<iq type="get" to="icq.jabber.mipt.ru" id="qip_1640120">
+<query xmlns="http://jabber.org/protocol/disco#items" node="http://jabber.org/protocol/commands" />
+</iq>
+
+<iq from="icq.jabber.mipt.ru" to="mandarin@jabber.mipt.ru/Офис" id="qip_1640120" type="result">
+<query xmlns="http://jabber.org/protocol/disco#items" node="http://jabber.org/protocol/commands">
+<item node="stats" jid="icq.jabber.mipt.ru" name="Статистика PyICQt" />
+<item node="help" jid="icq.jabber.mipt.ru" name="Помощь" />
+</query>
+</iq>
+
+<iq type="set" to="icq.jabber.mipt.ru" id="qip_1640120">
+<command xmlns="http://jabber.org/protocol/commands" node="stats" action="execute" />
+</iq>
+
+<iq from="icq.jabber.mipt.ru" to="mandarin@jabber.mipt.ru/Офис" id="qip_1640120" type="result">
+<command xmlns="http://jabber.org/protocol/commands" status="completed" sessionid="25216">
+<x xmlns="jabber:x:data" type="result">
+<title>Статистика PyICQt</title>
+<field var="OnlineSessions" type="text-single" label="В сети">
+<value>139</value>
+<desc>Количество пользователей, которые сейчас подключены к сервису.</desc>
+</field>
+<field var="IncomingMessages" type="text-single" label="Входящих сообщений">
+<value>9710</value>
+<desc>Количество сообщений, принятых из ICQ сети.</desc>
+</field>
+<field var="Uptime" type="text-single" label="Время работы">
+<value>109620</value>
+<desc>Время работы сервиса, в секундах.</desc>
+</field>
+<field var="TotalSessions" type="text-single" label="Всего сессий">
+<value>1684</value>
+<desc>Количество подключений с момента запуска сервиса.</desc>
+</field>
+<field var="MaxConcurrentSessions" type="text-single" label="Сессий одновременно">
+<value>142</value>
+<desc>Максимальное количество одновременных подключений к сервису.</desc>
+</field>
+<field var="OutgoingMessages" type="text-single" label="Исходящих сообщений">
+<value>10370</value>
+<desc>Количество сообщений, отправленных в ICQ сеть.</desc>
+</field>
+</x>
+</command>
+</iq>
