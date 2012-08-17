@@ -61,7 +61,7 @@ public class Storage {
         return;
       }
     } catch ( Throwable ex ) {
-      LogUtil.outMessage( "Rms data unexist: " + ex.getMessage() + ". Loading Res", true );
+      LogUtil.outMessage( "Rms data does not exist: " + ex.getMessage() + ". Loading Res", true );
     }
     /** RMS data unexist, loading from resources **/
     loadResData( fileName, dataGear );
