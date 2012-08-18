@@ -845,6 +845,11 @@ public class Handler {
     /** Sending last activity by mechanism **/
     Mechanism.sendLastActivity( cookie, jid );
   }
+  
+  public static void sendEntityTime( String cookie, String jid ) {
+    /** Sending entity time by mechanism **/
+    Mechanism.sendEntityTime( cookie, jid );
+  }
 
   public static void sendVersion( String cookie, String jid ) {
     /** Sending version by mechanism **/

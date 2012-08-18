@@ -338,6 +338,13 @@ public class Parser {
             /** This is ping request **/
             Handler.sendPong( session, iqFrom, iqId );
           }
+        } else if ( xmlReader.tagName.equals( "time" ) ) {
+          /** Tag type is Time **/
+          String xmlns = xmlReader.getAttrValue( "xmlns", false );
+          if ( xmlns.equals( "urn:xmpp:time" ) ) {
+            /** This is time info discovery request **/
+            Handler.sendEntityTime(iqId, iqFrom);
+          }
         }
       }
     } else if ( iqType.equals( "error" ) ) {

@@ -5,6 +5,7 @@ import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
 import com.tomclaw.utils.StringUtil;
+import com.tomclaw.utils.TimeUtil;
 import com.tomclaw.xmlgear.XmlOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -829,6 +830,38 @@ public class TemplateCollection {
     xmlWriter.attribute( "seconds", String.valueOf( lastActivity ) );
     xmlWriter.endTag();
     xmlWriter.endTag();
+    xmlWriter.flush();
+    return cookie;
+  }
+
+  public static String sendEntityTime( XmlOutputStream xmlWriter,
+          String cookie, String jid ) throws IOException {
+    /** Generating time offset and time string **/
+    String utcTime = TimeUtil.getUtcTimeString( TimeUtil.getCurrentTime() );
+    String tzoTime = ( ( TimeUtil.getGmtOffset() / 3600 ) > 0 ? "+" : "-" )
+            .concat( ( TimeUtil.getGmtOffset() / 3600 ) >= 10 ? "" : "0" ).
+            concat( String.valueOf( TimeUtil.getGmtOffset() / 3600 ) ).
+            concat( ":00" );
+    /** Iq tag **/
+    xmlWriter.startTag( TAG_IQ );
+    xmlWriter.attribute( ATT_TYPE, VAL_RESULT );
+    xmlWriter.attribute( ATT_XMLNS, "jabber:client" );
+    xmlWriter.attribute( ATT_TO, jid );
+    xmlWriter.attribute( ATT_ID, cookie );
+    /** Time **/
+    xmlWriter.startTag( "time" );
+    xmlWriter.attribute( ATT_XMLNS, "urn:xmpp:time" );
+    xmlWriter.startTag( "utc" );
+    xmlWriter.text( utcTime );
+    xmlWriter.endTag();
+    /** Time offset **/
+    xmlWriter.startTag( "tzo" );
+    xmlWriter.text( tzoTime );
+    xmlWriter.endTag();
+    /** Ending tags **/
+    xmlWriter.endTag();
+    xmlWriter.endTag();
+    /** Flushing stream **/
     xmlWriter.flush();
     return cookie;
   }
