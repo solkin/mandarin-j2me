@@ -1,14 +1,8 @@
 package com.tomclaw.mandarin.main;
 
+import com.tomclaw.mandarin.molecus.Mechanism;
 import com.tomclaw.mandarin.molecus.RoomItem;
-import com.tomclaw.tcuilite.Check;
-import com.tomclaw.tcuilite.Field;
-import com.tomclaw.tcuilite.Header;
-import com.tomclaw.tcuilite.Label;
-import com.tomclaw.tcuilite.Pane;
-import com.tomclaw.tcuilite.PopupItem;
-import com.tomclaw.tcuilite.Soft;
-import com.tomclaw.tcuilite.Window;
+import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
 
 /**
@@ -19,7 +13,6 @@ import com.tomclaw.tcuilite.localization.Localization;
 public class RoomNickChangeFrame extends Window {
   
   private Field updatedNickField;
-  private Check updateBookmarkNick;
 
   public RoomNickChangeFrame( final RoomItem roomItem ) {
     super( MidletMain.screen );
@@ -42,7 +35,19 @@ public class RoomNickChangeFrame extends Window {
       public void actionPerformed() {
         /** Showing wait screen **/
         MidletMain.screen.setWaitScreenState( true );
-
+        /** Checking for nick is changed **/
+        if ( roomItem.getRoomNick().equals( updatedNickField.getText() ) ) {
+          /** Updating nick in room item 
+           * in any case of bookmark state, because 
+           * presence will be sent according 
+           * to this this nick **/
+          roomItem.setRoomNick( updatedNickField.getText() );
+          /** Sending updated nick in presence by mechanism **/
+          Mechanism.changeRoomNickRequest( roomItem );
+        } else {
+          /** Returning to the previous frame **/
+          MidletMain.screen.setActiveWindow( s_prevWindow );
+        }
       }
     };
     /** Creating pane object **/
@@ -58,9 +63,6 @@ public class RoomNickChangeFrame extends Window {
     updatedNickField = new Field(roomItem.getRoomNick());
     updatedNickField.setFocused( true );
     pane.addItem( updatedNickField );
-    /** Update bookmark checkbox **/
-    updateBookmarkNick = new Check(Localization.getMessage( "UPDATE_BOOKMARK_NICK" ), true);
-    pane.addItem( updateBookmarkNick );
     /** Setting up pane **/
     setGObject( pane );
   }

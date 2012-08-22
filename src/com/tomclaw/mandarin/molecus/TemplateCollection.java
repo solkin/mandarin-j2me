@@ -3,7 +3,6 @@ package com.tomclaw.mandarin.molecus;
 import com.tomclaw.mandarin.main.MidletMain;
 import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
-import com.tomclaw.utils.LogUtil;
 import com.tomclaw.utils.StringUtil;
 import com.tomclaw.utils.TimeUtil;
 import com.tomclaw.xmlgear.XmlOutputStream;
@@ -750,6 +749,18 @@ public class TemplateCollection {
     xmlWriter.attribute( ATT_ID, cookie );
     xmlWriter.attribute( ATT_TO, roomItem.getJid().concat( "/" ).concat( roomItem.getRoomNick() ) );
     xmlWriter.attribute( ATT_TYPE, "unavailable" );
+    xmlWriter.endTag();
+    xmlWriter.flush();
+    return cookie;
+  }
+  
+  public static String changeRoomNick( XmlOutputStream xmlWriter, String from, RoomItem roomItem ) throws IOException {
+    /** Generating request cookie **/
+    String cookie = AccountRoot.generateCookie();
+    xmlWriter.startTag( TAG_PRESENCE );
+    xmlWriter.attribute( ATT_FROM, from );
+    xmlWriter.attribute( ATT_ID, cookie );
+    xmlWriter.attribute( ATT_TO, roomItem.getJid().concat( "/" ).concat( roomItem.getRoomNick() ) );
     xmlWriter.endTag();
     xmlWriter.flush();
     return cookie;
