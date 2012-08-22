@@ -48,7 +48,6 @@ public class MainFrame extends Window {
     initGui();
     /** Hotkeys **/
     addKeyEvent( new KeyEvent( 0, "KEY_DIALOG", true ) {
-
       public void actionPerformed() {
         LogUtil.outMessage( "KEY_DIALOG event" );
         openDialog( null, null );
@@ -110,13 +109,11 @@ public class MainFrame extends Window {
     statusPopupItem.imageFileHash = com.tomclaw.mandarin.core.Settings.IMG_STATUS.hashCode();
     /** Filter popup item **/
     final PopupItem groupSubFilter = new PopupItem( "" ) {
-
       public void actionPerformed() {
         com.tomclaw.mandarin.core.Settings.showGroups = !com.tomclaw.mandarin.core.Settings.showGroups;
       }
     };
     final PopupItem offlineSubFilter = new PopupItem( "" ) {
-
       public void actionPerformed() {
         com.tomclaw.mandarin.core.Settings.showOffline = !com.tomclaw.mandarin.core.Settings.showOffline;
       }
@@ -129,7 +126,6 @@ public class MainFrame extends Window {
     contactsPopupItem.addSubItem( searchBuddySubItem );
     /** Main menu popup item **/
     soft.leftSoft = new PopupItem( Localization.getMessage( "MENU" ) ) {
-
       public void actionPerformed() {
         /** Creting statuses if it's list is empty **/
         if ( statusPopupItem.isEmpty() ) {
@@ -138,7 +134,6 @@ public class MainFrame extends Window {
             final int statusIndex = c;
             String statusDescr = StatusUtil.getStatusDescr( statusIndex );
             PopupItem statusSubItem = new PopupItem( Localization.getMessage( statusDescr ) ) {
-
               public void actionPerformed() {
                 LogUtil.outMessage( "statusIndex = " + statusIndex );
                 /** If selected the same status index, ignoring **/
@@ -178,7 +173,6 @@ public class MainFrame extends Window {
           for ( int c = 0; c < services.getChildsCount(); c++ ) {
             final BuddyItem serviceItem = ( ( BuddyItem ) services.elementAt( c ) );
             PopupItem popupItem = new PopupItem( serviceItem.getUserName() ) {
-
               public void actionPerformed() {
                 if ( Handler.sureIsOnline() ) {
                   if ( serviceItem.getStatusIndex() != StatusUtil.offlineIndex ) {
@@ -196,7 +190,6 @@ public class MainFrame extends Window {
         }
         /** Appending XMPP and Molecus **/
         PopupItem popupItem = new PopupItem( Localization.getMessage( "XMPP_BUDDY" ) ) {
-
           public void actionPerformed() {
             if ( Handler.sureIsOnline() ) {
               Mechanism.sendPromptRequest( "SERVICE_XMPP" );
@@ -205,7 +198,6 @@ public class MainFrame extends Window {
         };
         addBuddySubItem.addSubItem( popupItem );
         popupItem = new PopupItem( Localization.getMessage( "MOLECUS_BUDDY" ) ) {
-
           public void actionPerformed() {
             if ( Handler.sureIsOnline() ) {
               Mechanism.sendPromptRequest( "SERVICE_MOLECUS" );
@@ -221,7 +213,6 @@ public class MainFrame extends Window {
     filterPopupItem.addSubItem( offlineSubFilter );
     /** Dialogs popup item **/
     final PopupItem dialogsPopupItem = new PopupItem( Localization.getMessage( "DIALOGS" ) ) {
-
       public void actionPerformed() {
         if ( MidletMain.chatFrame.getChatTabCount() != 0 ) {
           MidletMain.screen.setActiveWindow( MidletMain.chatFrame );
@@ -232,7 +223,6 @@ public class MainFrame extends Window {
     };
     /** Chatrooms **/
     final PopupItem muchatPopupItem = new PopupItem( Localization.getMessage( "CHATROOMS" ) ) {
-
       public void actionPerformed() {
         /** Checking for online **/
         if ( Handler.sureIsOnline() ) {
@@ -244,32 +234,26 @@ public class MainFrame extends Window {
     /** Settings popup item **/
     final PopupItem settngPopupItem = new PopupItem( Localization.getMessage( "SETTINGS" ) );
     final PopupItem accountSubItem = new PopupItem( Localization.getMessage( "ACCOUNT" ) ) {
-
       public void actionPerformed() {
       }
     };
     final PopupItem appearanceSubItem = new PopupItem( Localization.getMessage( "APPEARANCE" ) ) {
-
       public void actionPerformed() {
       }
     };
     final PopupItem notificationSubItem = new PopupItem( Localization.getMessage( "NOTIFICATION" ) ) {
-
       public void actionPerformed() {
       }
     };
     final PopupItem networkSubItem = new PopupItem( Localization.getMessage( "NETWORK" ) ) {
-
       public void actionPerformed() {
       }
     };
     final PopupItem tariffingSubItem = new PopupItem( Localization.getMessage( "TARIFFING" ) ) {
-
       public void actionPerformed() {
       }
     };
     final PopupItem hotkeysSubItem = new PopupItem( Localization.getMessage( "HOTKEYS" ) ) {
-
       public void actionPerformed() {
       }
     };
@@ -282,32 +266,26 @@ public class MainFrame extends Window {
     /** More popup item **/
     final PopupItem morePopupItem = new PopupItem( Localization.getMessage( "MORE" ) );
     final PopupItem updateCheckSubItem = new PopupItem( Localization.getMessage( "UPDATE_CHECK" ) ) {
-
       public void actionPerformed() {
       }
     };
     final PopupItem feedbackSubItem = new PopupItem( Localization.getMessage( "FEEDBACK" ) ) {
-
       public void actionPerformed() {
       }
     };
     final PopupItem netCheckSubItem = new PopupItem( Localization.getMessage( "NET_CHECK" ) ) {
-
       public void actionPerformed() {
       }
     };
     final PopupItem trafficSubItem = new PopupItem( Localization.getMessage( "TRAFFIC" ) ) {
-
       public void actionPerformed() {
       }
     };
     final PopupItem donateSubItem = new PopupItem( Localization.getMessage( "DONATE" ) ) {
-
       public void actionPerformed() {
       }
     };
     final PopupItem aboutSubItem = new PopupItem( Localization.getMessage( "ABOUT" ) ) {
-
       public void actionPerformed() {
       }
     };
@@ -319,7 +297,6 @@ public class MainFrame extends Window {
     morePopupItem.addSubItem( aboutSubItem );
     /** Minimize popup item **/
     final PopupItem minimizePopupItem = new PopupItem( Localization.getMessage( "MINIMIZE" ) ) {
-
       public void actionPerformed() {
         MidletMain.minimizeApp();
       }
@@ -327,44 +304,37 @@ public class MainFrame extends Window {
 
     /** Exit popup item **/
     final PopupItem exitPopupItem = new PopupItem( Localization.getMessage( "EXIT" ) ) {
-
       public void actionPerformed() {
         MidletMain.exitApp();
       }
     };
     /** Right soft root **/
     emptyPopup = new PopupItem( Localization.getMessage( "ELEMENT" ) ) {
-
       public void actionPerformed() {
         updatePopup();
       }
     };
     /** Group menu **/
     groupPopup = new PopupItem( Localization.getMessage( "ELEMENT" ) ) {
-
       public void actionPerformed() {
         updatePopup();
       }
     };
     groupPopup.addSubItem( new PopupItem( Localization.getMessage( "RENAME" ) ) {
-
       public void actionPerformed() {
       }
     } );
     groupPopup.addSubItem( new PopupItem( Localization.getMessage( "REMOVE" ) ) {
-
       public void actionPerformed() {
       }
     } );
     /** Buddy menu **/
     buddyPopup = new PopupItem( Localization.getMessage( "ELEMENT" ) ) {
-
       public void actionPerformed() {
         updatePopup();
       }
     };
     dialogPopupItem = new PopupItem( Localization.getMessage( "DIALOG" ) ) {
-
       public void actionPerformed() {
         /** Opening default resource dialog **/
         LogUtil.outMessage( "Dialog action" );
@@ -373,7 +343,6 @@ public class MainFrame extends Window {
     };
     buddyPopup.addSubItem( dialogPopupItem );
     buddyPopup.addSubItem( new PopupItem( Localization.getMessage( "EDIT" ) ) {
-
       public void actionPerformed() {
         /** Checking for online **/
         if ( Handler.sureIsOnline() ) {
@@ -388,7 +357,6 @@ public class MainFrame extends Window {
       }
     } );
     buddyPopup.addSubItem( new PopupItem( Localization.getMessage( "REMOVE" ) ) {
-
       public void actionPerformed() {
         /** Checking for online **/
         if ( Handler.sureIsOnline() ) {
@@ -398,14 +366,12 @@ public class MainFrame extends Window {
           if ( buddyItem != null ) {
             final Soft dialogSoft = new Soft( screen );
             dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
-
               public void actionPerformed() {
                 Mechanism.rosterRemoveRequest( buddyItem.getJid() );
                 dialogSoft.rightSoft.actionPerformed();
               }
             };
             dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
-
               public void actionPerformed() {
                 MainFrame.this.closeDialog();
               }
@@ -421,7 +387,6 @@ public class MainFrame extends Window {
     } );
     /** Buddy sub items **/
     subscrReqtPopup = new PopupItem( Localization.getMessage( "SUBSCRIPTION_REQUEST" ) ) {
-
       public void actionPerformed() {
         /** Checking for online **/
         if ( Handler.sureIsOnline() ) {
@@ -435,7 +400,6 @@ public class MainFrame extends Window {
       }
     };
     subscrApprPopup = new PopupItem( Localization.getMessage( "SUBSCRIPTION_APPROVE" ) ) {
-
       public void actionPerformed() {
         /** Checking for online **/
         if ( Handler.sureIsOnline() ) {
@@ -449,7 +413,6 @@ public class MainFrame extends Window {
       }
     };
     subscrRejtPopup = new PopupItem( Localization.getMessage( "SUBSCRIPTION_REJECT" ) ) {
-
       public void actionPerformed() {
         /** Checking for online **/
         if ( Handler.sureIsOnline() ) {
@@ -464,13 +427,11 @@ public class MainFrame extends Window {
     };
     /** Room menu **/
     roomPopup = new PopupItem( Localization.getMessage( "ELEMENT" ) ) {
-
       public void actionPerformed() {
         updatePopup();
       }
     };
     enterRoomPopupItem = new PopupItem( Localization.getMessage( "ENTER" ) ) {
-
       public void actionPerformed() {
         /** Enter selected room **/
         LogUtil.outMessage( "Enter room action" );
@@ -487,7 +448,6 @@ public class MainFrame extends Window {
       }
     };
     leaveRoomPopupItem = new PopupItem( Localization.getMessage( "LEAVE" ) ) {
-
       public void actionPerformed() {
         /** Enter selected room **/
         LogUtil.outMessage( "Leave room action" );
@@ -504,7 +464,6 @@ public class MainFrame extends Window {
       }
     };
     editBookmarkPopupItem = new PopupItem( Localization.getMessage( "EDIT" ) ) {
-
       public void actionPerformed() {
         /** Edit selected room **/
         LogUtil.outMessage( "Edit bookmark action" );
@@ -521,7 +480,6 @@ public class MainFrame extends Window {
       }
     };
     removeBookmarkPopupItem = new PopupItem( Localization.getMessage( "REMOVE" ) ) {
-
       public void actionPerformed() {
         /** Checking for online **/
         if ( Handler.sureIsOnline() ) {
@@ -533,7 +491,6 @@ public class MainFrame extends Window {
           if ( buddyItem != null && buddyItem instanceof RoomItem ) {
             final Soft dialogSoft = new Soft( screen );
             dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
-
               public void actionPerformed() {
                 /** Obtain bookmarks **/
                 final RoomItem roomItem = ( ( RoomItem ) buddyItem );
@@ -541,7 +498,6 @@ public class MainFrame extends Window {
                 if ( RoomUtil.checkPrivilege( roomItem.getRole(), roomItem.getAffiliation(), RoomUtil.DESTROY_ROOM ) ) {
                   final Soft dialogSoft = new Soft( screen );
                   dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
-
                     public void actionPerformed() {
                       /** Destroy room item **/
                       Mechanism.roomDestroyRequest( roomItem );
@@ -550,7 +506,6 @@ public class MainFrame extends Window {
                     }
                   };
                   dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
-
                     public void actionPerformed() {
                       /** Perform to remove only bookmark **/
                       removeBookmark( roomItem );
@@ -590,7 +545,6 @@ public class MainFrame extends Window {
               }
             };
             dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
-
               public void actionPerformed() {
                 /** Perform dialog close **/
                 MainFrame.this.closeDialog();
@@ -607,7 +561,6 @@ public class MainFrame extends Window {
     };
     roomSettingsPopupItem = new PopupItem( Localization.getMessage( "ROOM_SETTINGS" ) );
     roomConfigurationPopupItem = new Command( Localization.getMessage( "ROOM_CONFIG" ) ) {
-
       public void actionPerformed() {
         /** Edit selected room **/
         LogUtil.outMessage( "Room configuration action" );
@@ -626,14 +579,29 @@ public class MainFrame extends Window {
       }
     };
     roomChangeTopicPopupItem = new PopupItem( Localization.getMessage( "ROOM_CHANGETOPIC" ) );
-    roomChangeNickPopupItem = new PopupItem( Localization.getMessage( "ROOM_CHANGENICK" ) );
+    roomChangeNickPopupItem = new PopupItem( Localization.getMessage( "ROOM_CHANGENICK" ) ) {
+      public void actionPerformed() {
+        /** Change nick in selected room **/
+        LogUtil.outMessage( "Nick change action" );
+        /** Checking for online **/
+        if ( Handler.sureIsOnline() ) {
+          /** Obtain buddy item selected **/
+          final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
+          /** Checking selected item type **/
+          if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+            /** Show nick change frame **/
+            RoomNickChangeFrame roomNickChangeFrame = new RoomNickChangeFrame( ( RoomItem ) buddyItem );
+            MidletMain.screen.setActiveWindow( roomNickChangeFrame );
+          }
+        }
+      }
+    };
     roomUsersPopupItem = new PopupItem( Localization.getMessage( "ROOM_USERS" ) );
     roomBansPopupItem = new PopupItem( Localization.getMessage( "ROOM_BANS" ) );
     roomMembersPopupItem = new PopupItem( Localization.getMessage( "ROOM_MEMBERS" ) );
     roomAdminsPopupItem = new PopupItem( Localization.getMessage( "ROOM_ADMINS" ) );
     roomOwnersPopupItem = new PopupItem( Localization.getMessage( "ROOM_OWNERS" ) );
     roomDestroyPopupItem = new PopupItem( Localization.getMessage( "ROOM_DESTROY" ) ) {
-
       public void actionPerformed() {
         /** Checking for online **/
         if ( Handler.sureIsOnline() ) {
@@ -643,14 +611,12 @@ public class MainFrame extends Window {
           if ( buddyItem != null ) {
             final Soft dialogSoft = new Soft( screen );
             dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
-
               public void actionPerformed() {
                 Mechanism.roomDestroyRequest( ( RoomItem ) buddyItem );
                 dialogSoft.rightSoft.actionPerformed();
               }
             };
             dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
-
               public void actionPerformed() {
                 MainFrame.this.closeDialog();
               }
@@ -685,7 +651,6 @@ public class MainFrame extends Window {
     /** Soft initialization **/
     soft = new Soft( MidletMain.screen );
     soft.leftSoft = new PopupItem( Localization.getMessage( "EXIT" ) ) {
-
       public void actionPerformed() {
         MidletMain.exitApp();
       }
@@ -695,7 +660,6 @@ public class MainFrame extends Window {
     blank = new Pane( null, false );
     blank.addItem( new Label( Localization.getMessage( "NO_ACC_MSG" ) ) );
     Button accountAddBtn = new Button( Localization.getMessage( "ACCOUNT_ADD" ) ) {
-
       public void actionPerformed() {
         MidletMain.screen.setActiveWindow( new AccountEditFrame() );
       }
@@ -944,7 +908,6 @@ public class MainFrame extends Window {
                 ? resource.resource : Localization.getMessage( "ALL_RESOURCES" ),
                 com.tomclaw.mandarin.core.Settings.IMG_STATUS.hashCode(),
                 resource.statusIndex ) {
-
           public void actionPerformed() {
             /** Opening dialog **/
             openDialog( buddyItem, resource );
