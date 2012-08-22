@@ -1263,6 +1263,20 @@ public class Mechanism {
     /** Releasing xml spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
+  
+  public static void sendDiscoInfo( final String cookie, final String jid ) {
+    /** Obtain session object **/
+    final Session session = AccountRoot.getSession();
+    /** Creating xml spore **/
+    XmlSpore xmlSpore = new XmlSpore() {
+      public void onRun() throws Throwable {
+        /** Sending disco info query request **/
+        TemplateCollection.sendDiscoInfo( this, cookie, jid );
+      }
+    };
+    /** Releasing xml spore **/
+    session.getSporedStream().releaseSpore( xmlSpore );
+  }
 
   public static void sendLastActivity( final String cookie, final String jid ) {
     /** Obtain session object **/

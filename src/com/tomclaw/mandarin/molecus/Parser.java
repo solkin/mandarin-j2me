@@ -322,6 +322,7 @@ public class Parser {
           String xmlns = xmlReader.getAttrValue( "xmlns", false );
           if ( xmlns.equals( "http://jabber.org/protocol/disco#info" ) ) {
             /** This is service info discovery request **/
+            Handler.sendDiscoInfo( iqId, iqFrom );
           } else if ( xmlns.equals( "jabber:iq:last" ) ) {
             /** Last activity request **/
             Handler.sendLastActivity( iqId, iqFrom);

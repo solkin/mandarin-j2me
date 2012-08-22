@@ -840,6 +840,11 @@ public class Handler {
   public static void sendPushResult( String iqId ) {
     Mechanism.sendIqResult( iqId );
   }
+  
+  public static void sendDiscoInfo( String cookie, String jid ) {
+    /** Sending disco info by mechanism **/
+    Mechanism.sendDiscoInfo( cookie, jid );
+  }
 
   public static void sendLastActivity( String cookie, String jid ) {
     /** Sending last activity by mechanism **/
