@@ -3,7 +3,6 @@ package com.tomclaw.mandarin.molecus;
 import com.tomclaw.mandarin.main.MidletMain;
 import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
-import com.tomclaw.utils.LogUtil;
 import com.tomclaw.utils.StringUtil;
 import com.tomclaw.utils.TimeUtil;
 import com.tomclaw.xmlgear.XmlOutputStream;
@@ -47,6 +46,18 @@ public class TemplateCollection {
   public static final String VAL_GET = "get";
   public static final String VAL_SET = "set";
   public static final String VAL_RESULT = "result";
+  public static final String[] FEATURES = new String[]{
+      "http://jabber.org/protocol/disco#info",
+      "http://jabber.org/protocol/caps",
+      "http://jabber.org/protocol/muc",
+      "jabber:iq:version",
+      "jabber:x:data",
+      "jabber:iq:last",
+      "jabber:iq:time",
+      "urn:xmpp:time",
+      "urn:xmpp:ping",
+      "jabber:iq:private"
+    };
 
   /**
    * Serialize form and write it into xmlWriter
@@ -803,6 +814,72 @@ public class TemplateCollection {
       xmlWriter.endTag();
     }
     xmlWriter.endTag();
+    xmlWriter.endTag();
+    xmlWriter.endTag();
+    xmlWriter.flush();
+    return cookie;
+  }
+  
+  public static String sendDiscoInfo(
+          XmlOutputStream xmlWriter, String cookie, String jid ) throws IOException {
+    /** Request with specified cookie **/
+    xmlWriter.startTag( TAG_IQ );
+    xmlWriter.attribute( ATT_TYPE, VAL_RESULT );
+    xmlWriter.attribute( ATT_TO, jid );
+    xmlWriter.attribute( ATT_ID, cookie );
+    xmlWriter.startTag( TAG_QUERY );
+    xmlWriter.attribute( ATT_XMLNS, "http://jabber.org/protocol/disco#info" );
+    /** Identity **/
+    xmlWriter.startTag( "identity" );
+    xmlWriter.attribute( "category", "client" );
+    xmlWriter.attribute( "type", "j2me" );
+    xmlWriter.attribute( "name", "Mandarin" );
+    xmlWriter.endTag();
+    /** Features **/
+    for ( int c = 0; c < FEATURES.length; c++ ) {
+      xmlWriter.startTag( "feature" );
+      xmlWriter.attribute( "var", FEATURES[c] );
+      xmlWriter.endTag();
+    }
+    /** X data **/
+    String platform = "J2ME";
+    String configuration = "CLDC-1.0";
+    try {
+      platform = System.getProperty( "microedition.platform" );
+      configuration = System.getProperty( "microedition.configuration" );
+    } catch ( Throwable ex1 ) {
+    }
+    String version = MidletMain.version + " "
+            + MidletMain.type + "-build " + MidletMain.build;
+    String[][] fields = new String[][]{
+      { "FORM_TYPE",        "urn:xmpp:dataforms:softwareinfo" },
+      { "os",               platform                          },
+      { "os_version",       configuration                     },
+      { "software",         "Mandarin IM"                     },
+      { "software_version", version                           }
+    };
+    /** Writting X fields **/
+    xmlWriter.startTag( TAG_X );
+    xmlWriter.attribute( ATT_XMLNS, "jabber:x:data" );
+    xmlWriter.attribute( ATT_TYPE, "result" );
+    /** Cycling fields **/
+    for ( int c = 0; c < fields.length; c++ ) {
+      /** Starting field **/
+      xmlWriter.startTag( "field" );
+      xmlWriter.attribute( "var", fields[c][0] );
+      /** Checking for field is FORM_TYPE, that must be hidden **/
+      if ( fields[c][0].equals( "FORM_TYPE" ) ) {
+        xmlWriter.attribute( ATT_TYPE, "hidden" );
+      }
+      /** Writting value **/
+      xmlWriter.startTag( "value" );
+      xmlWriter.text( fields[c][1] );
+      xmlWriter.endTag();
+      /** Closing field tag **/
+      xmlWriter.endTag();
+    }
+    xmlWriter.endTag();
+    /** Closing tags **/
     xmlWriter.endTag();
     xmlWriter.endTag();
     xmlWriter.flush();
