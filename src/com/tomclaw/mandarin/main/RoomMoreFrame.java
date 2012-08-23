@@ -115,7 +115,7 @@ public class RoomMoreFrame extends Window {
     /** Header label **/
     tabLabel = new Label( header );
     /** Setting up header label **/
-    tabLabel.isHeader = true;
+    tabLabel.setHeader( true );
     pane.items.insertElementAt( tabLabel, 0 );
   }
 
@@ -127,7 +127,7 @@ public class RoomMoreFrame extends Window {
       /** Checking for features count to add features title **/
       if ( featuresCount == 0 ) {
         Label title = new Label( Localization.getMessage( "FEATURES" ) );
-        title.isTitle = true;
+        title.setTitle( true );
         pane.items.addElement( title );
       }
       /** Adding label to items **/

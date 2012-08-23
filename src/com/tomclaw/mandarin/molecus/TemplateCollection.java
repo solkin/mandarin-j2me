@@ -765,6 +765,18 @@ public class TemplateCollection {
     xmlWriter.flush();
     return cookie;
   }
+  
+  public static String changeRoomNick( XmlOutputStream xmlWriter, String from, RoomItem roomItem ) throws IOException {
+    /** Generating request cookie **/
+    String cookie = AccountRoot.generateCookie();
+    xmlWriter.startTag( TAG_PRESENCE );
+    xmlWriter.attribute( ATT_FROM, from );
+    xmlWriter.attribute( ATT_ID, cookie );
+    xmlWriter.attribute( ATT_TO, roomItem.getJid().concat( "/" ).concat( roomItem.getRoomNick() ) );
+    xmlWriter.endTag();
+    xmlWriter.flush();
+    return cookie;
+  }
 
   public static String sendRoomConfigurationForm( XmlOutputStream xmlWriter,
           String roomJid, Form form )

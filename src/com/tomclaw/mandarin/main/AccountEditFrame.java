@@ -355,7 +355,7 @@ public class AccountEditFrame extends Window {
   private void showAlrExistAccountPane() {
     pane.items.removeAllElements();
     Label titleLabel = new Label( Localization.getMessage( "MOLECUS_EXIST_TITLE" ) );
-    titleLabel.isTitle = true;
+    titleLabel.setTitle( true );
     pane.addItem( titleLabel );
     pane.addItem( new Label( Localization.getMessage( "USERNAME" ) ) );
     molecusLogin = new Field( "" );

@@ -7,7 +7,10 @@ import com.tomclaw.mandarin.core.Settings;
 import com.tomclaw.mandarin.main.BuddyList;
 import com.tomclaw.mandarin.main.MidletMain;
 import com.tomclaw.mandarin.main.RoomEditFrame;
-import com.tomclaw.tcuilite.*;
+import com.tomclaw.tcuilite.Check;
+import com.tomclaw.tcuilite.PaneObject;
+import com.tomclaw.tcuilite.PopupItem;
+import com.tomclaw.tcuilite.Soft;
 import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
 import com.tomclaw.utils.StringUtil;
@@ -971,6 +974,22 @@ public class Mechanism {
       public void onRun() throws Throwable {
         /** Sending room enering request **/
         TemplateCollection.leaveRoom( this, AccountRoot.getFullJid(), roomItem );
+      }
+    };
+    /** Releasing xml spore **/
+    session.getSporedStream().releaseSpore( xmlSpore );
+  }
+  
+  public static void changeRoomNickRequest( final RoomItem roomItem ) {
+    /** Showing wait screen **/
+    MidletMain.screen.setWaitScreenState( true );
+    /** Obtain session object **/
+    final Session session = AccountRoot.getSession();
+    /** Creating xml spore **/
+    XmlSpore xmlSpore = new XmlSpore() {
+      public void onRun() throws Throwable {
+        /** Sending room updated nick request **/
+        TemplateCollection.changeRoomNick( this, AccountRoot.getFullJid(), roomItem );
       }
     };
     /** Releasing xml spore **/
