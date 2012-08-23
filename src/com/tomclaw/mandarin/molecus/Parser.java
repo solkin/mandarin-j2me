@@ -646,7 +646,7 @@ public class Parser {
           if ( xmlReader.tagName.equals( "title" ) && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) {
             /** Appending title label **/
             Label title = new Label( xmlReader.body );
-            title.isTitle = true;
+            title.setTitle( true );
             form.objects.addElement( title );
           } else if ( xmlReader.tagName.equals( "instructions" ) && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) {
             form.objects.addElement( new Label( xmlReader.body ) );
@@ -791,7 +791,7 @@ public class Parser {
         } else {
           if ( xmlReader.tagName.equals( "instructions" ) && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) {
             Label instructions_label = new Label( xmlReader.body );
-            instructions_label.isTitle = true;
+            instructions_label.setTitle( true );
             form.objects.addElement( instructions_label );
           } else if ( xmlReader.tagName.equals( "username" )
                   || xmlReader.tagName.equals( "password" )
@@ -909,6 +909,7 @@ public class Parser {
           params.put( "AFFILIATION", xmlReader.getAttrValue( "affiliation", false ) );
           params.put( "JID", xmlReader.getAttrValue( "jid", false ) );
           params.put( "ROLE", xmlReader.getAttrValue( "role", false ) );
+          params.put( "NICK", xmlReader.getAttrValue( "nick", false ) );
         }
         if ( xmlReader.tagName.equals( "status" ) ) {
           String code = xmlReader.getAttrValue( "code", false );

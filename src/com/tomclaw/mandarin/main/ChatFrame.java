@@ -111,7 +111,6 @@ public class ChatFrame extends Window {
           screen.repaint();
         } catch ( Throwable ex1 ) {
           LogUtil.outMessage( "chatTabs.tabEvent: " + ex1.getMessage() );
-          ex1.printStackTrace();
         }
       }
     };
@@ -480,7 +479,7 @@ public class ChatFrame extends Window {
     if ( label == null ) {
       /** Creting tab label instance **/
       label = new Label( message );
-      label.isHeader = true;
+      label.setHeader( true );
     }
     return label;
   }

@@ -956,7 +956,7 @@ public class Mechanism {
     /** Creating xml spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
-        /** Sending room enering request with X **/
+        /** Sending room enering request **/
         TemplateCollection.enterRoom( this, AccountRoot.getFullJid(), roomItem );
       }
     };

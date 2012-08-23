@@ -165,7 +165,7 @@ public class Handler {
         /** Checking for muc presence information **/
         if ( !params.isEmpty()
                 && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
-          /** Creating new room instance **/
+          /** Creating room instance from buddy item **/
           RoomItem roomItem = ( RoomItem ) buddyItem;
           /** Checking for error code **/
           if ( params.containsKey( "ERROR_CAUSE" ) ) {
@@ -175,6 +175,7 @@ public class Handler {
             String muc_affiliation = null;
             String muc_jid = null;
             String muc_role = null;
+            String muc_nick = null;
             if ( params.containsKey( "AFFILIATION" ) ) {
               /** Affiliation in muc **/
               muc_affiliation = ( String ) params.get( "AFFILIATION" );
@@ -190,9 +191,13 @@ public class Handler {
               muc_role = ( String ) params.get( "ROLE" );
               t_resource.setRole( RoomUtil.getRoleIndex( muc_role ) );
             }
+            if ( params.containsKey( "NICK" ) ) {
+              /** Nick in muc **/
+              muc_nick = ( String ) params.get( "NICK" );
+            }
             if ( params.containsKey( "STATUS_110" )
-                    || ( muc_jid != null
-                    && muc_jid.equals( AccountRoot.getFullJid() ) ) || muc_jid == null ) {
+                    || ( muc_jid != null && muc_jid.equals( AccountRoot.getFullJid() ) ) 
+                    || muc_jid == null ) {
               /** Inform user that presence refers to itself **/
               if ( muc_affiliation != null ) {
                 /** Applying self-affiliation **/
@@ -226,8 +231,8 @@ public class Handler {
               /** Inform occupants that a non-privacy-related room 
                * configuration change has occurred **/
             }
-            if ( params.containsKey( "STATUS_110" ) || ( muc_jid != null
-                    && muc_jid.equals( AccountRoot.getFullJid() ) )
+            if ( params.containsKey( "STATUS_110" ) 
+                    || ( muc_jid != null && muc_jid.equals( AccountRoot.getFullJid() ) )
                     || muc_jid == null ) {
               /** Setting up room active or inactive **/
               if ( roomItem.setRoomActive(
@@ -266,15 +271,18 @@ public class Handler {
             }
             if ( params.containsKey( "STATUS_303" ) ) {
               /** Inform all occupants of new room nickname **/
-              if(( muc_jid != null
-                    && muc_jid.equals( AccountRoot.getFullJid() ) ) || muc_jid == null) {
+              LogUtil.outMessage( "Inform all occupants of new room nickname" );
+              LogUtil.outMessage( "room nick: " + roomItem.getRoomNick() );
+              LogUtil.outMessage( "resource : " + t_resource.resource );
+              /** Checking for this is our new nick **/
+              if ( muc_nick.equals( roomItem.getRoomNick() ) ) {
                 /** This is our nick - update bookmark **/
                 RoomItem item = new RoomItem( roomItem.getJid(), roomItem.getNickName(), roomItem.getMinimize(), roomItem.getAutoJoin() );
                 /** Updating parameters **/
-                item.setRoomNick( t_resource.resource );
+                item.setRoomNick( muc_nick );
                 item.setRoomPassword( roomItem.getRoomPassword() );
                 /** Mechanism invokation **/
-                Mechanism.sendBookmarksOperation( Mechanism.OPERATION_EDIT, roomItem, item, false, true);
+                Mechanism.sendBookmarksOperation( Mechanism.OPERATION_EDIT, roomItem, item, false, true );
               }
             }
             if ( params.containsKey( "STATUS_307" ) ) {
