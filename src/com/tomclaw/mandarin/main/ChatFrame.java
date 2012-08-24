@@ -165,11 +165,15 @@ public class ChatFrame extends Window {
                       }
                       /** Sending message **/
                       String cookie = TemplateCollection.sendMessage(
-                              this, fullJid, isMucMessage ? "groupchat" : "chat", message, false );
+                              this, fullJid, 
+                              isMucMessage ? "groupchat" : "chat", 
+                              message, false );
                       /** Checking for message type **/
                       if ( !isMucMessage ) {
                         /** Add's chat item to selected chat frame **/
-                        MidletMain.chatFrame.addChatItem( chatTab, cookie, ChatItem.TYPE_PLAIN_MSG, false, message );
+                        MidletMain.chatFrame.addChatItem( chatTab, cookie, 
+                                ChatItem.TYPE_PLAIN_MSG, false, message, 
+                                AccountRoot.getNickName() );
                         /** Repainting **/
                         MidletMain.screen.repaint();
                       }
@@ -181,7 +185,8 @@ public class ChatFrame extends Window {
               }
 
               public void onError( Throwable ex ) {
-                LogUtil.outMessage( "Error while send message instructions: " + ex.getMessage(), true );
+                LogUtil.outMessage( "Error while send message instructions: " 
+                        + ex.getMessage(), true );
               }
             };
             /** Releasing xml spore **/
@@ -246,7 +251,7 @@ public class ChatFrame extends Window {
    * @param message 
    * @return boolean
    */
-  public boolean addChatItem( ChatTab chatTab, String cookie, int type, boolean isIncoming, String message ) {
+  public boolean addChatItem( ChatTab chatTab, String cookie, int type, boolean isIncoming, String message, String nickName ) {
     /** Message text correction **/
     message = StringUtil.replace( message, "[", "\\[" );
     message = StringUtil.replace( message, "]", "\\]" );
@@ -259,7 +264,7 @@ public class ChatFrame extends Window {
     chatItem.dlvStatus = isIncoming ? ChatItem.DLV_STATUS_INCOMING : ChatItem.DLV_STATUS_NOT_SENT;
     chatItem.cookie = cookie.getBytes();
     chatItem.itemType = type;
-    chatItem.buddyNick = isIncoming ? chatTab.buddyItem.getNickName() : AccountRoot.getNickName();
+    chatItem.buddyNick = nickName;
     chatItem.buddyId = isIncoming ? chatTab.buddyItem.getJid() : AccountRoot.getClearJid();
     chatItem.itemDateTime = TimeUtil.getTimeString( TimeUtil.getCurrentTimeGMT(), false );
     /** Adding chat item **/

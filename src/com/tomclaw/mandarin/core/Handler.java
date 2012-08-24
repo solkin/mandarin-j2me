@@ -320,6 +320,7 @@ public class Handler {
    */
   public static void setMessage( String from, String type, String id, String message ) {
     String jid = BuddyList.getClearJid( from );
+    String nickName;
     String resource;
     if ( type.equals( "groupchat" ) ) {
       resource = "";
@@ -355,9 +356,15 @@ public class Handler {
         MidletMain.chatFrame.addChatTab( chatTab, false );
       }
     }
+    /** Defining nick name **/
+    if ( chatTab.isMucTab() ) {
+      nickName = BuddyList.getJidResource( from );
+    } else {
+      nickName = chatTab.buddyItem.getNickName();
+    }
     /** Showing message in chat tab **/
     boolean isTabActive = MidletMain.chatFrame.addChatItem( chatTab, id,
-            ChatItem.TYPE_PLAIN_MSG, true, message );
+            ChatItem.TYPE_PLAIN_MSG, true, message, nickName );
     if ( !( isTabActive && MidletMain.screen.activeWindow.equals( MidletMain.chatFrame ) ) ) {
       /** Chat tab is not active or ChatFrame is not on the screen **/
       chatTab.resource.unreadCount++;

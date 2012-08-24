@@ -19,7 +19,8 @@ import javax.microedition.lcdui.TextField;
  */
 public class Parser {
 
-  public static void process( Session session, XmlInputStream xmlReader ) throws Throwable {
+  public static void process( Session session, XmlInputStream xmlReader ) 
+          throws Throwable {
     /** Redirecting thread to specified method **/
     if ( xmlReader.tagName.equals( "iq" ) ) {
       /** Tag type is IQ **/
@@ -39,7 +40,8 @@ public class Parser {
     }
   }
 
-  private static void processIq( Session session, XmlInputStream xmlReader ) throws Throwable {
+  private static void processIq( Session session, XmlInputStream xmlReader ) 
+          throws Throwable {
     String iqType = xmlReader.getAttrValue( "type", false );
     String iqId = xmlReader.getAttrValue( "id", false );
     String iqFrom = xmlReader.getAttrValue( "from", false );
@@ -62,10 +64,13 @@ public class Parser {
               params.put( "FORM", form );
             }
             Queue.runQueueAction( iqId, params );
-          } else if ( xmlns.equals( "jabber:iq:auth" ) && xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
+          } else if ( xmlns.equals( "jabber:iq:auth" ) 
+                  && xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
             /** Authorization form **/
             Hashtable fields = new Hashtable();
-            while ( xmlReader.nextTag() && !( xmlReader.tagName.equals( "query" ) && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) ) {
+            while ( xmlReader.nextTag() 
+                    && !( xmlReader.tagName.equals( "query" ) 
+                    && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) ) {
               fields.put( xmlReader.tagName, "" );
             }
             Queue.runQueueAction( iqId, fields );
@@ -75,11 +80,13 @@ public class Parser {
             Vector roster = new Vector();
             params.put( "ROSTER", roster );
             /** Creating empty group Services **/
-            GroupItem servicesGroupItem = new GroupItem( Localization.getMessage( "SERVICES" ) );
+            GroupItem servicesGroupItem = 
+                    new GroupItem( Localization.getMessage( "SERVICES" ) );
             servicesGroupItem.isGroupVisible = false;
             params.put( "SERVICES", servicesGroupItem );
             /** Creating empty group General **/
-            GroupItem generalGroupItem = new GroupItem( Localization.getMessage( "GENERAL" ) );
+            GroupItem generalGroupItem = 
+                    new GroupItem( Localization.getMessage( "GENERAL" ) );
             generalGroupItem.internalGroupId = GroupItem.GROUP_GENERAL_ID;
             params.put( "GENERAL", generalGroupItem );
             if ( xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
@@ -88,7 +95,9 @@ public class Parser {
               boolean isItemInGroupFlag = false;
               boolean isItemServiceFlag = false;
               BuddyItem buddyItem = null;
-              while ( xmlReader.nextTag() && !( xmlReader.tagName.equals( "query" ) && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) ) {
+              while ( xmlReader.nextTag() 
+                      && !( xmlReader.tagName.equals( "query" ) 
+                      && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) ) {
                 if ( xmlReader.tagName.equals( "item" ) ) {
                   /** Item tag */
                   if ( xmlReader.tagType == XmlInputStream.TAG_PLAIN
