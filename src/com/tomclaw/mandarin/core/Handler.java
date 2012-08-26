@@ -196,7 +196,7 @@ public class Handler {
               muc_nick = ( String ) params.get( "NICK" );
             }
             if ( params.containsKey( "STATUS_110" )
-                    || ( muc_jid != null && muc_jid.equals( AccountRoot.getFullJid() ) ) 
+                    || ( muc_jid != null && muc_jid.equals( AccountRoot.getFullJid() ) )
                     || muc_jid == null ) {
               /** Inform user that presence refers to itself **/
               if ( muc_affiliation != null ) {
@@ -231,7 +231,7 @@ public class Handler {
               /** Inform occupants that a non-privacy-related room 
                * configuration change has occurred **/
             }
-            if ( params.containsKey( "STATUS_110" ) 
+            if ( params.containsKey( "STATUS_110" )
                     || ( muc_jid != null && muc_jid.equals( AccountRoot.getFullJid() ) )
                     || muc_jid == null ) {
               /** Setting up room active or inactive **/
@@ -318,10 +318,11 @@ public class Handler {
    * @param id
    * @param message 
    */
-  public static void setMessage( String from, String type, String id, String message ) {
+  public static void setMessage( String from, String type, String id, String message, String subject ) {
     String jid = BuddyList.getClearJid( from );
     String nickName;
     String resource;
+    /** Checking for message type to detect resource **/
     if ( type.equals( "groupchat" ) ) {
       resource = "";
     } else {
@@ -364,7 +365,7 @@ public class Handler {
     }
     /** Showing message in chat tab **/
     boolean isTabActive = MidletMain.chatFrame.addChatItem( chatTab, id,
-            ChatItem.TYPE_PLAIN_MSG, true, message, nickName );
+            ChatItem.TYPE_PLAIN_MSG, true, nickName, message, subject );
     if ( !( isTabActive && MidletMain.screen.activeWindow.equals( MidletMain.chatFrame ) ) ) {
       /** Chat tab is not active or ChatFrame is not on the screen **/
       chatTab.resource.unreadCount++;
@@ -866,7 +867,7 @@ public class Handler {
   public static void sendPushResult( String iqId ) {
     Mechanism.sendIqResult( iqId );
   }
-  
+
   public static void sendDiscoInfo( String cookie, String jid ) {
     /** Sending disco info by mechanism **/
     Mechanism.sendDiscoInfo( cookie, jid );
@@ -876,7 +877,7 @@ public class Handler {
     /** Sending last activity by mechanism **/
     Mechanism.sendLastActivity( cookie, jid );
   }
-  
+
   public static void sendEntityTime( String cookie, String jid ) {
     /** Sending entity time by mechanism **/
     Mechanism.sendEntityTime( cookie, jid );

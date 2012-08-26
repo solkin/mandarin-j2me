@@ -172,8 +172,8 @@ public class ChatFrame extends Window {
                       if ( !isMucMessage ) {
                         /** Add's chat item to selected chat frame **/
                         MidletMain.chatFrame.addChatItem( chatTab, cookie, 
-                                ChatItem.TYPE_PLAIN_MSG, false, message, 
-                                AccountRoot.getNickName() );
+                                ChatItem.TYPE_PLAIN_MSG, false, 
+                                AccountRoot.getNickName(), message, null);
                         /** Repainting **/
                         MidletMain.screen.repaint();
                       }
@@ -251,13 +251,17 @@ public class ChatFrame extends Window {
    * @param message 
    * @return boolean
    */
-  public boolean addChatItem( ChatTab chatTab, String cookie, int type, boolean isIncoming, String message, String nickName ) {
+  public boolean addChatItem( ChatTab chatTab, String cookie, int type, boolean isIncoming, String nickName, String message, String subject ) {
     /** Message text correction **/
     message = StringUtil.replace( message, "[", "\\[" );
     message = StringUtil.replace( message, "]", "\\]" );
     // message = Smiles.replaceSmilesForCodes( message );
     message = StringUtil.replace( message, "\n", "[br/]" );
     message = "[p]".concat( message ).concat( "[/p]" );
+    /** Checking for subject is not null and not equals to the body **/
+    if ( subject != null && !subject.equals( message ) ) {
+      message = "[b]".concat( subject ).concat( "[/b][br/]" ).concat( message );
+    }
     LogUtil.outMessage( "message = " + message );
     /** Creating chat item instance **/
     ChatItem chatItem = new com.tomclaw.tcuilite.ChatItem( chatPane, message );

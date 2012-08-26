@@ -594,6 +594,7 @@ public class Parser {
     String messageId = xmlReader.getAttrValue( "id", false );
     String messageType = xmlReader.getAttrValue( "type", false );
     String body = null;
+    String subject = null;
     /** Checking even presence tag selfclosed **/
     if ( xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
       /** Cycling all the tags **/
@@ -602,11 +603,18 @@ public class Parser {
               && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) ) {
         if ( xmlReader.tagName.equals( "body" )
                 && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) {
+          /** Reading message body **/
           body = xmlReader.body;
+        } else if ( xmlReader.tagName.equals( "subject" )
+                && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) {
+          /** Reading subject value **/
+          subject = xmlReader.body;
         }
       }
+      /** Checking for message bosy is not null **/
       if ( body != null ) {
-        Handler.setMessage( messageFrom, messageType, messageId, body );
+        /** Handler method invokation **/
+        Handler.setMessage( messageFrom, messageType, messageId, body, subject );
       }
     }
   }
