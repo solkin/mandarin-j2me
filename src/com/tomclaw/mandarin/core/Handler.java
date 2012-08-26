@@ -357,9 +357,13 @@ public class Handler {
         MidletMain.chatFrame.addChatTab( chatTab, false );
       }
     }
-    /** Defining nick name **/
+    /** Defining nick name and applying subject **/
     if ( chatTab.isMucTab() ) {
       nickName = BuddyList.getJidResource( from );
+      /** Checking for message is system **/
+      if ( nickName.length() == 0 ) {
+        ( ( RoomItem ) chatTab.buddyItem ).setRoomTopic( subject );
+      }
     } else {
       nickName = chatTab.buddyItem.getNickName();
     }

@@ -578,7 +578,23 @@ public class MainFrame extends Window {
         }
       }
     };
-    roomChangeTopicPopupItem = new PopupItem( Localization.getMessage( "ROOM_CHANGETOPIC" ) );
+    roomChangeTopicPopupItem = new PopupItem( Localization.getMessage( "ROOM_CHANGETOPIC" ) ) {
+      public void actionPerformed() {
+        /** Change nick in selected room **/
+        LogUtil.outMessage( "Topic edit action" );
+        /** Checking for online **/
+        if ( Handler.sureIsOnline() ) {
+          /** Obtain buddy item selected **/
+          final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
+          /** Checking selected item type **/
+          if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+            /** Show topic edit frame **/
+            RoomTopicEditFrame roomTopicEditFrame = new RoomTopicEditFrame( ( RoomItem ) buddyItem );
+            MidletMain.screen.setActiveWindow( roomTopicEditFrame );
+          }
+        }
+      }
+    };
     roomChangeNickPopupItem = new PopupItem( Localization.getMessage( "ROOM_CHANGENICK" ) ) {
       public void actionPerformed() {
         /** Change nick in selected room **/

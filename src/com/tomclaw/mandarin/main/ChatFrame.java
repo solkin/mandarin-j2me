@@ -167,7 +167,7 @@ public class ChatFrame extends Window {
                       String cookie = TemplateCollection.sendMessage(
                               this, fullJid, 
                               isMucMessage ? "groupchat" : "chat", 
-                              message, false );
+                              message, null );
                       /** Checking for message type **/
                       if ( !isMucMessage ) {
                         /** Add's chat item to selected chat frame **/
