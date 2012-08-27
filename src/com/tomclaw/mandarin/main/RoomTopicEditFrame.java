@@ -1,5 +1,6 @@
 package com.tomclaw.mandarin.main;
 
+import com.tomclaw.mandarin.molecus.Mechanism;
 import com.tomclaw.mandarin.molecus.RoomItem;
 import com.tomclaw.tcuilite.Field;
 import com.tomclaw.tcuilite.Header;
@@ -16,7 +17,7 @@ import com.tomclaw.tcuilite.localization.Localization;
  * @author Solkin
  */
 public class RoomTopicEditFrame extends Window {
-  
+
   private Field updatedTopicField;
 
   public RoomTopicEditFrame( final RoomItem roomItem ) {
@@ -30,7 +31,6 @@ public class RoomTopicEditFrame extends Window {
     soft = new Soft( screen );
     /** Right soft **/
     soft.rightSoft = new PopupItem( Localization.getMessage( "BACK" ) ) {
-
       public void actionPerformed() {
         /** Returning to the previous frame **/
         MidletMain.screen.setActiveWindow( s_prevWindow );
@@ -38,10 +38,11 @@ public class RoomTopicEditFrame extends Window {
     };
     /** Left soft **/
     soft.leftSoft = new PopupItem( Localization.getMessage( "SAVE" ) ) {
-
       public void actionPerformed() {
         /** Showing wait screen **/
         MidletMain.screen.setWaitScreenState( true );
+        /** Sending topic edit request **/
+        Mechanism.editRoomTopicRequest( roomItem, updatedTopicField.getText() );
       }
     };
     /** Creating pane object **/

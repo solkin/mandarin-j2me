@@ -7,6 +7,7 @@ import com.tomclaw.mandarin.core.Settings;
 import com.tomclaw.mandarin.main.BuddyList;
 import com.tomclaw.mandarin.main.MidletMain;
 import com.tomclaw.mandarin.main.RoomEditFrame;
+import com.tomclaw.tcuilite.ChatItem;
 import com.tomclaw.tcuilite.Check;
 import com.tomclaw.tcuilite.PaneObject;
 import com.tomclaw.tcuilite.PopupItem;
@@ -990,6 +991,23 @@ public class Mechanism {
       public void onRun() throws Throwable {
         /** Sending room updated nick request **/
         TemplateCollection.changeRoomNick( this, AccountRoot.getFullJid(), roomItem );
+      }
+    };
+    /** Releasing xml spore **/
+    session.getSporedStream().releaseSpore( xmlSpore );
+  }
+  
+    public static void editRoomTopicRequest( final RoomItem roomItem, final String topic ) {
+    /** Showing wait screen **/
+    MidletMain.screen.setWaitScreenState( true );
+    /** Obtain session object **/
+    final Session session = AccountRoot.getSession();
+    /** Creating xml spore **/
+    XmlSpore xmlSpore = new XmlSpore() {
+      public void onRun() throws Throwable {
+        /** Sending room updated nick request **/
+        TemplateCollection.sendMessage( this, roomItem.getJid(), 
+                "groupchat", null, topic );
       }
     };
     /** Releasing xml spore **/
