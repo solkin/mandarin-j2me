@@ -238,6 +238,9 @@ public class RoomItem extends BuddyItem {
   }
 
   public String getRoomTopic() {
+    if ( topic == null ) {
+      return "";
+    }
     return topic;
   }
 }

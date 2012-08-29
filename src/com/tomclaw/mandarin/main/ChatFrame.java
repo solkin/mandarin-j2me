@@ -264,10 +264,16 @@ public class ChatFrame extends Window {
       }
     } else if ( isMuc && subject != null && message == null ) {
       /** This is muc topic **/
-      message = "[p][i][b][c=purple]* ".concat( nickName ).concat( " " ).
+      message = "[i][b][c=purple]* ".concat( nickName ).concat( " " ).
               concat( Localization.getMessage( "CHANGED_ROOM_TOPIC_TO" ) ).
-              concat( ":[/b][br/]" ).concat( subject ).concat( "[/i][/p]" );
-    } else {
+              concat( ":[/b][br/]" ).concat( subject ).concat( "[/i]" );
+    } else if ( isMuc && (subject == null || subject.length() == 0) 
+            && message == null ) {
+      /** This is muc topic **/
+      message = "[i][b][c=purple]* ".concat( nickName ).concat( " " ).
+              concat( Localization.getMessage( "REMOVED_TOPIC" ) ).
+              concat( "[/b][/i]" );
+    }  else {
       message = "[c=red][b]".concat( Localization.getMessage( "INVALID_MESSAGE_RECEIVED" ) ).concat( "[/b][/c]" );
     }
     return message;
