@@ -16,6 +16,7 @@ public class RoomItem extends BuddyItem {
   private int affiliation;
   private boolean isNonAnonimous;
   private boolean isRoomActive;
+  private String topic;
 
   /**
    * Creates configured service item
@@ -230,5 +231,13 @@ public class RoomItem extends BuddyItem {
    */
   public void setNonAnonimous( boolean isNonAnonimous ) {
     this.isNonAnonimous = isNonAnonimous;
+  }
+
+  public void setRoomTopic( String subject ) {
+    this.topic = subject;
+  }
+
+  public String getRoomTopic() {
+    return topic;
   }
 }

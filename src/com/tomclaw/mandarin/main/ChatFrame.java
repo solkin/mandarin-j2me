@@ -165,15 +165,18 @@ public class ChatFrame extends Window {
                       }
                       /** Sending message **/
                       String cookie = TemplateCollection.sendMessage(
-                              this, fullJid, 
-                              isMucMessage ? "groupchat" : "chat", 
-                              message, false );
+                              this, fullJid,
+                              isMucMessage ? "groupchat" : "chat",
+                              message, null );
                       /** Checking for message type **/
                       if ( !isMucMessage ) {
+                        /** Check and prepare message **/
+                        message = checkMessage( AccountRoot.getNickName(), 
+                                message, null, chatTab.isMucTab() );
                         /** Add's chat item to selected chat frame **/
-                        MidletMain.chatFrame.addChatItem( chatTab, cookie, 
-                                ChatItem.TYPE_PLAIN_MSG, false, message, 
-                                AccountRoot.getNickName() );
+                        MidletMain.chatFrame.addChatItem( chatTab, cookie,
+                                ChatItem.TYPE_PLAIN_MSG, false,
+                                AccountRoot.getNickName(), message );
                         /** Repainting **/
                         MidletMain.screen.repaint();
                       }
@@ -185,7 +188,7 @@ public class ChatFrame extends Window {
               }
 
               public void onError( Throwable ex ) {
-                LogUtil.outMessage( "Error while send message instructions: " 
+                LogUtil.outMessage( "Error while send message instructions: "
                         + ex.getMessage(), true );
               }
             };
@@ -244,6 +247,32 @@ public class ChatFrame extends Window {
     }
   }
 
+  public static String checkMessage( String nickName, String message, String subject, boolean isMuc ) {
+    /** Checking for message is subject or message with subject **/
+    if ( message != null ) {
+      /** Message text correction **/
+      message = StringUtil.replace( message, "[", "\\[" );
+      message = StringUtil.replace( message, "]", "\\]" );
+      // message = Smiles.replaceSmilesForCodes( message );
+      message = StringUtil.replace( message, "\n", "[br/]" );
+      message = "[p]".concat( message ).concat( "[/p]" );
+      /** Checking for subject is not null, not equals to the body 
+       * and nick name present **/
+      if ( subject != null && !subject.equals( message )
+              && nickName.length() > 0 ) {
+        message = "[b]".concat( subject ).concat( "[/b][br/]" ).concat( message );
+      }
+    } else if ( isMuc && subject != null && message == null ) {
+      /** This is muc topic **/
+      message = "[p][i][b][c=purple]* ".concat( nickName ).concat( " " ).
+              concat( Localization.getMessage( "CHANGED_ROOM_TOPIC_TO" ) ).
+              concat( ":[/b][br/]" ).concat( subject ).concat( "[/i][/p]" );
+    } else {
+      message = "[c=red][b]".concat( Localization.getMessage( "INVALID_MESSAGE_RECEIVED" ) ).concat( "[/b][/c]" );
+    }
+    return message;
+  }
+
   /**
    * Adds chat item to the specified chat tab
    * Returns true if specified chat tab is active
@@ -251,14 +280,13 @@ public class ChatFrame extends Window {
    * @param message 
    * @return boolean
    */
-  public boolean addChatItem( ChatTab chatTab, String cookie, int type, boolean isIncoming, String message, String nickName ) {
-    /** Message text correction **/
-    message = StringUtil.replace( message, "[", "\\[" );
-    message = StringUtil.replace( message, "]", "\\]" );
-    // message = Smiles.replaceSmilesForCodes( message );
-    message = StringUtil.replace( message, "\n", "[br/]" );
-    message = "[p]".concat( message ).concat( "[/p]" );
+  public boolean addChatItem( ChatTab chatTab, String cookie, int type,
+          boolean isIncoming, String nickName, String message ) {
     LogUtil.outMessage( "message = " + message );
+    /** Checking for room item and nick is empty **/
+    if ( chatTab.isMucTab() && nickName.length() == 0 ) {
+      nickName = Localization.getMessage( "ROOM_SYSTEM" );
+    }
     /** Creating chat item instance **/
     ChatItem chatItem = new com.tomclaw.tcuilite.ChatItem( chatPane, message );
     chatItem.dlvStatus = isIncoming ? ChatItem.DLV_STATUS_INCOMING : ChatItem.DLV_STATUS_NOT_SENT;

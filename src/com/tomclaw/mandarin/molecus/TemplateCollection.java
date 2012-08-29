@@ -6,6 +6,7 @@ import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.StringUtil;
 import com.tomclaw.utils.TimeUtil;
 import com.tomclaw.xmlgear.XmlOutputStream;
+import com.tomclaw.xmlgear.XmlSpore;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -47,17 +48,17 @@ public class TemplateCollection {
   public static final String VAL_SET = "set";
   public static final String VAL_RESULT = "result";
   public static final String[] FEATURES = new String[]{
-      "http://jabber.org/protocol/disco#info",
-      "http://jabber.org/protocol/caps",
-      "http://jabber.org/protocol/muc",
-      "jabber:iq:version",
-      "jabber:x:data",
-      "jabber:iq:last",
-      "jabber:iq:time",
-      "urn:xmpp:time",
-      "urn:xmpp:ping",
-      "jabber:iq:private"
-    };
+    "http://jabber.org/protocol/disco#info",
+    "http://jabber.org/protocol/caps",
+    "http://jabber.org/protocol/muc",
+    "jabber:iq:version",
+    "jabber:x:data",
+    "jabber:iq:last",
+    "jabber:iq:time",
+    "urn:xmpp:time",
+    "urn:xmpp:ping",
+    "jabber:iq:private"
+  };
 
   /**
    * Serialize form and write it into xmlWriter
@@ -329,15 +330,25 @@ public class TemplateCollection {
   }
 
   public static String sendMessage( XmlOutputStream xmlWriter, String to,
-          String type, String body, boolean isSubject ) throws IOException {
+          String type, String body, String subject ) throws IOException {
     String cookie = AccountRoot.generateCookie();
     xmlWriter.startTag( "message" );
     xmlWriter.attribute( ATT_ID, cookie );
     xmlWriter.attribute( ATT_TYPE, type );
     xmlWriter.attribute( ATT_TO, to );
-    xmlWriter.startTag( isSubject ? "subject" : "body" );
-    xmlWriter.text( body );
-    xmlWriter.endTag();
+    /** Checking for subject is not null **/
+    if ( subject != null ) {
+      xmlWriter.startTag( "subject" );
+      xmlWriter.text( subject );
+      xmlWriter.endTag();
+    }
+    /** Checking for body is not null **/
+    if ( body != null ) {
+      xmlWriter.startTag( "body" );
+      xmlWriter.text( body );
+      xmlWriter.endTag();
+    }
+    /** Ending tag **/
     xmlWriter.endTag();
     xmlWriter.flush();
     return cookie;
@@ -765,7 +776,7 @@ public class TemplateCollection {
     xmlWriter.flush();
     return cookie;
   }
-  
+
   public static String changeRoomNick( XmlOutputStream xmlWriter, String from, RoomItem roomItem ) throws IOException {
     /** Generating request cookie **/
     String cookie = AccountRoot.generateCookie();
@@ -831,7 +842,7 @@ public class TemplateCollection {
     xmlWriter.flush();
     return cookie;
   }
-  
+
   public static String sendDiscoInfo(
           XmlOutputStream xmlWriter, String cookie, String jid ) throws IOException {
     /** Request with specified cookie **/
@@ -864,11 +875,11 @@ public class TemplateCollection {
     String version = MidletMain.version + " "
             + MidletMain.type + "-build " + MidletMain.build;
     String[][] fields = new String[][]{
-      { "FORM_TYPE",        "urn:xmpp:dataforms:softwareinfo" },
-      { "os",               platform                          },
-      { "os_version",       configuration                     },
-      { "software",         "Mandarin IM"                     },
-      { "software_version", version                           }
+      { "FORM_TYPE", "urn:xmpp:dataforms:softwareinfo" },
+      { "os", platform },
+      { "os_version", configuration },
+      { "software", "Mandarin IM" },
+      { "software_version", version }
     };
     /** Writting X fields **/
     xmlWriter.startTag( TAG_X );

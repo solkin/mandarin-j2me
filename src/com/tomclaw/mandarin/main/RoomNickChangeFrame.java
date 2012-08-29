@@ -35,8 +35,6 @@ public class RoomNickChangeFrame extends Window {
     soft.leftSoft = new PopupItem( Localization.getMessage( "SAVE" ) ) {
 
       public void actionPerformed() {
-        /** Showing wait screen **/
-        MidletMain.screen.setWaitScreenState( true );
         /** Checking for nick is changed **/
         if ( roomItem.getRoomNick().equals( updatedNickField.getText() ) ) {
           /** Returning to the previous frame **/
