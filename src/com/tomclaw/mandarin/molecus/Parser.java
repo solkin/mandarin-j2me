@@ -611,11 +611,8 @@ public class Parser {
           subject = xmlReader.body;
         }
       }
-      /** Checking for message bosy is not null **/
-      if ( body != null ) {
-        /** Handler method invokation **/
-        Handler.setMessage( messageFrom, messageType, messageId, body, subject );
-      }
+      /** Handler method invokation **/
+      Handler.setMessage( messageFrom, messageType, messageId, body, subject );
     }
   }
 

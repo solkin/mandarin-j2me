@@ -998,8 +998,6 @@ public class Mechanism {
   }
   
     public static void editRoomTopicRequest( final RoomItem roomItem, final String topic ) {
-    /** Showing wait screen **/
-    MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
     /** Creating xml spore **/

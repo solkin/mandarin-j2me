@@ -39,10 +39,10 @@ public class RoomTopicEditFrame extends Window {
     /** Left soft **/
     soft.leftSoft = new PopupItem( Localization.getMessage( "SAVE" ) ) {
       public void actionPerformed() {
-        /** Showing wait screen **/
-        MidletMain.screen.setWaitScreenState( true );
         /** Sending topic edit request **/
         Mechanism.editRoomTopicRequest( roomItem, updatedTopicField.getText() );
+        /** Returning to the previous frame **/
+        MidletMain.screen.setActiveWindow( s_prevWindow );
       }
     };
     /** Creating pane object **/

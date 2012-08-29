@@ -360,16 +360,18 @@ public class Handler {
     /** Defining nick name and applying subject **/
     if ( chatTab.isMucTab() ) {
       nickName = BuddyList.getJidResource( from );
-      /** Checking for message is system **/
-      if ( nickName.length() == 0 ) {
+      /** Checking for message is topic **/
+      if ( subject != null && ( message == null || nickName.length() == 0 ) ) {
         ( ( RoomItem ) chatTab.buddyItem ).setRoomTopic( subject );
       }
     } else {
       nickName = chatTab.buddyItem.getNickName();
     }
+    /** Check and prepare message **/
+    message = ChatFrame.checkMessage( nickName, message, subject, chatTab.isMucTab() );
     /** Showing message in chat tab **/
     boolean isTabActive = MidletMain.chatFrame.addChatItem( chatTab, id,
-            ChatItem.TYPE_PLAIN_MSG, true, nickName, message, subject );
+            ChatItem.TYPE_PLAIN_MSG, true, nickName, message );
     if ( !( isTabActive && MidletMain.screen.activeWindow.equals( MidletMain.chatFrame ) ) ) {
       /** Chat tab is not active or ChatFrame is not on the screen **/
       chatTab.resource.unreadCount++;
