@@ -36,10 +36,7 @@ public class BuddyItem extends GroupChild {
    */
   public BuddyItem( String jid ) {
     this( jid, null, null, true );
-    /**super ( jid );
-     setJid ( jid );
-     this.title = getUserName ();
-     isTemp = true;**/
+    BuddyItem.this.setSubscription(null);
   }
 
   /**
@@ -98,11 +95,10 @@ public class BuddyItem extends GroupChild {
    */
   public void setSubscription( String subscription ) {
     /** Checking for remove subscription type **/
-    if ( subscription != null && subscription.equals( "remove" ) ) {
-      subscription = null;
+    if ( subscription == null || subscription.equals( "remove" ) ) {
+      subscription = "none";
     }
     this.subscription = subscription;
-
   }
 
   /**
@@ -170,9 +166,6 @@ public class BuddyItem extends GroupChild {
    * @return subscription
    */
   public String getSubscription() {
-    if ( subscription == null ) {
-      return "none";
-    }
     return subscription;
   }
 

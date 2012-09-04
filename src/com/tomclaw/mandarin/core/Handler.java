@@ -933,7 +933,8 @@ public class Handler {
    * @param title
    * @param message 
    */
-  public static void showDialog( Window window, Soft dialogSoft, String title, String message ) {
+  public static void showDialog( Window window, Soft dialogSoft, String title, 
+          String message ) {
     /** Hiding wait screen state **/
     MidletMain.screen.setWaitScreenState( false );
     /** Creating soft and dialog **/

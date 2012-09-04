@@ -93,7 +93,7 @@ public class MidletMain extends MIDlet {
   }
 
   /**
-   * MInimizing application event
+   * Minimizing application event
    */
   public static void minimizeApp() {
     Display.getDisplay( midletMain ).setCurrent( null );
