@@ -18,25 +18,25 @@ public class Settings {
   /** RMS files **/
   public static String buddyListFile = "/mandarin/roster.dat";
   /** Appearance **/
-  public static boolean showGroups = true;
-  public static boolean showOffline = false;
+  public static boolean showGroups = true; // TODO
+  public static boolean showOffline = false; // TODO
   public static boolean isSortOnline = true; // TODO
   public static boolean isRaiseUnread = true; // TODO
   public static int textBoxMaxSize = 2048; // TODO
   public static boolean isHideUnsupportedServices = false; // TODO
   public static String themeOfflineResPath = "/res/themes/tcuilite_defg.tt2";
   public static String themeOnlineResPath = "/res/themes/tcuilite_defc.tt2";
-  public static boolean isAutomatedSubscriptionApprove = true; 
-  public static boolean isAutomatedSubscriptionRequests = true;
-  public static boolean isHideSubscriptionApproveMessage = true;
-  public static int pingDelay = 20000;
-  public static boolean isRemoveOfflineResources = true;
-  public static long roomsUpdateDelay = 300000;
-  public static boolean isMucHistoryMaxStanzas = true;
-  public static int mucHistoryMaxStanzas = 5;
-  public static boolean isMucHistorySeconds = false;
-  public static int mucHistorySeconds = 180;
-  public static int mucHistoryMaxChars = 2000;
+  public static boolean isAutomatedSubscriptionApprove = true; // TODO
+  public static boolean isAutomatedSubscriptionRequests = true; // TODO
+  public static boolean isHideSubscriptionApproveMessage = true; // TODO
+  public static int pingDelay = 20000; // TODO
+  public static boolean isRemoveOfflineResources = true; // TODO
+  public static long roomsUpdateDelay = 300000; // TODO
+  public static boolean isMucHistoryMaxStanzas = true; // TODO
+  public static int mucHistoryMaxStanzas = 5; // TODO
+  public static boolean isMucHistorySeconds = false; // TODO
+  public static int mucHistorySeconds = 180; // TODO
+  public static int mucHistoryMaxChars = 2000; // TODO
 
   /**
    * Updating all settings from Storage data

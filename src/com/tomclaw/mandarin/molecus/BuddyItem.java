@@ -336,21 +336,27 @@ public class BuddyItem extends GroupChild {
   public void updateUi() {
     /** Left icons **/
     weight = 0;
+    /** Checking buddy status to reaise online **/
     if ( getStatusIndex() != StatusUtil.offlineIndex && Settings.isSortOnline ) {
       weight = -2;
     }
     int chatImage = -1;
+    /** Checking for unread messages **/
     if ( getUnreadCount() > 0 ) {
       chatImage = ChatItem.TYPE_PLAIN_MSG;
+      /** Checking setting to raise unread **/
       if ( Settings.isRaiseUnread ) {
         weight = -3;
       }
     }
+    /** Applying left images **/
     imageLeftIndex = new int[]{ chatImage, protocolOffset + getStatusIndex() };
     /** Right icons **/
     int subscriptionImage = -1;
-    /** Checking for subscription is not null-type and not service item **/
-    if ( subscription != null && !isService() ) {
+    /** Checking for subscription is not null-type and not service 
+     * or room item **/
+    if ( subscription != null && !isService() && 
+            getInternalType() != BuddyItem.TYPE_ROOM_ITEM) {
       if ( subscription.equals( "from" ) ) {
         subscriptionImage = IMG_SUBSCRIPTION_FROM;
       } else if ( subscription.equals( "to" ) ) {
@@ -359,9 +365,11 @@ public class BuddyItem extends GroupChild {
         subscriptionImage = IMG_SUBSCRIPTION_NONE;
       }
     }
+    /** Checking for item is invalid **/
     if ( isBuddyInvalid ) {
       subscriptionImage = IMG_SUBSCRIPTION_ERROR;
     }
+    /** Applying right images **/
     imageRightIndex = new int[]{ subscriptionImage };
   }
 
