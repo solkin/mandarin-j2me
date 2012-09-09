@@ -1,0 +1,111 @@
+<iq type="set" to="unnamed@conference.localhost" id="aac2a">
+<query xmlns="http://jabber.org/protocol/muc#admin">
+<item affiliation="owner" jid="owner@localhost"/>
+<item affiliation="admin" jid="administrator@loaclhost"/>
+<item affiliation="member" jid="member@localhost"/>
+<item affiliation="outcast" jid="banned@localhost"/>
+</query>
+</iq>
+
+
+<iq from="unnamed@conference.localhost" type="result" to="breuki@localhost/myhost" id="aac2a">
+<query xmlns="http://jabber.org/protocol/muc#admin"/>
+</iq>
+
+
+<iq type="get" to="unnamed@conference.localhost" id="aac3a">
+<query xmlns="http://jabber.org/protocol/muc#admin">
+<item affiliation="outcast"/>
+</query>
+</iq>
+
+
+<iq type="get" to="unnamed@conference.localhost" id="aac4a">
+<query xmlns="http://jabber.org/protocol/muc#admin">
+<item affiliation="member"/>
+</query>
+</iq>
+
+
+<iq type="get" to="unnamed@conference.localhost" id="aac5a">
+<query xmlns="http://jabber.org/protocol/muc#admin">
+<item affiliation="admin"/>
+</query>
+</iq>
+
+
+<iq type="get" to="unnamed@conference.localhost" id="aac6a">
+<query xmlns="http://jabber.org/protocol/muc#admin">
+<item affiliation="owner"/>
+</query>
+</iq>
+
+
+<iq from="unnamed@conference.localhost" type="result" to="breuki@localhost/myhost" id="aac3a">
+<query xmlns="http://jabber.org/protocol/muc#admin">
+<item affiliation="outcast" jid="banned@localhost">
+<reason/>
+</item>
+</query>
+</iq>
+
+
+<iq from="unnamed@conference.localhost" type="result" to="breuki@localhost/myhost" id="aac4a">
+<query xmlns="http://jabber.org/protocol/muc#admin">
+<item affiliation="member" jid="member@localhost">
+<reason/>
+</item>
+</query>
+</iq>
+
+
+<iq from="unnamed@conference.localhost" type="result" to="breuki@localhost/myhost" id="aac5a">
+<query xmlns="http://jabber.org/protocol/muc#admin">
+<item affiliation="admin" jid="administrator@loaclhost">
+<reason/>
+</item>
+</query>
+</iq>
+
+
+<iq from="unnamed@conference.localhost" type="result" to="breuki@localhost/myhost" id="aac6a">
+<query xmlns="http://jabber.org/protocol/muc#admin">
+<item affiliation="owner" jid="owner@localhost">
+<reason/>
+</item>
+<item affiliation="owner" jid="breuki@localhost">
+<reason/>
+</item>
+</query>
+</iq>
+
+
+
+
+
+
+
+
+
+
+<iq type="set" to="unnamed@conference.localhost" id="aac7a">
+<query xmlns="http://jabber.org/protocol/muc#admin">
+<item affiliation="none" jid="breuki@localhost"/>
+</query>
+</iq>
+
+
+<presence from="unnamed@conference.localhost/Breukizzz" xml:lang="en" to="breuki@localhost/myhost">
+<priority>5</priority>
+<c xmlns="http://jabber.org/protocol/caps" node="http://psi-im.org/caps" ver="caps-b75d8d2b25" ext="cs ep-notify html"/>
+<x xmlns="http://jabber.org/protocol/muc#user">
+<item affiliation="none" role="moderator" jid="breuki@localhost/myhost"/>
+</x>
+</presence>
+
+
+<iq from="unnamed@conference.localhost" type="result" to="breuki@localhost/myhost" id="aac7a">
+<query xmlns="http://jabber.org/protocol/muc#admin"/>
+</iq>
+
+

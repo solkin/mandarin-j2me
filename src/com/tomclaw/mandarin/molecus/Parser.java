@@ -19,7 +19,7 @@ import javax.microedition.lcdui.TextField;
  */
 public class Parser {
 
-  public static void process( Session session, XmlInputStream xmlReader ) 
+  public static void process( Session session, XmlInputStream xmlReader )
           throws Throwable {
     /** Redirecting thread to specified method **/
     if ( xmlReader.tagName.equals( "iq" ) ) {
@@ -40,7 +40,7 @@ public class Parser {
     }
   }
 
-  private static void processIq( Session session, XmlInputStream xmlReader ) 
+  private static void processIq( Session session, XmlInputStream xmlReader )
           throws Throwable {
     String iqType = xmlReader.getAttrValue( "type", false );
     String iqId = xmlReader.getAttrValue( "id", false );
@@ -64,12 +64,12 @@ public class Parser {
               params.put( "FORM", form );
             }
             Queue.runQueueAction( iqId, params );
-          } else if ( xmlns.equals( "jabber:iq:auth" ) 
+          } else if ( xmlns.equals( "jabber:iq:auth" )
                   && xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
             /** Authorization form **/
             Hashtable fields = new Hashtable();
-            while ( xmlReader.nextTag() 
-                    && !( xmlReader.tagName.equals( "query" ) 
+            while ( xmlReader.nextTag()
+                    && !( xmlReader.tagName.equals( "query" )
                     && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) ) {
               fields.put( xmlReader.tagName, "" );
             }
@@ -80,12 +80,12 @@ public class Parser {
             Vector roster = new Vector();
             params.put( "ROSTER", roster );
             /** Creating empty group Services **/
-            GroupItem servicesGroupItem = 
+            GroupItem servicesGroupItem =
                     new GroupItem( Localization.getMessage( "SERVICES" ) );
             servicesGroupItem.isGroupVisible = false;
             params.put( "SERVICES", servicesGroupItem );
             /** Creating empty group General **/
-            GroupItem generalGroupItem = 
+            GroupItem generalGroupItem =
                     new GroupItem( Localization.getMessage( "GENERAL" ) );
             generalGroupItem.internalGroupId = GroupItem.GROUP_GENERAL_ID;
             params.put( "GENERAL", generalGroupItem );
@@ -95,8 +95,8 @@ public class Parser {
               boolean isItemInGroupFlag = false;
               boolean isItemServiceFlag = false;
               BuddyItem buddyItem = null;
-              while ( xmlReader.nextTag() 
-                      && !( xmlReader.tagName.equals( "query" ) 
+              while ( xmlReader.nextTag()
+                      && !( xmlReader.tagName.equals( "query" )
                       && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) ) {
                 if ( xmlReader.tagName.equals( "item" ) ) {
                   /** Item tag */
@@ -311,6 +311,41 @@ public class Parser {
               params.put( "FORM", form );
             }
             Queue.runQueueAction( iqId, params );
+          } else if ( xmlns.equals( "http://jabber.org/protocol/muc#admin" ) ) {
+            /** Checking for tag type **/
+            if ( xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
+              /** Main variables **/
+              Visitor visitor = null;
+              /** Parsing items list **/
+              while ( xmlReader.nextTag()
+                      && !( xmlReader.tagName.equals( "query" )
+                      && ( xmlReader.tagType == XmlInputStream.TAG_CLOSING
+                      || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING ) ) ) {
+                /** Checking for tag name is item **/
+                if ( xmlReader.tagName.equals( "item" ) ) {
+                  /** Checking for tag type is plain or selfclosing **/
+                  if ( xmlReader.tagType == XmlInputStream.TAG_PLAIN
+                          || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING ) {
+                    /** Creating visitor instance **/
+                    visitor = new Visitor( xmlReader.getAttrValue( "affiliation", false ),
+                            xmlReader.getAttrValue( "jid", false ) );
+                  }
+                  /** Checking for tag type is any closing **/
+                  if ( xmlReader.tagType == XmlInputStream.TAG_CLOSING
+                          || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING ) {
+                    /** Checking for visitor is not null **/
+                    if ( visitor != null && visitor.jid != null ) {
+                      /** Checking for visitor is not already 
+                       * in list and adding it **/
+                      if ( !params.containsKey( visitor.jid ) ) {
+                        params.put( visitor.jid, visitor );
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            Queue.runQueueAction( iqId, params );
           }
         } else if ( xmlReader.tagName.equals( "command" ) ) {
           /** Tag type is Command **/
@@ -334,10 +369,10 @@ public class Parser {
             Handler.sendDiscoInfo( iqId, iqFrom );
           } else if ( xmlns.equals( "jabber:iq:last" ) ) {
             /** Last activity request **/
-            Handler.sendLastActivity( iqId, iqFrom);
+            Handler.sendLastActivity( iqId, iqFrom );
           } else if ( xmlns.equals( "jabber:iq:version" ) ) {
             /** Client version request **/
-            Handler.sendVersion( iqId, iqFrom);
+            Handler.sendVersion( iqId, iqFrom );
           } else if ( xmlns.equals( "urn:xmpp:time" ) ) {
             /** Client time request **/
           }
@@ -353,7 +388,7 @@ public class Parser {
           String xmlns = xmlReader.getAttrValue( "xmlns", false );
           if ( xmlns.equals( "urn:xmpp:time" ) ) {
             /** This is time info discovery request **/
-            Handler.sendEntityTime(iqId, iqFrom);
+            Handler.sendEntityTime( iqId, iqFrom );
           }
         }
       }
@@ -853,12 +888,11 @@ public class Parser {
                 LogUtil.outMessage( "Command found: " + xmlReader.tagName );
                 /** Checking for default action **/
                 Command command = new Command( Localization.getMessage( xmlReader.tagName.toUpperCase() ) ) {
-
                   public void actionPerformed() {
                     /** Showing wait screen **/
                     MidletMain.screen.setWaitScreenState( true );
-                    /** Command invokation **/
-                    LogUtil.outMessage( "Command invokation: " + item.jid + ", " + name );
+                    /** Command invocation **/
+                    LogUtil.outMessage( "Command invocation: " + item.jid + ", " + name );
                     Mechanism.executeCommand( item, form, name );
                   }
                 };

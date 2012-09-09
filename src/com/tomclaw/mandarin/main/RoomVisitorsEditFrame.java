@@ -1,31 +1,28 @@
 package com.tomclaw.mandarin.main;
 
-import com.tomclaw.mandarin.molecus.Mechanism;
 import com.tomclaw.mandarin.molecus.RoomItem;
-import com.tomclaw.tcuilite.Field;
 import com.tomclaw.tcuilite.Header;
-import com.tomclaw.tcuilite.Label;
 import com.tomclaw.tcuilite.Pane;
 import com.tomclaw.tcuilite.PopupItem;
 import com.tomclaw.tcuilite.Soft;
 import com.tomclaw.tcuilite.Window;
 import com.tomclaw.tcuilite.localization.Localization;
+import java.util.Vector;
 
 /**
  * Solkin Igor Viktorovich, TomClaw Software, 2003-2012
  * http://www.tomclaw.com/
  * @author Solkin
  */
-public class RoomTopicEditFrame extends Window {
+public class RoomVisitorsEditFrame extends Window {
 
-  private Field updatedTopicField;
-
-  public RoomTopicEditFrame( final RoomItem roomItem ) {
+  public RoomVisitorsEditFrame( final RoomItem roomItem, 
+          final String affiliation, Vector list ) {
     super( MidletMain.screen );
     /** Previous window **/
     s_prevWindow = MidletMain.mainFrame;
     /** Header **/
-    header = new Header( Localization.getMessage( "ROOM_EDIT_TOPIC" ).
+    header = new Header( Localization.getMessage( "ROOM_".concat( affiliation.toUpperCase() ).concat( "_LIST" ) ).
             concat( ": " ).concat( roomItem.getUserName() ) );
     /** Soft **/
     soft = new Soft( screen );
@@ -39,8 +36,7 @@ public class RoomTopicEditFrame extends Window {
     /** Left soft **/
     soft.leftSoft = new PopupItem( Localization.getMessage( "SAVE" ) ) {
       public void actionPerformed() {
-        /** Sending topic edit request **/
-        Mechanism.editRoomTopicRequest( roomItem, updatedTopicField.getText() );
+        /** Sending list edit request **/
         /** Returning to the previous frame **/
         MidletMain.screen.setActiveWindow( s_prevWindow );
       }
@@ -48,14 +44,6 @@ public class RoomTopicEditFrame extends Window {
     /** Creating pane object **/
     Pane pane = new Pane( null, false );
     /** Creating pane objects **/
-    /** Current nick label **/
-    Label topicOfLabel = new Label( Localization.getMessage( "TOPIC_OF" ).concat( " " ).concat( roomItem.getRoomTitle() ) );
-    topicOfLabel.setHeader( true );
-    pane.addItem( topicOfLabel );
-    /** Edit topic **/
-    updatedTopicField = new Field( roomItem.getRoomTopic() );
-    updatedTopicField.setFocused( true );
-    pane.addItem( updatedTopicField );
     /** Setting up pane **/
     setGObject( pane );
   }

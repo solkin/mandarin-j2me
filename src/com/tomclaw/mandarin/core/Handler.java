@@ -281,7 +281,7 @@ public class Handler {
                 /** Updating parameters **/
                 item.setRoomNick( muc_nick );
                 item.setRoomPassword( roomItem.getRoomPassword() );
-                /** Mechanism invokation **/
+                /** Mechanism invocation **/
                 Mechanism.sendBookmarksOperation( Mechanism.OPERATION_EDIT, roomItem, item, false, true );
               }
             }
@@ -522,7 +522,7 @@ public class Handler {
       MidletMain.roomsFrame = new RoomsFrame();
     }
     if ( System.currentTimeMillis() - MidletMain.roomsFrame.updateTime > Settings.roomsUpdateDelay ) {
-      /** Mechanism invokation to update rooms **/
+      /** Mechanism invocation **/
       Mechanism.sendRoomsItemsDiscoveryRequest();
     }
     return MidletMain.roomsFrame;

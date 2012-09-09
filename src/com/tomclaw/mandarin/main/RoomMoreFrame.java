@@ -163,7 +163,7 @@ public class RoomMoreFrame extends Window {
         /** Adding room item into buddy list **/
         Handler.getBuddyList().roomsGroupItem.addChild( roomItem );
       } else {
-        /** Mechanism invokation **/
+        /** Mechanism invocation **/
         Mechanism.sendBookmarksOperation( Mechanism.OPERATION_ADD, roomItem, false, false );
       }
     } else {

@@ -980,7 +980,7 @@ public class Mechanism {
     /** Releasing xml spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
-  
+
   public static void changeRoomNickRequest( final RoomItem roomItem ) {
     /** Showing wait screen **/
     MidletMain.screen.setWaitScreenState( true );
@@ -996,15 +996,15 @@ public class Mechanism {
     /** Releasing xml spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
-  
-    public static void editRoomTopicRequest( final RoomItem roomItem, final String topic ) {
+
+  public static void editRoomTopicRequest( final RoomItem roomItem, final String topic ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
     /** Creating xml spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending room updated nick request **/
-        TemplateCollection.sendMessage( this, roomItem.getJid(), 
+        TemplateCollection.sendMessage( this, roomItem.getJid(),
                 "groupchat", null, topic );
       }
     };
@@ -1253,6 +1253,38 @@ public class Mechanism {
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
+  public static void roomVisitorsListRequest( final RoomItem roomItem, final String affiliation ) {
+    /** Showing wait screen **/
+    MidletMain.screen.setWaitScreenState( true );
+    /** Obtain session object **/
+    final Session session = AccountRoot.getSession();
+    /** Creating xml spore **/
+    XmlSpore xmlSpore = new XmlSpore() {
+      public void onRun() throws Throwable {
+        /** Sending room destroy request **/
+        String cookie = TemplateCollection.sendRoomVisitorsListRequest(
+                this, roomItem.getJid(), affiliation );
+        QueueAction queueAction = new QueueAction() {
+          public void actionPerformed( Hashtable params ) {
+            /** Room returns list **/
+            String errorCause = ( String ) params.get( "ERROR_CAUSE" );
+            /** Checking for error **/
+            if ( errorCause == null ) {
+              LogUtil.outMessage( "Room's list of ".concat( affiliation ).concat( " received." ) );
+              return;
+            }
+            /* Handling error case **/
+            Handler.showError( errorCause );
+          }
+        };
+        queueAction.setCookie( cookie );
+        Queue.pushQueueAction( queueAction );
+      }
+    };
+    /** Releasing xml spore **/
+    session.getSporedStream().releaseSpore( xmlSpore );
+  }
+
   public static void roomDestroyRequest( final RoomItem roomItem ) {
     /** Showing wait screen **/
     MidletMain.screen.setWaitScreenState( true );
@@ -1298,7 +1330,7 @@ public class Mechanism {
     /** Releasing xml spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
-  
+
   public static void sendDiscoInfo( final String cookie, final String jid ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
@@ -1329,7 +1361,7 @@ public class Mechanism {
     /** Releasing xml spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
-  
+
   public static void sendEntityTime( final String cookie, final String jid ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();

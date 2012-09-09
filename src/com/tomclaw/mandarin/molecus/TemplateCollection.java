@@ -43,10 +43,15 @@ public class TemplateCollection {
   public static final String ATT_JID = "jid";
   public static final String ATT_NAME = "name";
   public static final String ATT_SUBSCRIPTION = "subscription";
+  public static final String ATT_AFFILIATION = "affiliation";
   /** Values **/
   public static final String VAL_GET = "get";
   public static final String VAL_SET = "set";
   public static final String VAL_RESULT = "result";
+  public static final String VAL_OWNER = "owner";
+  public static final String VAL_ADMIN = "admin";
+  public static final String VAL_MEMBER = "member";
+  public static final String VAL_OUTCAST = "outcast";
   public static final String[] FEATURES = new String[]{
     "http://jabber.org/protocol/disco#info",
     "http://jabber.org/protocol/caps",
@@ -811,6 +816,26 @@ public class TemplateCollection {
         xmlWriter.attribute( ATT_TYPE, "cancel" );
       }
     }
+    xmlWriter.endTag();
+    xmlWriter.endTag();
+    xmlWriter.flush();
+    return cookie;
+  }
+  
+  public static String sendRoomVisitorsListRequest( XmlOutputStream xmlWriter,
+          String roomJid, String affiliation ) throws IOException {
+    /** Generating request cookie **/
+    String cookie = AccountRoot.generateCookie();
+    xmlWriter.startTag( TAG_IQ );
+    xmlWriter.attribute( ATT_TYPE, VAL_GET );
+    xmlWriter.attribute( ATT_TO, roomJid );
+    xmlWriter.attribute( ATT_ID, cookie );
+    xmlWriter.startTag( TAG_QUERY );
+    xmlWriter.attribute( ATT_XMLNS, "http://jabber.org/protocol/muc#admin" );
+    /** Destroying room tag **/
+    xmlWriter.startTag( "item" );
+    xmlWriter.attribute( ATT_AFFILIATION, affiliation );
+    xmlWriter.endTag();
     xmlWriter.endTag();
     xmlWriter.endTag();
     xmlWriter.flush();

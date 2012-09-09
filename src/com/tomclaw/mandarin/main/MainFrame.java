@@ -37,7 +37,7 @@ public class MainFrame extends Window {
   private PopupItem roomChangeNickPopupItem;
   private PopupItem roomUsersPopupItem;
   private PopupItem roomDestroyPopupItem;
-  private PopupItem roomBansPopupItem;
+  private PopupItem roomOutcastPopupItem;
   private PopupItem roomMembersPopupItem;
   private PopupItem roomAdminsPopupItem;
   private PopupItem roomOwnersPopupItem;
@@ -441,7 +441,7 @@ public class MainFrame extends Window {
           final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
           /** Checking selected item type **/
           if ( buddyItem != null && buddyItem instanceof RoomItem ) {
-            /** Mechanism invokation **/
+            /** Mechanism invocation **/
             Mechanism.enterRoomRequest( ( RoomItem ) buddyItem );
           }
         }
@@ -457,7 +457,7 @@ public class MainFrame extends Window {
           final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
           /** Checking selected item type **/
           if ( buddyItem != null && buddyItem instanceof RoomItem ) {
-            /** Mechanism invokation **/
+            /** Mechanism invocation **/
             Mechanism.leaveRoomRequest( ( RoomItem ) buddyItem );
           }
         }
@@ -572,7 +572,7 @@ public class MainFrame extends Window {
           if ( buddyItem != null && buddyItem instanceof RoomItem ) {
             /** Showing wait screen **/
             MidletMain.screen.setWaitScreenState( true );
-            /** Mechanism invokation **/
+            /** Mechanism invocation **/
             Mechanism.configureRoomRequest( ( RoomItem ) buddyItem, false );
           }
         }
@@ -613,7 +613,23 @@ public class MainFrame extends Window {
       }
     };
     roomUsersPopupItem = new PopupItem( Localization.getMessage( "ROOM_USERS" ) );
-    roomBansPopupItem = new PopupItem( Localization.getMessage( "ROOM_BANS" ) );
+    roomOutcastPopupItem = new PopupItem( Localization.getMessage( "ROOM_OUTCAST" ) ) {
+      public void actionPerformed() {
+        /** Outcast list edit in selected room **/
+        LogUtil.outMessage( "Outcast list edit in selected room" );
+        /** Checking for online **/
+        if ( Handler.sureIsOnline() ) {
+          /** Obtain buddy item selected **/
+          final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
+          /** Checking selected item type **/
+          if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+            /** Mechanism invocation **/
+            Mechanism.roomVisitorsListRequest( ( RoomItem ) buddyItem, 
+                    TemplateCollection.VAL_OUTCAST );
+          }
+        }
+      }
+    };
     roomMembersPopupItem = new PopupItem( Localization.getMessage( "ROOM_MEMBERS" ) );
     roomAdminsPopupItem = new PopupItem( Localization.getMessage( "ROOM_ADMINS" ) );
     roomOwnersPopupItem = new PopupItem( Localization.getMessage( "ROOM_OWNERS" ) );
@@ -810,7 +826,7 @@ public class MainFrame extends Window {
           /** Checking parity for members edit **/
           if ( RoomUtil.checkPrivilege( roomItem.getRole(),
                   roomItem.getAffiliation(), RoomUtil.EDIT_MEMBER_LIST ) ) {
-            roomUsersPopupItem.addSubItem( roomBansPopupItem );
+            roomUsersPopupItem.addSubItem( roomOutcastPopupItem );
             roomUsersPopupItem.addSubItem( roomMembersPopupItem );
           }
           /** Checking parity for admins edit **/

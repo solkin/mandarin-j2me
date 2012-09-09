@@ -155,7 +155,7 @@ public class ServiceItem extends BuddyItem {
       /** Creating instance for unregister popup item **/
       unregPopup = new PopupItem( Localization.getMessage( "UNREGISTER" ) ) {
         public void actionPerformed() {
-          /** Mechanism invokation **/
+          /** Mechanism invocation **/
           Mechanism.sendRemoveRegistration( getJid() );
         }
       };
