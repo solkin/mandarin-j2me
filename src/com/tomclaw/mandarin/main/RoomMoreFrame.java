@@ -183,7 +183,7 @@ public class RoomMoreFrame extends Window {
       Mechanism.enterRoomRequest( roomItem );
     } else {
       /** Opening chat frame for this room **/
-      Handler.roomEnteringComplete( roomItem, false );
+      Handler.roomEnteringComplete( roomItem, false, false );
     }
   }
 

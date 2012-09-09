@@ -1234,7 +1234,7 @@ public class Mechanism {
               Handler.resetRoomsCache();
               if ( enterRoom ) {
                 /** Entering room **/
-                Handler.roomEnteringComplete( roomItem, false );
+                Handler.roomEnteringComplete( roomItem, false, false );
               } else {
                 /** Showing main frame **/
                 Handler.showMainFrame();

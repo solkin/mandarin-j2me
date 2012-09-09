@@ -239,7 +239,7 @@ public class Handler {
                       t_resource.statusIndex != StatusUtil.offlineIndex ) ) {
                 /** Handling room entering is complete **/
                 Handler.roomEnteringComplete( roomItem,
-                        params.containsKey( "STATUS_201" ) );
+                        params.containsKey( "STATUS_201" ), true );
               } else {
                 /** Hiding wait screen **/
                 MidletMain.screen.setWaitScreenState( false );
@@ -589,16 +589,18 @@ public class Handler {
 
   /**
    * Room entering is complete event
-   * @param roomItem 
+   * @param roomItem
+   * @param isCreated
+   * @param isCleanChat 
    */
-  public static void roomEnteringComplete( RoomItem roomItem, boolean isCreated ) {
+  public static void roomEnteringComplete( RoomItem roomItem, boolean isCreated, boolean isCleanChat ) {
     /** Checking for room item temp status **/
     if ( isCreated ) {
       /** Loading room configuration frame */
       Mechanism.configureRoomRequest( roomItem, true );
     } else {
       /** Opening room in chat frame **/
-      MidletMain.mainFrame.openDialog( roomItem, roomItem.getResource( "" ), true );
+      MidletMain.mainFrame.openDialog( roomItem, roomItem.getResource( "" ), isCleanChat );
       /** Hiding wait screen **/
       MidletMain.screen.setWaitScreenState( false );
     }
