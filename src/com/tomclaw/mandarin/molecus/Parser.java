@@ -312,6 +312,8 @@ public class Parser {
             }
             Queue.runQueueAction( iqId, params );
           } else if ( xmlns.equals( "http://jabber.org/protocol/muc#admin" ) ) {
+            /** Creating items vector **/
+            Vector items = new Vector();
             /** Checking for tag type **/
             if ( xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
               /** Main variables **/
@@ -321,30 +323,35 @@ public class Parser {
                       && !( xmlReader.tagName.equals( "query" )
                       && ( xmlReader.tagType == XmlInputStream.TAG_CLOSING
                       || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING ) ) ) {
-                /** Checking for tag name is item **/
+                /** Checking for tag name **/
                 if ( xmlReader.tagName.equals( "item" ) ) {
                   /** Checking for tag type is plain or selfclosing **/
                   if ( xmlReader.tagType == XmlInputStream.TAG_PLAIN
                           || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING ) {
                     /** Creating visitor instance **/
-                    visitor = new Visitor( xmlReader.getAttrValue( "affiliation", false ),
-                            xmlReader.getAttrValue( "jid", false ) );
+                    visitor = new Visitor( xmlReader.getAttrValue( "jid", false ),
+                            xmlReader.getAttrValue( "affiliation", false ) );
                   }
                   /** Checking for tag type is any closing **/
                   if ( xmlReader.tagType == XmlInputStream.TAG_CLOSING
                           || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING ) {
                     /** Checking for visitor is not null **/
                     if ( visitor != null && visitor.jid != null ) {
-                      /** Checking for visitor is not already 
-                       * in list and adding it **/
-                      if ( !params.containsKey( visitor.jid ) ) {
-                        params.put( visitor.jid, visitor );
-                      }
+                      /** Adding visitor to list **/
+                      items.addElement( visitor );
                     }
+                  }
+                } else if ( xmlReader.tagName.equals( "reason" )
+                        && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) {
+                  /** Checking for visitor is not null **/
+                  if ( visitor != null ) {
+                    /** Updating reason **/
+                    visitor.reason = xmlReader.body;
                   }
                 }
               }
             }
+            params.put( "ITEMS", items );
             Queue.runQueueAction( iqId, params );
           }
         } else if ( xmlReader.tagName.equals( "command" ) ) {
@@ -888,6 +895,7 @@ public class Parser {
                 LogUtil.outMessage( "Command found: " + xmlReader.tagName );
                 /** Checking for default action **/
                 Command command = new Command( Localization.getMessage( xmlReader.tagName.toUpperCase() ) ) {
+
                   public void actionPerformed() {
                     /** Showing wait screen **/
                     MidletMain.screen.setWaitScreenState( true );

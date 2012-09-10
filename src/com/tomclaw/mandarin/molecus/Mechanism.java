@@ -7,7 +7,6 @@ import com.tomclaw.mandarin.core.Settings;
 import com.tomclaw.mandarin.main.BuddyList;
 import com.tomclaw.mandarin.main.MidletMain;
 import com.tomclaw.mandarin.main.RoomEditFrame;
-import com.tomclaw.tcuilite.ChatItem;
 import com.tomclaw.tcuilite.Check;
 import com.tomclaw.tcuilite.PaneObject;
 import com.tomclaw.tcuilite.PopupItem;
@@ -1271,6 +1270,9 @@ public class Mechanism {
             /** Checking for error **/
             if ( errorCause == null ) {
               LogUtil.outMessage( "Room's list of ".concat( affiliation ).concat( " received." ) );
+              Vector items = (Vector)params.get( "ITEMS" );
+              /** Sending event to handler **/
+              Handler.showRoomVisitorsListEditFrame(roomItem, affiliation, items);
               return;
             }
             /* Handling error case **/

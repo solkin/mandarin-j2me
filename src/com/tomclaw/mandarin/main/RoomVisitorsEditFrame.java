@@ -1,11 +1,7 @@
 package com.tomclaw.mandarin.main;
 
 import com.tomclaw.mandarin.molecus.RoomItem;
-import com.tomclaw.tcuilite.Header;
-import com.tomclaw.tcuilite.Pane;
-import com.tomclaw.tcuilite.PopupItem;
-import com.tomclaw.tcuilite.Soft;
-import com.tomclaw.tcuilite.Window;
+import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
 import java.util.Vector;
 
@@ -16,14 +12,14 @@ import java.util.Vector;
  */
 public class RoomVisitorsEditFrame extends Window {
 
-  public RoomVisitorsEditFrame( final RoomItem roomItem, 
-          final String affiliation, Vector list ) {
+  public RoomVisitorsEditFrame( final RoomItem roomItem,
+          final String affiliation, Vector items ) {
     super( MidletMain.screen );
     /** Previous window **/
     s_prevWindow = MidletMain.mainFrame;
     /** Header **/
     header = new Header( Localization.getMessage( "ROOM_".concat( affiliation.toUpperCase() ).concat( "_LIST" ) ).
-            concat( ": " ).concat( roomItem.getUserName() ) );
+            concat( " " ).concat( roomItem.getRoomTitle() ) );
     /** Soft **/
     soft = new Soft( screen );
     /** Right soft **/
@@ -34,17 +30,24 @@ public class RoomVisitorsEditFrame extends Window {
       }
     };
     /** Left soft **/
-    soft.leftSoft = new PopupItem( Localization.getMessage( "SAVE" ) ) {
+    soft.leftSoft = new PopupItem( Localization.getMessage( "MENU" ) );
+    soft.leftSoft.addSubItem( new PopupItem( Localization.getMessage( "ADD" ) ) {
       public void actionPerformed() {
-        /** Sending list edit request **/
-        /** Returning to the previous frame **/
-        MidletMain.screen.setActiveWindow( s_prevWindow );
       }
-    };
-    /** Creating pane object **/
-    Pane pane = new Pane( null, false );
-    /** Creating pane objects **/
+    } );
+    soft.leftSoft.addSubItem( new PopupItem( Localization.getMessage( "REMOVE" ) ) {
+      public void actionPerformed() {
+      }
+    } );
+    soft.leftSoft.addSubItem( new PopupItem( Localization.getMessage( "MORE_INFO" ) ) {
+      public void actionPerformed() {
+      }
+    } );
+    /** Creating list object **/
+    List list = new List();
+    /** Setting up items **/
+    list.items = items;
     /** Setting up pane **/
-    setGObject( pane );
+    setGObject( list );
   }
 }
