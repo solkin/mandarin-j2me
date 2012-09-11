@@ -1252,9 +1252,25 @@ public class Mechanism {
     /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
+  
+  public static void roomVisitorsListRequest( final RoomItem roomItem, 
+          final String affiliation ) {
+    roomVisitorsListOperation(roomItem, affiliation, null, null, OPERATION_GET);
+  }
+  
+  public static void roomVisitorsListRemoveItem( final RoomItem roomItem, 
+          final String jid ) {
+    roomVisitorsListOperation(roomItem, TemplateCollection.VAL_NONE, jid, null, OPERATION_REMOVE);
+  }
+  
+  public static void roomVisitorsListAddItem( final RoomItem roomItem, 
+          final String affiliation, final String jid, 
+          final String reason) {
+    roomVisitorsListOperation(roomItem, affiliation, jid, reason, OPERATION_ADD);
+  }
 
-  public static void roomVisitorsListOperation( final RoomItem roomItem, 
-          final String affiliation, final int operation ) {
+  private static void roomVisitorsListOperation( final RoomItem roomItem, 
+          final String affiliation, final String jid, final String reason, final int operation ) {
     /** Showing wait screen **/
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
@@ -1264,7 +1280,7 @@ public class Mechanism {
       public void onRun() throws Throwable {
         /** Sending room destroy request **/
         String cookie = TemplateCollection.sendRoomVisitorsListOperation(
-                this, roomItem.getJid(), affiliation, operation );
+                this, roomItem.getJid(), affiliation, jid, reason, operation );
         QueueAction queueAction = new QueueAction() {
           public void actionPerformed( Hashtable params ) {
             /** Room returns list **/

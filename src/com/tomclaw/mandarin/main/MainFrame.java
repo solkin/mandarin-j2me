@@ -615,22 +615,22 @@ public class MainFrame extends Window {
     roomUsersPopupItem = new PopupItem( Localization.getMessage( "ROOM_USERS" ) );
     roomOutcastPopupItem = new PopupItem( Localization.getMessage( "ROOM_OUTCAST" ) ) {
       public void actionPerformed() {
-        showRoomVisitorsEditFrame(TemplateCollection.VAL_OUTCAST);
+        showRoomVisitorsEditFrame( TemplateCollection.VAL_OUTCAST );
       }
     };
     roomMembersPopupItem = new PopupItem( Localization.getMessage( "ROOM_MEMBERS" ) ) {
       public void actionPerformed() {
-        showRoomVisitorsEditFrame(TemplateCollection.VAL_MEMBER);
+        showRoomVisitorsEditFrame( TemplateCollection.VAL_MEMBER );
       }
     };
     roomAdminsPopupItem = new PopupItem( Localization.getMessage( "ROOM_ADMINS" ) ) {
       public void actionPerformed() {
-        showRoomVisitorsEditFrame(TemplateCollection.VAL_ADMIN);
+        showRoomVisitorsEditFrame( TemplateCollection.VAL_ADMIN );
       }
     };
     roomOwnersPopupItem = new PopupItem( Localization.getMessage( "ROOM_OWNERS" ) ) {
       public void actionPerformed() {
-        showRoomVisitorsEditFrame(TemplateCollection.VAL_OWNER);
+        showRoomVisitorsEditFrame( TemplateCollection.VAL_OWNER );
       }
     };
     roomDestroyPopupItem = new PopupItem( Localization.getMessage( "ROOM_DESTROY" ) ) {
@@ -949,20 +949,21 @@ public class MainFrame extends Window {
       }
     }
   }
-  
+
   private void showRoomVisitorsEditFrame( String affiliation ) {
-      /** Outcast list edit in selected room **/
-      LogUtil.outMessage( "List edit in selected room for ".concat( affiliation ) );
-      /** Checking for online **/
-      if ( Handler.sureIsOnline() ) {
-        /** Obtain buddy item selected **/
-        final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
-        /** Checking selected item type **/
-        if ( buddyItem != null && buddyItem instanceof RoomItem ) {
-          /** Mechanism invocation **/
-          Mechanism.roomVisitorsListOperation( ( RoomItem ) buddyItem, 
-                  affiliation, Mechanism.OPERATION_GET );
-        }
+    /** Outcast list edit in selected room **/
+    LogUtil.outMessage( "List edit in selected room for "
+            .concat( affiliation ) );
+    /** Checking for online **/
+    if ( Handler.sureIsOnline() ) {
+      /** Obtain buddy item selected **/
+      final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
+      /** Checking selected item type **/
+      if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+        /** Mechanism invocation **/
+        Mechanism.roomVisitorsListRequest( ( RoomItem ) buddyItem,
+                affiliation );
       }
     }
+  }
 }

@@ -1,6 +1,8 @@
 package com.tomclaw.mandarin.main;
 
+import com.tomclaw.mandarin.molecus.Mechanism;
 import com.tomclaw.mandarin.molecus.RoomItem;
+import com.tomclaw.mandarin.molecus.Visitor;
 import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
 import java.util.Vector;
@@ -11,6 +13,8 @@ import java.util.Vector;
  * @author Solkin
  */
 public class RoomVisitorsEditFrame extends Window {
+
+  private final List list;
 
   public RoomVisitorsEditFrame( final RoomItem roomItem,
           final String affiliation, Vector items ) {
@@ -37,6 +41,13 @@ public class RoomVisitorsEditFrame extends Window {
     } );
     soft.leftSoft.addSubItem( new PopupItem( Localization.getMessage( "REMOVE" ) ) {
       public void actionPerformed() {
+        /** Checking for selected item is in real range **/
+        if ( list.selectedIndex >= 0 && list.selectedIndex < list.items.size() ) {
+          /** Obtain list item **/
+          Visitor visitor = ( Visitor ) list.getElement( list.selectedIndex );
+          /** Mechanism invocation **/
+          Mechanism.roomVisitorsListRemoveItem( roomItem, visitor.jid );
+        }
       }
     } );
     soft.leftSoft.addSubItem( new PopupItem( Localization.getMessage( "MORE_INFO" ) ) {
@@ -44,7 +55,7 @@ public class RoomVisitorsEditFrame extends Window {
       }
     } );
     /** Creating list object **/
-    List list = new List();
+    list = new List();
     /** Setting up items **/
     list.items = items;
     /** Setting up pane **/

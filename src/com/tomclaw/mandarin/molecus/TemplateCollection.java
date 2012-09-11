@@ -6,7 +6,6 @@ import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.StringUtil;
 import com.tomclaw.utils.TimeUtil;
 import com.tomclaw.xmlgear.XmlOutputStream;
-import com.tomclaw.xmlgear.XmlSpore;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -31,6 +30,7 @@ public class TemplateCollection {
   public static final String TAG_REMOVE = "remove";
   public static final String TAG_CONFERENCE = "conference";
   public static final String TAG_PASSWORD = "password";
+  public static final String TAG_REASON = "reason";
   /** Attributes **/
   public static final String ATT_TYPE = "type";
   public static final String ATT_ID = "id";
@@ -52,6 +52,7 @@ public class TemplateCollection {
   public static final String VAL_ADMIN = "admin";
   public static final String VAL_MEMBER = "member";
   public static final String VAL_OUTCAST = "outcast";
+  public static final String VAL_NONE = "none";
   public static final String[] FEATURES = new String[]{
     "http://jabber.org/protocol/disco#info",
     "http://jabber.org/protocol/caps",
@@ -823,7 +824,7 @@ public class TemplateCollection {
   }
   
   public static String sendRoomVisitorsListOperation( XmlOutputStream xmlWriter,
-          String roomJid, String affiliation,int operation ) throws IOException {
+          String roomJid, String affiliation, String jid, String reason, int operation ) throws IOException {
     /** Generating request cookie **/
     String cookie = AccountRoot.generateCookie();
     xmlWriter.startTag( TAG_IQ );
@@ -836,6 +837,16 @@ public class TemplateCollection {
     /** Destroying room tag **/
     xmlWriter.startTag( "item" );
     xmlWriter.attribute( ATT_AFFILIATION, affiliation );
+    /** Checking for operation type to append JID **/
+    if(operation != Mechanism.OPERATION_GET) {
+      xmlWriter.attribute( ATT_JID, jid );
+    }
+    /** Checking for operation to add reason tag **/
+    if(operation == Mechanism.OPERATION_ADD) {
+      xmlWriter.startTag( TAG_REASON );
+      xmlWriter.text( reason );
+      xmlWriter.endTag();
+    }
     xmlWriter.endTag();
     xmlWriter.endTag();
     xmlWriter.endTag();
