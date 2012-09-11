@@ -822,12 +822,13 @@ public class TemplateCollection {
     return cookie;
   }
   
-  public static String sendRoomVisitorsListRequest( XmlOutputStream xmlWriter,
-          String roomJid, String affiliation ) throws IOException {
+  public static String sendRoomVisitorsListOperation( XmlOutputStream xmlWriter,
+          String roomJid, String affiliation,int operation ) throws IOException {
     /** Generating request cookie **/
     String cookie = AccountRoot.generateCookie();
     xmlWriter.startTag( TAG_IQ );
-    xmlWriter.attribute( ATT_TYPE, VAL_GET );
+    xmlWriter.attribute( ATT_TYPE, operation == Mechanism.OPERATION_GET
+            ? VAL_GET : VAL_SET );
     xmlWriter.attribute( ATT_TO, roomJid );
     xmlWriter.attribute( ATT_ID, cookie );
     xmlWriter.startTag( TAG_QUERY );

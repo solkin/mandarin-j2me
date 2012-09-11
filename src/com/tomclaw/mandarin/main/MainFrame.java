@@ -960,8 +960,8 @@ public class MainFrame extends Window {
         /** Checking selected item type **/
         if ( buddyItem != null && buddyItem instanceof RoomItem ) {
           /** Mechanism invocation **/
-          Mechanism.roomVisitorsListRequest( ( RoomItem ) buddyItem, 
-                  affiliation );
+          Mechanism.roomVisitorsListOperation( ( RoomItem ) buddyItem, 
+                  affiliation, Mechanism.OPERATION_GET );
         }
       }
     }
