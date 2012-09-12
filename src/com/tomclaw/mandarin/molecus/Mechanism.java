@@ -1252,25 +1252,29 @@ public class Mechanism {
     /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
-  
-  public static void roomVisitorsListRequest( final RoomItem roomItem, 
+
+  public static void roomVisitorsListRequest( final RoomItem roomItem,
           final String affiliation ) {
-    roomVisitorsListOperation(roomItem, affiliation, null, null, OPERATION_GET);
-  }
-  
-  public static void roomVisitorsListRemoveItem( final RoomItem roomItem, 
-          final String jid ) {
-    roomVisitorsListOperation(roomItem, TemplateCollection.VAL_NONE, jid, null, OPERATION_REMOVE);
-  }
-  
-  public static void roomVisitorsListAddItem( final RoomItem roomItem, 
-          final String affiliation, final String jid, 
-          final String reason) {
-    roomVisitorsListOperation(roomItem, affiliation, jid, reason, OPERATION_ADD);
+    roomVisitorsListOperation( null, roomItem, affiliation, null, null,
+            OPERATION_GET );
   }
 
-  private static void roomVisitorsListOperation( final RoomItem roomItem, 
-          final String affiliation, final String jid, final String reason, final int operation ) {
+  public static void roomVisitorsListRemoveItem( final Vector items,
+          final RoomItem roomItem, final String jid ) {
+    roomVisitorsListOperation( items, roomItem, TemplateCollection.VAL_NONE,
+            jid, null, OPERATION_REMOVE );
+  }
+
+  public static void roomVisitorsListAddItem( final Vector items,
+          final RoomItem roomItem, final String affiliation, final String jid,
+          final String reason ) {
+    roomVisitorsListOperation( items, roomItem, affiliation, jid, reason,
+            OPERATION_ADD );
+  }
+
+  private static void roomVisitorsListOperation( final Vector items,
+          final RoomItem roomItem, final String affiliation, final String jid,
+          final String reason, final int operation ) {
     /** Showing wait screen **/
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
@@ -1289,18 +1293,29 @@ public class Mechanism {
             if ( errorCause == null ) {
               LogUtil.outMessage( "Room's list operation #" + operation + " of ".concat( affiliation ).concat( " completed." ) );
               /** Switching by operation type **/
-              switch(operation) {
+              switch ( operation ) {
                 case OPERATION_GET: {
                   /** Obtain items vector **/
-                  Vector items = (Vector)params.get( "ITEMS" );
+                  Vector items = ( Vector ) params.get( "ITEMS" );
                   /** Sending event to handler **/
-                  Handler.showRoomVisitorsListEditFrame(roomItem, affiliation, items);
+                  Handler.showRoomVisitorsListEditFrame( roomItem, affiliation, items );
                   break;
                 }
                 case OPERATION_ADD: {
                   break;
                 }
                 case OPERATION_REMOVE: {
+                  /** Searching for items in visitors vector **/
+                  for ( int c = 0; c < items.size(); c++ ) {
+                    /** Checking for visitor is equal **/
+                    if ( ( ( Visitor ) items.elementAt( c ) ).jid.equals( jid ) ) {
+                      /** Removing buddy from items **/
+                      items.removeElementAt( c );
+                      break;
+                    }
+                  }
+                  /** Showing wait screen **/
+                  MidletMain.screen.setWaitScreenState( false );
                   break;
                 }
               }
@@ -1317,7 +1332,7 @@ public class Mechanism {
     /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
-  
+
   public static void roomDestroyRequest( final RoomItem roomItem ) {
     /** Showing wait screen **/
     MidletMain.screen.setWaitScreenState( true );

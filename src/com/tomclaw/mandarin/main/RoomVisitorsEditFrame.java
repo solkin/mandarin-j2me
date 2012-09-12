@@ -1,5 +1,6 @@
 package com.tomclaw.mandarin.main;
 
+import com.tomclaw.mandarin.core.Handler;
 import com.tomclaw.mandarin.molecus.Mechanism;
 import com.tomclaw.mandarin.molecus.RoomItem;
 import com.tomclaw.mandarin.molecus.Visitor;
@@ -44,9 +45,28 @@ public class RoomVisitorsEditFrame extends Window {
         /** Checking for selected item is in real range **/
         if ( list.selectedIndex >= 0 && list.selectedIndex < list.items.size() ) {
           /** Obtain list item **/
-          Visitor visitor = ( Visitor ) list.getElement( list.selectedIndex );
-          /** Mechanism invocation **/
-          Mechanism.roomVisitorsListRemoveItem( roomItem, visitor.jid );
+          final Visitor visitor = ( Visitor ) list.getElement( list.selectedIndex );
+          final Soft dialogSoft = new Soft( screen );
+          dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
+            public void actionPerformed() {
+              dialogSoft.rightSoft.actionPerformed();
+              /** Mechanism invocation **/
+              Mechanism.roomVisitorsListRemoveItem( list.items, roomItem, visitor.jid );
+            }
+          };
+          dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
+            public void actionPerformed() {
+              RoomVisitorsEditFrame.this.closeDialog();
+            }
+          };
+          Handler.showDialog( RoomVisitorsEditFrame.this, dialogSoft,
+                  "REMOVING",
+                  Localization.getMessage( "SURE" ).concat( " " ).
+                  concat( Localization.getMessage( "REMOVE_".
+                  concat( affiliation.toUpperCase() ) ) ).concat( " " ).
+                  concat( roomItem.getRoomTitle() ).
+                  concat( ", " ).concat( visitor.jid ).concat( ", " ).
+                  concat( Localization.getMessage( "FROM_ROOM_LISTS" ) ) );
         }
       }
     } );
