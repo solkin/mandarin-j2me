@@ -401,7 +401,7 @@ public class Parser {
       }
     } else if ( iqType.equals( "error" ) ) {
       if ( xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
-        /** Skipping all tags until error block or iq closing **/
+        /** Skipping all tags until error block or IQ closing **/
         while ( xmlReader.nextTag()
                 && !( xmlReader.tagName.equals( "error" )
                 || ( xmlReader.tagName.equals( "iq" ) && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) ) ) {

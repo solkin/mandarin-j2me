@@ -280,7 +280,7 @@ public class BuddyList extends Group {
   }
 
   public BuddyItem createTempBuddyItem( String jid ) {
-    /** Creating budyy item **/
+    /** Creating buddy item **/
     BuddyItem buddyItem = new BuddyItem( jid );
     buddyItem.setSubscription( "none" );
     buddyItem.updateUi();

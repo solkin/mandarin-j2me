@@ -1302,10 +1302,30 @@ public class Mechanism {
                   break;
                 }
                 case OPERATION_ADD: {
+                  boolean uniqueJid = true;
+                  /** Searching for item in visitors vector **/
+                  for ( int c = 0; c < items.size(); c++ ) {
+                    /** Checking for visitor is equal **/
+                    if ( ( ( Visitor ) items.elementAt( c ) ).jid.equals( jid ) ) {
+                      /** Visitor is already present in list **/
+                      uniqueJid = false;
+                      break;
+                    }
+                  }
+                  /** Checking for JID is not present in list items **/
+                  if ( uniqueJid ) {
+                    /** Creating new visitor item **/
+                    Visitor visitor = new Visitor( jid, affiliation );
+                    visitor.reason = reason;
+                    /** Adding new visitor to items list **/
+                    items.addElement( visitor );
+                  }
+                  /** Showing wait screen **/
+                  MidletMain.screen.setWaitScreenState( false );
                   break;
                 }
                 case OPERATION_REMOVE: {
-                  /** Searching for items in visitors vector **/
+                  /** Searching for item in visitors vector **/
                   for ( int c = 0; c < items.size(); c++ ) {
                     /** Checking for visitor is equal **/
                     if ( ( ( Visitor ) items.elementAt( c ) ).jid.equals( jid ) ) {
@@ -1322,7 +1342,7 @@ public class Mechanism {
               return;
             }
             /* Handling error case **/
-            Handler.showError( errorCause );
+            Handler.showError( "VIS_".concat( errorCause ) );
           }
         };
         queueAction.setCookie( cookie );

@@ -842,7 +842,7 @@ public class TemplateCollection {
       xmlWriter.attribute( ATT_JID, jid );
     }
     /** Checking for operation to add reason tag **/
-    if(operation == Mechanism.OPERATION_ADD) {
+    if(operation == Mechanism.OPERATION_ADD && reason != null) {
       xmlWriter.startTag( TAG_REASON );
       xmlWriter.text( reason );
       xmlWriter.endTag();

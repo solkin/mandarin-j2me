@@ -14,12 +14,17 @@ import java.util.Vector;
  * @author Solkin
  */
 public class RoomVisitorsEditFrame extends Window {
-
+  
   private final List list;
-
+  private final RoomItem roomItem;
+  private final String affiliation;
+  
   public RoomVisitorsEditFrame( final RoomItem roomItem,
           final String affiliation, Vector items ) {
     super( MidletMain.screen );
+    /** Main variables **/
+    this.roomItem = roomItem;
+    this.affiliation = affiliation;
     /** Previous window **/
     s_prevWindow = MidletMain.mainFrame;
     /** Header **/
@@ -36,10 +41,34 @@ public class RoomVisitorsEditFrame extends Window {
     };
     /** Left soft **/
     soft.leftSoft = new PopupItem( Localization.getMessage( "MENU" ) );
-    soft.leftSoft.addSubItem( new PopupItem( Localization.getMessage( "ADD" ) ) {
+    PopupItem addPopupItem = new PopupItem( Localization.getMessage( "ADD" ) );
+    /** Adding all users from room item, that have real JID **/
+    int statusFileHash = com.tomclaw.mandarin.core.Settings.IMG_STATUS.hashCode();
+    for ( int c = 0; c < roomItem.resources.length; c++ ) {
+      /** Checking for JID exists **/
+      if ( roomItem.resources[c].jid != null
+              && roomItem.resources[c].jid.length() > 0 ) {
+        /** Resource's JID **/
+        final String jid = BuddyList.getClearJid( roomItem.resources[c].jid );
+        /** Creating buddy popup item instance **/
+        PopupItem buddyPopupItem = new PopupItem( roomItem.resources[c].resource ) {
+          public void actionPerformed() {
+            /** To prevent memory overload we use external method **/
+            visitorAddConfirmationDialog( jid );
+          }
+        };
+        /** Configuring popup item **/
+        buddyPopupItem.imageFileHash = statusFileHash;
+        buddyPopupItem.imageIndex = roomItem.resources[c].statusIndex;
+        /** Adding popup item to the parent popup item **/
+        addPopupItem.addSubItem( buddyPopupItem );
+      }
+    }
+    addPopupItem.addSubItem( new PopupItem( Localization.getMessage( "OTHER" ) ) {
       public void actionPerformed() {
       }
     } );
+    soft.leftSoft.addSubItem( addPopupItem );
     soft.leftSoft.addSubItem( new PopupItem( Localization.getMessage( "REMOVE" ) ) {
       public void actionPerformed() {
         /** Checking for selected item is in real range **/
@@ -80,5 +109,30 @@ public class RoomVisitorsEditFrame extends Window {
     list.items = items;
     /** Setting up pane **/
     setGObject( list );
+  }
+  
+  private void visitorAddConfirmationDialog( final String jid ) {
+    final Soft dialogSoft = new Soft( screen );
+    dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
+      public void actionPerformed() {
+        dialogSoft.rightSoft.actionPerformed();
+        /** Mechanism invocation **/
+        Mechanism.roomVisitorsListAddItem( list.items, roomItem, affiliation, jid, null );
+      }
+    };
+    dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
+      public void actionPerformed() {
+        RoomVisitorsEditFrame.this.closeDialog();
+      }
+    };
+    Handler.showDialog( RoomVisitorsEditFrame.this, dialogSoft,
+            "REMOVING",
+            Localization.getMessage( "SURE" ).concat( " " ).
+            concat( Localization.getMessage( "ADD_".
+            concat( affiliation.toUpperCase() ) ) ).concat( " " ).
+            concat( roomItem.getRoomTitle() ).
+            concat( " " ).concat( Localization.getMessage( "FOR_".
+            concat( affiliation.toUpperCase() ) ) ).concat( " " ).
+            concat( jid ) );
   }
 }
