@@ -1,5 +1,6 @@
 package com.tomclaw.mandarin.molecus;
 
+import com.tomclaw.mandarin.main.BuddyList;
 import com.tomclaw.tcuilite.ListItem;
 
 /**
@@ -8,16 +9,16 @@ import com.tomclaw.tcuilite.ListItem;
  * @author Solkin
  */
 public class Visitor extends ListItem {
-  
+
   public String jid;
   public String affiliation;
   public String reason;
-  
-  public Visitor(String jid, String affiliation) {
+
+  public Visitor( String jid, String affiliation ) {
     /** Applying variables **/
     this.jid = jid;
     this.affiliation = affiliation;
     /** Applying title **/
-    this.title = jid;
+    this.title = BuddyList.getJidUsername( jid );
   }
 }

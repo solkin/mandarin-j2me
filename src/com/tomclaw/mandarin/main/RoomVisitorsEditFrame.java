@@ -1,6 +1,7 @@
 package com.tomclaw.mandarin.main;
 
 import com.tomclaw.mandarin.core.Handler;
+import com.tomclaw.mandarin.molecus.AccountRoot;
 import com.tomclaw.mandarin.molecus.Mechanism;
 import com.tomclaw.mandarin.molecus.RoomItem;
 import com.tomclaw.mandarin.molecus.Visitor;
@@ -14,11 +15,11 @@ import java.util.Vector;
  * @author Solkin
  */
 public class RoomVisitorsEditFrame extends Window {
-  
+
   private final List list;
   private final RoomItem roomItem;
   private final String affiliation;
-  
+
   public RoomVisitorsEditFrame( final RoomItem roomItem,
           final String affiliation, Vector items ) {
     super( MidletMain.screen );
@@ -101,6 +102,27 @@ public class RoomVisitorsEditFrame extends Window {
     } );
     soft.leftSoft.addSubItem( new PopupItem( Localization.getMessage( "MORE_INFO" ) ) {
       public void actionPerformed() {
+        /** Checking for selected item is in real range **/
+        if ( list.selectedIndex >= 0 && list.selectedIndex < list.items.size() ) {
+          /** Obtain list item **/
+          final Visitor visitor = ( Visitor ) list.getElement( list.selectedIndex );
+          final Soft dialogSoft = new Soft( screen );
+          dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "CLOSE" ) ) {
+            public void actionPerformed() {
+              RoomVisitorsEditFrame.this.closeDialog();
+            }
+          };
+          String moreInfoMessage = "JID: ".concat( visitor.jid ).concat( "\n" ).
+                  concat( Localization.getMessage( "AFFILIATION" ) ).concat( " " ).
+                  concat( Localization.getMessage( "TO_".
+                  concat( visitor.affiliation.toUpperCase() ).concat( "S" ) ) );
+          if ( visitor.reason != null && visitor.reason.length() > 0 ) {
+            moreInfoMessage += "\n".concat( Localization.getMessage( "REASON" ) ).
+                    concat( ": " ).concat( visitor.reason );
+          }
+          Handler.showDialog( RoomVisitorsEditFrame.this, dialogSoft,
+                  "MORE_INFO", moreInfoMessage );
+        }
       }
     } );
     /** Creating list object **/
@@ -110,14 +132,18 @@ public class RoomVisitorsEditFrame extends Window {
     /** Setting up pane **/
     setGObject( list );
   }
-  
+
   private void visitorAddConfirmationDialog( final String jid ) {
     final Soft dialogSoft = new Soft( screen );
     dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
       public void actionPerformed() {
         dialogSoft.rightSoft.actionPerformed();
         /** Mechanism invocation **/
-        Mechanism.roomVisitorsListAddItem( list.items, roomItem, affiliation, jid, null );
+        Mechanism.roomVisitorsListAddItem( list.items, roomItem, affiliation,
+                jid, Localization.getMessage( "CHANGED_TO_".
+                concat( affiliation.toUpperCase() ) ).
+                concat( " " ).concat(
+                BuddyList.getClearJid( AccountRoot.getFullJid() ) ) );
       }
     };
     dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
@@ -133,6 +159,6 @@ public class RoomVisitorsEditFrame extends Window {
             concat( roomItem.getRoomTitle() ).
             concat( " " ).concat( Localization.getMessage( "FOR_".
             concat( affiliation.toUpperCase() ) ) ).concat( " " ).
-            concat( jid ) );
+            concat( jid ).concat( "?" ) );
   }
 }
