@@ -895,7 +895,6 @@ public class Parser {
                 LogUtil.outMessage( "Command found: " + xmlReader.tagName );
                 /** Checking for default action **/
                 Command command = new Command( Localization.getMessage( xmlReader.tagName.toUpperCase() ) ) {
-
                   public void actionPerformed() {
                     /** Showing wait screen **/
                     MidletMain.screen.setWaitScreenState( true );
@@ -963,10 +962,19 @@ public class Parser {
             && xmlReader.tagType == XmlInputStream.TAG_PLAIN ) {
       while ( xmlReader.nextTag() && !( xmlReader.tagName.equals( "x" ) && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) ) {
         if ( xmlReader.tagName.equals( "item" ) ) {
-          params.put( "AFFILIATION", xmlReader.getAttrValue( "affiliation", false ) );
-          params.put( "JID", xmlReader.getAttrValue( "jid", false ) );
-          params.put( "ROLE", xmlReader.getAttrValue( "role", false ) );
-          params.put( "NICK", xmlReader.getAttrValue( "nick", false ) );
+          /** Checking for keys is present and reading values **/
+          if ( xmlReader.checkAttr( "affiliation" ) ) {
+            params.put( "AFFILIATION", xmlReader.getAttrValue( "affiliation", false ) );
+          }
+          if ( xmlReader.checkAttr( "jid" ) ) {
+            params.put( "JID", xmlReader.getAttrValue( "jid", false ) );
+          }
+          if ( xmlReader.checkAttr( "role" ) ) {
+            params.put( "ROLE", xmlReader.getAttrValue( "role", false ) );
+          }
+          if ( xmlReader.checkAttr( "nick" ) ) {
+            params.put( "NICK", xmlReader.getAttrValue( "nick", false ) );
+          }
         }
         if ( xmlReader.tagName.equals( "status" ) ) {
           String code = xmlReader.getAttrValue( "code", false );
