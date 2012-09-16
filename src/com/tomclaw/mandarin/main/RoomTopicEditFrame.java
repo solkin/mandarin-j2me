@@ -25,8 +25,7 @@ public class RoomTopicEditFrame extends Window {
     /** Previous window **/
     s_prevWindow = MidletMain.mainFrame;
     /** Header **/
-    header = new Header( Localization.getMessage( "ROOM_EDIT_TOPIC" ).
-            concat( ": " ).concat( roomItem.getUserName() ) );
+    header = new Header( Localization.getMessage( "ROOM_EDIT_TOPIC" ) );
     /** Soft **/
     soft = new Soft( screen );
     /** Right soft **/

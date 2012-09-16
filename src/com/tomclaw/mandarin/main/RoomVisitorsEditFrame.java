@@ -67,6 +67,8 @@ public class RoomVisitorsEditFrame extends Window {
     }
     addPopupItem.addSubItem( new PopupItem( Localization.getMessage( "OTHER" ) ) {
       public void actionPerformed() {
+        MidletMain.screen.setActiveWindow( new RoomVisitorsAddFrame(
+                RoomVisitorsEditFrame.this, roomItem, list.items, affiliation ) );
       }
     } );
     soft.leftSoft.addSubItem( addPopupItem );
