@@ -8,7 +8,6 @@ import com.tomclaw.tcuilite.PopupItem;
 import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
 import com.tomclaw.xmlgear.XmlSpore;
-import java.io.IOException;
 import java.util.Hashtable;
 
 /**
@@ -155,7 +154,7 @@ public class ServiceItem extends BuddyItem {
       /** Creating instance for unregister popup item **/
       unregPopup = new PopupItem( Localization.getMessage( "UNREGISTER" ) ) {
         public void actionPerformed() {
-          /** Mechanism invokation **/
+          /** Mechanism invocation **/
           Mechanism.sendRemoveRegistration( getJid() );
         }
       };

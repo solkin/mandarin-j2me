@@ -101,7 +101,7 @@ public class RoomEditFrame extends Window {
         /** Updating parameters **/
         item.setRoomNick( nick );
         item.setRoomPassword( password );
-        /** Mechanism invokation **/
+        /** Mechanism invocation **/
         Mechanism.sendBookmarksOperation( Mechanism.OPERATION_EDIT, item, roomItem, false, isSoloOperation );
       }
       return;

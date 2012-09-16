@@ -281,7 +281,7 @@ public class Handler {
                 /** Updating parameters **/
                 item.setRoomNick( muc_nick );
                 item.setRoomPassword( roomItem.getRoomPassword() );
-                /** Mechanism invokation **/
+                /** Mechanism invocation **/
                 Mechanism.sendBookmarksOperation( Mechanism.OPERATION_EDIT, roomItem, item, false, true );
               }
             }
@@ -456,6 +456,7 @@ public class Handler {
       for ( int c = 0; c < items.size(); c++ ) {
         final Item item = ( Item ) items.elementAt( c );
         PopupItem popupItem = new PopupItem( item.name ) {
+
           public void actionPerformed() {
             /** Showing wait screen **/
             MidletMain.screen.setWaitScreenState( true );
@@ -522,7 +523,7 @@ public class Handler {
       MidletMain.roomsFrame = new RoomsFrame();
     }
     if ( System.currentTimeMillis() - MidletMain.roomsFrame.updateTime > Settings.roomsUpdateDelay ) {
-      /** Mechanism invokation to update rooms **/
+      /** Mechanism invocation **/
       Mechanism.sendRoomsItemsDiscoveryRequest();
     }
     return MidletMain.roomsFrame;
@@ -604,6 +605,17 @@ public class Handler {
       /** Hiding wait screen **/
       MidletMain.screen.setWaitScreenState( false );
     }
+  }
+
+  public static void showRoomVisitorsListEditFrame( RoomItem roomItem,
+          String affiliation, Vector items ) {
+    /** Creating frame instance **/
+    RoomVisitorsEditFrame roomVisitorsEditFrame 
+            = new RoomVisitorsEditFrame(roomItem, affiliation, items);
+    /** Disabling wait screen **/
+    MidletMain.screen.setWaitScreenState( false );
+    /** Setting up frame as current **/
+    MidletMain.screen.setActiveWindow( roomVisitorsEditFrame );
   }
 
   /**
@@ -823,12 +835,14 @@ public class Handler {
     final Soft dialogSoft = new Soft( MidletMain.screen );
     /** Left action soft **/
     dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "CLOSE" ) ) {
+
       public void actionPerformed() {
         window.closeDialog();
       }
     };
     /** Right action soft **/
     dialogSoft.rightSoft = new PopupItem( Localization.getMessage( actionType.concat( "_ACTION" ) ) ) {
+
       public void actionPerformed() {
         /** Checking for action type **/
         if ( actionType.equals( "SUBSCRIBE" ) ) {
@@ -920,6 +934,7 @@ public class Handler {
     /** Creating soft and dialog **/
     Soft dialogSoft = new Soft( MidletMain.screen );
     dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "CLOSE" ) ) {
+
       public void actionPerformed() {
         window.closeDialog();
       }
@@ -935,7 +950,7 @@ public class Handler {
    * @param title
    * @param message 
    */
-  public static void showDialog( Window window, Soft dialogSoft, String title, 
+  public static void showDialog( Window window, Soft dialogSoft, String title,
           String message ) {
     /** Hiding wait screen state **/
     MidletMain.screen.setWaitScreenState( false );

@@ -19,8 +19,7 @@ public class RoomNickChangeFrame extends Window {
     /** Previous window **/
     s_prevWindow = MidletMain.mainFrame;
     /** Header **/
-    header = new Header( Localization.getMessage( "ROOM_CHANGENICK" ).
-            concat( ": " ).concat( roomItem.getUserName() ) );
+    header = new Header( Localization.getMessage( "ROOM_CHANGENICK" ) );
     /** Soft **/
     soft = new Soft( screen );
     /** Right soft **/

@@ -61,7 +61,7 @@ public class RoomsFrame extends Window {
       /** Obtain disco item **/
       DiscoItem discoItem = ( DiscoItem ) list.items.elementAt( list.selectedIndex );
       if ( discoItem != null ) {
-        /** Mechanism invokation **/
+        /** Mechanism invocation **/
         Mechanism.sendRoomsInfoDiscoveryRequest( discoItem );
       }
     } else if ( list.selectedIndex == 0 ) {

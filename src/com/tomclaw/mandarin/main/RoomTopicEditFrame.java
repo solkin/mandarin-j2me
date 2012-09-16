@@ -25,8 +25,7 @@ public class RoomTopicEditFrame extends Window {
     /** Previous window **/
     s_prevWindow = MidletMain.mainFrame;
     /** Header **/
-    header = new Header( Localization.getMessage( "ROOM_EDIT_TOPIC" ).
-            concat( ": " ).concat( roomItem.getUserName() ) );
+    header = new Header( Localization.getMessage( "ROOM_EDIT_TOPIC" ) );
     /** Soft **/
     soft = new Soft( screen );
     /** Right soft **/
@@ -48,7 +47,7 @@ public class RoomTopicEditFrame extends Window {
     /** Creating pane object **/
     Pane pane = new Pane( null, false );
     /** Creating pane objects **/
-    /** Currecnt nick label **/
+    /** Current nick label **/
     Label topicOfLabel = new Label( Localization.getMessage( "TOPIC_OF" ).concat( " " ).concat( roomItem.getRoomTitle() ) );
     topicOfLabel.setHeader( true );
     pane.addItem( topicOfLabel );

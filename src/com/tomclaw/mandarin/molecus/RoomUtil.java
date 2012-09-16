@@ -82,7 +82,7 @@ public class RoomUtil {
   }
 
   /**
-   * Returns affiliation index for human-type sting affiliation type
+   * Returns affiliation index for human-type string affiliation type
    * @param affiliation
    * @return Integer index
    */
