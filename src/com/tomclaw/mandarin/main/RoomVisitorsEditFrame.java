@@ -7,6 +7,7 @@ import com.tomclaw.mandarin.molecus.RoomItem;
 import com.tomclaw.mandarin.molecus.Visitor;
 import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
+import com.tomclaw.utils.StringUtil;
 import java.util.Vector;
 
 /**
@@ -47,8 +48,7 @@ public class RoomVisitorsEditFrame extends Window {
     int statusFileHash = com.tomclaw.mandarin.core.Settings.IMG_STATUS.hashCode();
     for ( int c = 0; c < roomItem.resources.length; c++ ) {
       /** Checking for JID exists **/
-      if ( roomItem.resources[c].jid != null
-              && roomItem.resources[c].jid.length() > 0 ) {
+      if ( !StringUtil.isNullOrEmpty( roomItem.resources[c].jid ) ) {
         /** Resource's JID **/
         final String jid = BuddyList.getClearJid( roomItem.resources[c].jid );
         /** Creating buddy popup item instance **/

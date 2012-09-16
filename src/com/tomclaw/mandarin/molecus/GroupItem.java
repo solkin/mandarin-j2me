@@ -1,7 +1,6 @@
 package com.tomclaw.mandarin.molecus;
 
 import com.tomclaw.tcuilite.GroupHeader;
-import java.util.Vector;
 
 /**
  * Solkin Igor Viktorovich, TomClaw Software, 2003-2012

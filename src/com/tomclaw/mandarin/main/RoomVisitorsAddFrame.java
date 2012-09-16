@@ -12,6 +12,7 @@ import com.tomclaw.tcuilite.PopupItem;
 import com.tomclaw.tcuilite.Soft;
 import com.tomclaw.tcuilite.Window;
 import com.tomclaw.tcuilite.localization.Localization;
+import com.tomclaw.utils.StringUtil;
 import java.util.Vector;
 
 /**
@@ -48,12 +49,13 @@ public class RoomVisitorsAddFrame extends Window {
         if ( jid.length() > 0 ) {
           if ( jid.indexOf( '@' ) != -1 ) {
             /** Manual JID **/
-            /** Checking for host is exist **/
-            if ( BuddyList.getJidHost( jid ).length() == 0 ) {
+            /** Checking for host is empty **/
+            if ( StringUtil.isNullOrEmpty( BuddyList.getJidHost( jid ) ) ) {
               Handler.showError( "EMPTY_JID_HOST" );
               return;
             }
-            if ( BuddyList.getJidUsername( jid ).length() == 0 ) {
+            /** Checking for username is empty **/
+            if ( StringUtil.isNullOrEmpty( BuddyList.getJidUsername( jid ) ) ) {
               Handler.showError( "EMPTY_JID_USERNAME" );
               return;
             }

@@ -436,7 +436,7 @@ public class Parser {
                     String subscription = xmlReader.getAttrValue( "subscription", true );
                     /** Obtain buddy item from list **/
                     buddyItem = buddyList.getBuddyItem( jid );
-                    /** Checkign name and buddy item for null-type **/
+                    /** Checking name and buddy item for null-type **/
                     if ( name == null && buddyItem != null ) {
                       /** Applying exist nick name to the new item **/
                       name = buddyItem.getNickName();

@@ -8,7 +8,6 @@ import com.tomclaw.tcuilite.PopupItem;
 import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
 import com.tomclaw.xmlgear.XmlSpore;
-import java.io.IOException;
 import java.util.Hashtable;
 
 /**
