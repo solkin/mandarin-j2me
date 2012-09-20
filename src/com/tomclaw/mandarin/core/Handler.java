@@ -228,7 +228,7 @@ public class Handler {
               /** Inform occupants that room now does not show unavailable members **/
             }
             if ( params.containsKey( "STATUS_104" ) ) {
-              /** Inform occupants that a non-privacy-related room 
+              /** Inform occupants that a non-privacy-related room,
                * configuration change has occurred **/
             }
             if ( params.containsKey( "STATUS_110" )
@@ -263,8 +263,8 @@ public class Handler {
               /** Room is created **/
             }
             if ( params.containsKey( "STATUS_210" ) ) {
-              /** Inform user that service has assigned or modified 
-               * occupant’s roomnick **/
+              /** Inform user that service has assigned or modified,
+               * occupant's roomnick **/
             }
             if ( params.containsKey( "STATUS_301" ) ) {
               /** User is banned **/
@@ -295,7 +295,7 @@ public class Handler {
               /** User is non-member in members-only room and kicked out **/
             }
             if ( params.containsKey( "STATUS_332" ) ) {
-              /** Inform user that he or she is being removed from the room 
+              /** Inform user that he or she is being removed from the room,
                * because the MUC service is being shut down **/
             }
           }

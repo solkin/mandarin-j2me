@@ -21,6 +21,13 @@ public class NetConnection {
   public OutputStream outputStream = null;
   public InputStream inputStream = null;
 
+  /**
+   * Connecting to specified host and port with SSL option
+   * @param host
+   * @param port
+   * @param isUseSsl
+   * @throws IOException 
+   */
   public void connectAddress ( String host, int port, boolean isUseSsl ) throws IOException {
     /** Saving host and port **/
     this.host = host;
@@ -39,6 +46,10 @@ public class NetConnection {
     LogUtil.outMessage ( "Connected successfully" );
   }
 
+  /**
+   * Disconnecting from connected host
+   * @throws IOException 
+   */
   public void disconnect () throws IOException {
     /** Closing I/O streams **/
     outputStream.close ();
@@ -46,10 +57,23 @@ public class NetConnection {
     socket.close ();
   }
 
+  /**
+   * Flushing output stream
+   * @throws IOException 
+   */
   public void flush () throws IOException {
     outputStream.flush ();
   }
 
+  /**
+   * Reading specified length from input stream
+   * @param length
+   * @return byte array
+   * @throws IOException
+   * @throws InterruptedException
+   * @throws java.io.InterruptedIOException
+   * @throws java.lang.IndexOutOfBoundsException 
+   */
   public byte[] read ( int length ) throws IOException, InterruptedException, java.io.InterruptedIOException, java.lang.IndexOutOfBoundsException {
     byte[] data = new byte[ length ];
     int dataReadSum = 0;
@@ -65,6 +89,11 @@ public class NetConnection {
     return data;
   }
 
+  /**
+   * Returns available data on input stream
+   * @return int
+   * @throws IOException 
+   */
   public int getAvailable () throws IOException {
     return inputStream.available ();
   }

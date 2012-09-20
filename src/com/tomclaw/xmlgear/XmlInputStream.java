@@ -50,6 +50,11 @@ public class XmlInputStream {
     this.inputStream = inputStream;
   }
 
+  /**
+   * Parsing next tag from input stream
+   * @return boolean document end
+   * @throws Throwable 
+   */
   public boolean nextTag() throws Throwable {
     tagName = null;
     tagType = TAG_UNKNOWN;
@@ -218,14 +223,22 @@ public class XmlInputStream {
     return false;
   }
 
+  /**
+   * Returns before current tag body
+   * @return String body
+   */
   public String getBody() {
     return body == null ? "" : body;
   }
 
+  /**
+   * Closing input stream
+   * @throws IOException 
+   */
   public void close() throws IOException {
     inputStream.close();
   }
-
+  
   private String subChars( StringBuffer sb, int start, int end ) {
     return toStringFromXmlWellFormed( byteArrayToString( sb, start, end ) );
   }
