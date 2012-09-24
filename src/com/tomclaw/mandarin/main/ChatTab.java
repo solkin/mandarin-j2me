@@ -5,6 +5,7 @@ import com.tomclaw.tcuilite.ChatItem;
 import com.tomclaw.tcuilite.Label;
 import com.tomclaw.tcuilite.TabItem;
 import com.tomclaw.tcuilite.localization.Localization;
+import com.tomclaw.utils.LogUtil;
 import com.tomclaw.utils.StringUtil;
 import java.util.Vector;
 

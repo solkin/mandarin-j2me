@@ -215,7 +215,7 @@ public class Handler {
               /** Inform user that any occupant is allowed to see the user’s full JID **/
               roomItem.setNonAnonimous( true );
             } else {
-              /** Room is anonimous **/
+              /** Room is anonymous **/
               roomItem.setNonAnonimous( false );
             }
             if ( params.containsKey( "STATUS_101" ) ) {
@@ -252,11 +252,11 @@ public class Handler {
               /** Room logging is disabled **/
             }
             if ( params.containsKey( "STATUS_172" ) ) {
-              /** Room is now non-anonimous **/
+              /** Room is now non-anonymous **/
               roomItem.setNonAnonimous( true );
             }
             if ( params.containsKey( "STATUS_173" ) ) {
-              /** Room is now semi-anonimous **/
+              /** Room is now semi-anonymous **/
               roomItem.setNonAnonimous( false );
             }
             if ( params.containsKey( "STATUS_201" ) ) {
@@ -264,10 +264,13 @@ public class Handler {
             }
             if ( params.containsKey( "STATUS_210" ) ) {
               /** Inform user that service has assigned or modified,
-               * occupant's roomnick **/
+               * occupant's room nick **/
             }
             if ( params.containsKey( "STATUS_301" ) ) {
               /** User is banned **/
+              roomItem.setResourcesOffline();
+              /** Showing error **/
+              showError( "ROOM_VISITOR_BANNED" );
             }
             if ( params.containsKey( "STATUS_303" ) ) {
               /** Inform all occupants of new room nickname **/
@@ -287,6 +290,9 @@ public class Handler {
             }
             if ( params.containsKey( "STATUS_307" ) ) {
               /** User is kicked **/
+              roomItem.setResourcesOffline();
+              /** Showing error **/
+              showError( "ROOM_VISITOR_KICKED" );
             }
             if ( params.containsKey( "STATUS_321" ) ) {
               /** Room is members-only and user affiliation changed **/

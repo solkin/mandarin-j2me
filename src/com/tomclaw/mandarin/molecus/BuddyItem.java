@@ -144,6 +144,10 @@ public class BuddyItem extends GroupChild {
     }
   }
 
+  /**
+   * Returns buddy user name
+   * @return String username
+   */
   public final String getUserName() {
     int index = jid.indexOf( '@' );
     if ( index != -1 ) {

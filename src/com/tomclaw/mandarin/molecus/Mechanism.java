@@ -903,7 +903,7 @@ public class Mechanism {
                   Item item = ( Item ) items.elementAt( c );
                   /** Username detection **/
                   username = BuddyList.getJidUsername( item.jid );
-                  LogUtil.outMessage( username );
+                  LogUtil.outMessage( "Username: " + username );
                   /** Checking for username not null **/
                   if ( username != null ) {
                     try {

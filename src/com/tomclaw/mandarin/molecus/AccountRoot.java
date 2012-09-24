@@ -27,6 +27,9 @@ public class AccountRoot {
   private static Session session;
   private static int statusIndex = StatusUtil.offlineIndex;
 
+  /**
+   * Initialization of user data
+   */
   public static void init() {
     /** User data is loaded **/
   }
@@ -87,6 +90,10 @@ public class AccountRoot {
     AccountRoot.priority = priority;
   }
 
+  /**
+   * Returns session or creates if session doesn't exist
+   * @return Session
+   */
   public static Session getSession() {
     if ( session == null ) {
       session = new Session( true );
@@ -94,26 +101,43 @@ public class AccountRoot {
     return session;
   }
 
-  /** 
+  /**
    * Checks for account fields are filled and ready
+   * @return boolean
    */
   public static boolean isReady() {
     return ( userName != null && password != null && resource != null
             && remoteHost != null && remotePort != 0 );
   }
 
+  /**
+   * Returns account is offline
+   * @return 
+   */
   public static boolean isOffline() {
     return statusIndex == StatusUtil.offlineIndex;
   }
 
+  /**
+   * Returns account user name
+   * @return String username
+   */
   public static String getUserName() {
     return userName;
   }
 
+  /**
+   * Returns account password
+   * @return String password
+   */
   public static String getPassword() {
     return password;
   }
 
+  /**
+   * Returns account nick name
+   * @return String nick name
+   */
   public static String getNickName() {
     if ( nickName == null ) {
       return userName;
@@ -121,58 +145,114 @@ public class AccountRoot {
     return nickName;
   }
 
+  /**
+   * Returns remote connection host for main stream
+   * @return String host
+   */
   public static String getRemoteHost() {
     return remoteHost;
   }
 
+  /**
+   * Returns remote connection port for main stream
+   * @return int port
+   */
   public static int getRemotePort() {
     return remotePort;
   }
 
+  /**
+   * Returns host for services scan after connection
+   * @return String services host
+   */
   public static String getServicesHost() {
     return servicesHost;
   }
 
+  /**
+   * Returns rooms host to scan and create
+   * @return String room host
+   */
   public static String getRoomHost() {
     return roomHost;
   }
 
+  /**
+   * Returns session resource
+   * @return String resource
+   */
   public static String getResource() {
     return resource;
   }
 
+  /**
+   * Returns clear JID, concatinated from username and remote host
+   * @return String clear JId
+   */
   public static String getClearJid() {
     return userName.concat( "@" ).concat( remoteHost );
   }
 
+  /**
+   * Returns full JID, concatinated from clear JID and resource
+   * @return 
+   */
   public static String getFullJid() {
     return getClearJid().concat( "/" ).concat( resource );
   }
 
+  /**
+   * Generates random cookie for outgoing packets
+   * @return 
+   */
   public static String generateCookie() {
     return StringUtil.generateString( 8 );
   }
 
+  /**
+   * Returns host for registering users
+   * @return String register host
+   */
   public static String getRegisterHost() {
     return registerHost;
   }
 
+  /**
+   * Returns port for registering host
+   * @return 
+   */
   public static int getRegisterPort() {
     return registerPort;
   }
 
+  /**
+   * Returns use SSL on connection option
+   * @return boolean SSL option
+   */
   public static boolean getUseSsl() {
     return isUseSsl;
   }
 
+  /**
+   * Returns use SASL connection method option
+   * @return 
+   */
   public static boolean getUseSasl() {
     return isUseSasl;
   }
 
+  /**
+   * Returns status index of account (according to StatusUtil)
+   * @return int status index
+   */
   public static int getStatusIndex() {
     return statusIndex;
   }
 
+  /**
+   * Returns account priority that configures while connection
+   * @return int priority
+   */
   public static int getPriority() {
     return priority;
   }
