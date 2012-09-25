@@ -269,6 +269,9 @@ public class Handler {
             if ( params.containsKey( "STATUS_301" ) ) {
               /** User is banned **/
               roomItem.setResourcesOffline();
+              /** In this case, user banned, but 
+               * status updated for whole room **/
+              resource = "";
               /** Showing error **/
               showError( "ROOM_VISITOR_BANNED" );
             }
@@ -291,6 +294,9 @@ public class Handler {
             if ( params.containsKey( "STATUS_307" ) ) {
               /** User is kicked **/
               roomItem.setResourcesOffline();
+              /** In this case, user banned, but 
+               * status updated for whole room **/
+              resource = "";
               /** Showing error **/
               showError( "ROOM_VISITOR_KICKED" );
             }
