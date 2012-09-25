@@ -135,7 +135,7 @@ public class Handler {
     } else {
       /** Searching for buddy in roster **/
       BuddyItem buddyItem = MidletMain.mainFrame.buddyList.getBuddyItem( clearJid );
-      /** Checking for buddy item existance in roster **/
+      /** Checking for buddy item existing in roster **/
       if ( buddyItem == null ) {
         /** Buddy not exist, according to the 
          * RFC 3921 presence must be ignored **/
@@ -162,7 +162,7 @@ public class Handler {
           LogUtil.outMessage( "Removing resource: ".concat( resource ) );
           buddyItem.removeResource( resource );
         }
-        /** Checking for muc presence information **/
+        /** Checking for MUC presence information **/
         if ( !params.isEmpty()
                 && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
           /** Creating room instance from buddy item **/
@@ -172,27 +172,28 @@ public class Handler {
             String error_cause = ( String ) params.get( "ERROR_CAUSE" );
             Handler.showError( "MUC_".concat( error_cause ) );
           } else {
+            /** Obtain affiliation, JID, role and nick **/
             String muc_affiliation = null;
             String muc_jid = null;
             String muc_role = null;
             String muc_nick = null;
             if ( params.containsKey( "AFFILIATION" ) ) {
-              /** Affiliation in muc **/
+              /** Affiliation in MUC **/
               muc_affiliation = ( String ) params.get( "AFFILIATION" );
               t_resource.setAffiliation( RoomUtil.getAffiliationIndex( muc_affiliation ) );
             }
             if ( params.containsKey( "JID" ) ) {
-              /** JID in muc **/
+              /** JID in MUC **/
               muc_jid = ( String ) params.get( "JID" );
               t_resource.setJid( muc_jid );
             }
             if ( params.containsKey( "ROLE" ) ) {
-              /** Role in muc **/
+              /** Role in MUC **/
               muc_role = ( String ) params.get( "ROLE" );
               t_resource.setRole( RoomUtil.getRoleIndex( muc_role ) );
             }
             if ( params.containsKey( "NICK" ) ) {
-              /** Nick in muc **/
+              /** Nick in MUC **/
               muc_nick = ( String ) params.get( "NICK" );
             }
             if ( params.containsKey( "STATUS_110" )
@@ -219,13 +220,16 @@ public class Handler {
               roomItem.setNonAnonimous( false );
             }
             if ( params.containsKey( "STATUS_101" ) ) {
-              /** Inform user that his or her affiliation changed while not in the room **/
+              /** Inform user that his or her affiliation 
+               * changed while not in the room **/
+              showDialog("INFO", "AFFL_WAS_CHANGED");
             }
             if ( params.containsKey( "STATUS_102" ) ) {
               /** Inform occupants that room now shows unavailable members **/
             }
             if ( params.containsKey( "STATUS_103" ) ) {
-              /** Inform occupants that room now does not show unavailable members **/
+              /** Inform occupants that room now does 
+               * not show unavailable members **/
             }
             if ( params.containsKey( "STATUS_104" ) ) {
               /** Inform occupants that a non-privacy-related room,
@@ -302,13 +306,31 @@ public class Handler {
             }
             if ( params.containsKey( "STATUS_321" ) ) {
               /** Room is members-only and user affiliation changed **/
+              roomItem.setResourcesOffline();
+              /** In this case, user banned, but 
+               * status updated for whole room **/
+              resource = "";
+              /** Showing error **/
+              showError( "ROOM_MEMBERS_ONLY_AFFL_CHG" );
             }
             if ( params.containsKey( "STATUS_322" ) ) {
               /** User is non-member in members-only room and kicked out **/
+              roomItem.setResourcesOffline();
+              /** In this case, user banned, but 
+               * status updated for whole room **/
+              resource = "";
+              /** Showing error **/
+              showError( "ROOM_BECAME_MEMBERS_ONLY" );
             }
             if ( params.containsKey( "STATUS_332" ) ) {
               /** Inform user that he or she is being removed from the room,
                * because the MUC service is being shut down **/
+              roomItem.setResourcesOffline();
+              /** In this case, user banned, but 
+               * status updated for whole room **/
+              resource = "";
+              /** Showing error **/
+              showError( "SYSTEM_SHUTDOWN" );
             }
           }
         }
@@ -924,25 +946,28 @@ public class Handler {
 
   public static void sendTime() {
   }
-
-  /**
-   * Shows error in active window
-   * @param errorCause
-   * @param window 
-   */
+  
   public static void showError( String errorCause ) {
-    /** Obtain window **/
-    final Window window = MidletMain.screen.activeWindow;
-    /** Hiding wait screen state **/
-    MidletMain.screen.setWaitScreenState( false );
-    /** Defining title **/
-    String title = "ERROR";
     /** Checking error **/
     if ( errorCause.equals( "" ) ) {
       /** Cause unknown **/
       LogUtil.outMessage( "Cause unknown" );
       errorCause = "CAUSE_UNKNOWN";
     }
+    /** Showing dialog **/
+    showDialog("ERROR", errorCause);
+  }
+
+  /**
+   * Shows error in active window
+   * @param errorCause
+   * @param window 
+   */
+  public static void showDialog( String title, String message ) {
+    /** Obtain window **/
+    final Window window = MidletMain.screen.activeWindow;
+    /** Hiding wait screen state **/
+    MidletMain.screen.setWaitScreenState( false );
     /** Creating soft and dialog **/
     Soft dialogSoft = new Soft( MidletMain.screen );
     dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "CLOSE" ) ) {
@@ -952,11 +977,12 @@ public class Handler {
       }
     };
     /** Showing dialog **/
-    showDialog( window, dialogSoft, title, Localization.getMessage( errorCause ) );
+    showDialog( window, dialogSoft, title, Localization.getMessage( message ) );
   }
 
   /**
-   * Showing frame dialog for specied window, soft, title and message
+   * Showing frame dialog for specified window, soft, 
+   * title (not localized) and message (localized)
    * @param window
    * @param dialogSoft
    * @param title
