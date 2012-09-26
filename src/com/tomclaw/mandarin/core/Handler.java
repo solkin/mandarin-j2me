@@ -180,7 +180,8 @@ public class Handler {
             if ( params.containsKey( "AFFILIATION" ) ) {
               /** Affiliation in MUC **/
               muc_affiliation = ( String ) params.get( "AFFILIATION" );
-              t_resource.setAffiliation( RoomUtil.getAffiliationIndex( muc_affiliation ) );
+              t_resource.setAffiliation(
+                      RoomUtil.getAffiliationIndex( muc_affiliation ) );
             }
             if ( params.containsKey( "JID" ) ) {
               /** JID in MUC **/
@@ -197,7 +198,7 @@ public class Handler {
               muc_nick = ( String ) params.get( "NICK" );
             }
             if ( params.containsKey( "STATUS_110" )
-                    || ( muc_jid != null 
+                    || ( muc_jid != null
                     && muc_jid.equals( AccountRoot.getFullJid() ) ) ) {
               /** Inform user that presence refers to itself **/
               if ( muc_affiliation != null ) {
@@ -237,10 +238,13 @@ public class Handler {
               /** Inform occupants that a non-privacy-related room,
                * configuration change has occurred **/
             }
-            if ( params.containsKey( "STATUS_110" )
-                    || ( muc_jid != null 
-                    && muc_jid.equals( AccountRoot.getFullJid() ) ) ) {
-              /** Setting up room active or inactive **/
+            if ( ( params.containsKey( "STATUS_110" )
+                    || ( muc_jid != null
+                    && muc_jid.equals( AccountRoot.getFullJid() ) ) )
+                    && !params.containsKey( "STATUS_303" )
+                    && !roomItem.getRoomActive() ) {
+              /** Setting up room active or inactive 
+               * if it is not already active **/
               if ( roomItem.setRoomActive(
                       t_resource.statusIndex != StatusUtil.offlineIndex ) ) {
                 /** Handling room entering is complete **/
@@ -289,23 +293,34 @@ public class Handler {
               /** Checking for this is our new nick **/
               if ( muc_nick.equals( roomItem.getRoomNick() ) ) {
                 /** This is our nick - update bookmark **/
-                RoomItem item = new RoomItem( roomItem.getJid(), roomItem.getNickName(), roomItem.getMinimize(), roomItem.getAutoJoin() );
+                RoomItem item = new RoomItem( roomItem.getJid(), 
+                        roomItem.getNickName(), roomItem.getMinimize(), 
+                        roomItem.getAutoJoin() );
                 /** Updating parameters **/
                 item.setRoomNick( muc_nick );
                 item.setRoomPassword( roomItem.getRoomPassword() );
                 /** Mechanism invocation **/
-                Mechanism.sendBookmarksOperation( Mechanism.OPERATION_EDIT, roomItem, item, false, true );
+                Mechanism.sendBookmarksOperation( Mechanism.OPERATION_EDIT, 
+                        roomItem, item, false, true );
               }
               /** Checking for chat tab **/
-              ChatTab chatTab = MidletMain.chatFrame.getChatTab( clearJid, "", false );
+              ChatTab chatTab = MidletMain.chatFrame.getChatTab( clearJid, 
+                      "", false );
               if ( chatTab != null ) {
                 /** Check and prepare message **/
-                String message = ChatFrame.checkMessage( resource, "Changed nick name from " + resource + " to " + muc_nick, null, chatTab.isMucTab() );
+                String message = "[p][i][b][c=purple]".concat(resource).
+                        concat( "[/c][/b][/i] " ).concat(
+                        Localization.getMessage( "CHANGED_NICK" ) ).
+                        concat( " [i][b][c=purple]" ).concat( muc_nick ).
+                        concat( "[/c][/b][/i][/p]" );
                 /** Showing message in chat tab **/
-                boolean isTabActive = MidletMain.chatFrame.addChatItem( chatTab, AccountRoot.generateCookie(),
+                boolean isTabActive = MidletMain.chatFrame.addChatItem( 
+                        chatTab, AccountRoot.generateCookie(),
                         ChatItem.TYPE_PLAIN_MSG, true, resource, message );
-                if ( !( isTabActive && MidletMain.screen.activeWindow.equals( MidletMain.chatFrame ) ) ) {
-                  /** Chat tab is not active or ChatFrame is not on the screen **/
+                if ( !( isTabActive && MidletMain.screen.activeWindow.
+                        equals( MidletMain.chatFrame ) ) ) {
+                  /** Chat tab is not active or ChatFrame 
+                   * is not on the screen **/
                   chatTab.resource.unreadCount++;
                   /** Check for first unread message **/
                   if ( chatTab.resource.unreadCount == 1 ) {

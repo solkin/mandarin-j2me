@@ -522,7 +522,7 @@ public class MainFrame extends Window {
               }
 
               public void removeBookmark( RoomItem roomItem ) {
-                /** Checking for confrence status **/
+                /** Checking for conference status **/
                 if ( buddyItem.getStatusIndex() != StatusUtil.offlineIndex ) {
                   /** Log out from active conference **/
                   Mechanism.leaveRoomRequest( roomItem );
