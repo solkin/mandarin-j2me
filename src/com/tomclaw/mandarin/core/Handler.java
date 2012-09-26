@@ -197,14 +197,15 @@ public class Handler {
               muc_nick = ( String ) params.get( "NICK" );
             }
             if ( params.containsKey( "STATUS_110" )
-                    || ( muc_jid != null && muc_jid.equals( AccountRoot.getFullJid() ) )
-                    || muc_jid == null ) {
+                    || ( muc_jid != null 
+                    && muc_jid.equals( AccountRoot.getFullJid() ) ) ) {
               /** Inform user that presence refers to itself **/
               if ( muc_affiliation != null ) {
                 /** Applying self-affiliation **/
                 roomItem.setAffiliation(
                         RoomUtil.getAffiliationIndex( muc_affiliation ) );
               }
+              /** Checking for role **/
               if ( muc_role != null ) {
                 /** Applying self-role **/
                 roomItem.setRole(
@@ -213,7 +214,8 @@ public class Handler {
             }
             /** Status codes **/
             if ( params.containsKey( "STATUS_100" ) ) {
-              /** Inform user that any occupant is allowed to see the user’s full JID **/
+              /** Inform user that any occupant is 
+               * allowed to see the user’s full JID **/
               roomItem.setNonAnonimous( true );
             } else {
               /** Room is anonymous **/
@@ -222,7 +224,7 @@ public class Handler {
             if ( params.containsKey( "STATUS_101" ) ) {
               /** Inform user that his or her affiliation 
                * changed while not in the room **/
-              showDialog("INFO", "AFFL_WAS_CHANGED");
+              showDialog( "INFO", "AFFL_WAS_CHANGED" );
             }
             if ( params.containsKey( "STATUS_102" ) ) {
               /** Inform occupants that room now shows unavailable members **/
@@ -236,8 +238,8 @@ public class Handler {
                * configuration change has occurred **/
             }
             if ( params.containsKey( "STATUS_110" )
-                    || ( muc_jid != null && muc_jid.equals( AccountRoot.getFullJid() ) )
-                    || muc_jid == null ) {
+                    || ( muc_jid != null 
+                    && muc_jid.equals( AccountRoot.getFullJid() ) ) ) {
               /** Setting up room active or inactive **/
               if ( roomItem.setRoomActive(
                       t_resource.statusIndex != StatusUtil.offlineIndex ) ) {
@@ -293,6 +295,26 @@ public class Handler {
                 item.setRoomPassword( roomItem.getRoomPassword() );
                 /** Mechanism invocation **/
                 Mechanism.sendBookmarksOperation( Mechanism.OPERATION_EDIT, roomItem, item, false, true );
+              }
+              /** Checking for chat tab **/
+              ChatTab chatTab = MidletMain.chatFrame.getChatTab( clearJid, "", false );
+              if ( chatTab != null ) {
+                /** Check and prepare message **/
+                String message = ChatFrame.checkMessage( resource, "Changed nick name from " + resource + " to " + muc_nick, null, chatTab.isMucTab() );
+                /** Showing message in chat tab **/
+                boolean isTabActive = MidletMain.chatFrame.addChatItem( chatTab, AccountRoot.generateCookie(),
+                        ChatItem.TYPE_PLAIN_MSG, true, resource, message );
+                if ( !( isTabActive && MidletMain.screen.activeWindow.equals( MidletMain.chatFrame ) ) ) {
+                  /** Chat tab is not active or ChatFrame is not on the screen **/
+                  chatTab.resource.unreadCount++;
+                  /** Check for first unread message **/
+                  if ( chatTab.resource.unreadCount == 1 ) {
+                    /** Buddy item UI update **/
+                    chatTab.buddyItem.updateUi();
+                    /** Chat tab UI update **/
+                    chatTab.updateUi();
+                  }
+                }
               }
             }
             if ( params.containsKey( "STATUS_307" ) ) {
@@ -490,7 +512,6 @@ public class Handler {
       for ( int c = 0; c < items.size(); c++ ) {
         final Item item = ( Item ) items.elementAt( c );
         PopupItem popupItem = new PopupItem( item.name ) {
-
           public void actionPerformed() {
             /** Showing wait screen **/
             MidletMain.screen.setWaitScreenState( true );
@@ -644,8 +665,7 @@ public class Handler {
   public static void showRoomVisitorsListEditFrame( RoomItem roomItem,
           String affiliation, Vector items ) {
     /** Creating frame instance **/
-    RoomVisitorsEditFrame roomVisitorsEditFrame 
-            = new RoomVisitorsEditFrame(roomItem, affiliation, items);
+    RoomVisitorsEditFrame roomVisitorsEditFrame = new RoomVisitorsEditFrame( roomItem, affiliation, items );
     /** Disabling wait screen **/
     MidletMain.screen.setWaitScreenState( false );
     /** Setting up frame as current **/
@@ -869,14 +889,12 @@ public class Handler {
     final Soft dialogSoft = new Soft( MidletMain.screen );
     /** Left action soft **/
     dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "CLOSE" ) ) {
-
       public void actionPerformed() {
         window.closeDialog();
       }
     };
     /** Right action soft **/
     dialogSoft.rightSoft = new PopupItem( Localization.getMessage( actionType.concat( "_ACTION" ) ) ) {
-
       public void actionPerformed() {
         /** Checking for action type **/
         if ( actionType.equals( "SUBSCRIBE" ) ) {
@@ -946,7 +964,7 @@ public class Handler {
 
   public static void sendTime() {
   }
-  
+
   public static void showError( String errorCause ) {
     /** Checking error **/
     if ( errorCause.equals( "" ) ) {
@@ -955,7 +973,7 @@ public class Handler {
       errorCause = "CAUSE_UNKNOWN";
     }
     /** Showing dialog **/
-    showDialog("ERROR", errorCause);
+    showDialog( "ERROR", errorCause );
   }
 
   /**
@@ -971,7 +989,6 @@ public class Handler {
     /** Creating soft and dialog **/
     Soft dialogSoft = new Soft( MidletMain.screen );
     dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "CLOSE" ) ) {
-
       public void actionPerformed() {
         window.closeDialog();
       }
