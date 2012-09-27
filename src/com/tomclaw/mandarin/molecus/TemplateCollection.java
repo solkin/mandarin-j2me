@@ -18,6 +18,12 @@ import java.util.Vector;
  */
 public class TemplateCollection {
 
+  /** Constants **/
+  public static String ROOM_NAME = "muc#roomconfig_roomname";
+  public static String ROOM_DESC = "muc#roomconfig_roomdesc";
+  public static String ROOM_PERSISTENT = "muc#roomconfig_persistentroom";
+  public static String ROOM_PASS_PROT = "muc#roomconfig_passwordprotectedroom";
+  public static String ROOM_PASSWORD = "muc#roomconfig_roomsecret";
   /** Tags **/
   public static final String TAG_IQ = "iq";
   public static final String TAG_QUERY = "query";

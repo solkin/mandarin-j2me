@@ -10,6 +10,9 @@ import com.tomclaw.utils.LogUtil;
  */
 public class Settings {
 
+  /** Constants **/
+  public static final int ROOM_NAME_MAX_SIZE = 40;
+  public static final int ROOM_DESC_MAX_SIZE = 120;
   /** Icons **/
   public static String IMG_CHAT = "/res/groups/img_chat.png";
   public static String IMG_STATUS = "/res/groups/img_status.png";

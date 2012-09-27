@@ -7,10 +7,7 @@ import com.tomclaw.mandarin.core.Settings;
 import com.tomclaw.mandarin.main.BuddyList;
 import com.tomclaw.mandarin.main.MidletMain;
 import com.tomclaw.mandarin.main.RoomEditFrame;
-import com.tomclaw.tcuilite.Check;
-import com.tomclaw.tcuilite.PaneObject;
-import com.tomclaw.tcuilite.PopupItem;
-import com.tomclaw.tcuilite.Soft;
+import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
 import com.tomclaw.utils.StringUtil;
@@ -1034,12 +1031,7 @@ public class Mechanism {
               Form form = ( Form ) params.get( "FORM" );
               /** Adding execute command **/
               Command command = new Command( Localization.getMessage( "SAVE" ) ) {
-                /** Constants **/
-                private String ROOM_NAME = "muc#roomconfig_roomname";
-                private String ROOM_DESC = "muc#roomconfig_roomdesc";
-                private String ROOM_PERSISTENT = "muc#roomconfig_persistentroom";
-                private String ROOM_PASS_PROT = "muc#roomconfig_passwordprotectedroom";
-                private String ROOM_PASSWORD = "muc#roomconfig_roomsecret";
+                
                 /** State to continue if recommended value is not corrected **/
                 private int state;
 
@@ -1054,13 +1046,13 @@ public class Mechanism {
                   /** Showing wait screen **/
                   MidletMain.screen.setWaitScreenState( true );
                   /** Checking for enteried data **/
-                  if ( checkAndHaltOnEmptyValue( ROOM_NAME, "MUC_ROOM_NAME_IS_REQUIRED" ) ) {
-                    if ( checkAndHaltOnEmptyValue( ROOM_DESC, "MUC_ROOM_DESC_IS_REQUIRED" ) ) {
+                  if ( checkAndHaltOnEmptyValue( TemplateCollection.ROOM_NAME, "MUC_ROOM_NAME_IS_REQUIRED" ) ) {
+                    if ( checkAndHaltOnEmptyValue( TemplateCollection.ROOM_DESC, "MUC_ROOM_DESC_IS_REQUIRED" ) ) {
                       if ( state >= 1 || checkForRecommendedValue(
-                              ROOM_PERSISTENT, true,
+                              TemplateCollection.ROOM_PERSISTENT, true,
                               "MUC_ROOM_PERS_IS_RECOMMENDED" ) ) {
                         if ( state >= 2 || checkForRecommendedValue(
-                                ROOM_PASS_PROT, false,
+                                TemplateCollection.ROOM_PASS_PROT, false,
                                 "MUC_ROOM_PROT_IS_UNRECOMMENDED" ) ) {
                           /** Saving bookmark **/
                           updateBookmark();
@@ -1080,23 +1072,23 @@ public class Mechanism {
                 private void updateBookmark() {
                   /** Obtain room properties object **/
                   PaneObject paneObject;
-                  paneObject = form.getObjectByName( ROOM_NAME );
+                  paneObject = form.getObjectByName( TemplateCollection.ROOM_NAME );
                   /** Defining room name **/
                   String roomName = paneObject.getStringValue();
                   /** Checking for room is temporary **/
-                  paneObject = form.getObjectByName( ROOM_PERSISTENT );
+                  paneObject = form.getObjectByName( TemplateCollection.ROOM_PERSISTENT );
                   boolean isPersistent = ( ( Check ) paneObject ).state;
                   /** Checking for room is password protected **/
-                  paneObject = form.getObjectByName( ROOM_PASS_PROT );
+                  paneObject = form.getObjectByName( TemplateCollection.ROOM_PASS_PROT );
                   boolean isPassProt = ( ( Check ) paneObject ).state;
                   /** Checking for protection is enabled **/
                   String password = "";
                   if ( isPassProt ) {
                     /** Obtain room password object **/
-                    paneObject = form.getObjectByName( ROOM_PASSWORD );
+                    paneObject = form.getObjectByName( TemplateCollection.ROOM_PASSWORD );
                     if ( paneObject != null ) {
                       if ( StringUtil.isEmptyOrNull( paneObject.getStringValue() ) ) {
-                        LogUtil.outMessage( ROOM_PASSWORD.concat( " is empty" ) );
+                        LogUtil.outMessage( TemplateCollection.ROOM_PASSWORD.concat( " is empty" ) );
                       } else {
                         password = paneObject.getStringValue();
                       }
@@ -1168,6 +1160,33 @@ public class Mechanism {
                           "WARNING", Localization.getMessage( dialogDescr ) );
                 }
               };
+              /** Checking form for ROOM_NAME and ROOM_DESC fields **/
+              /** Obtain room name object **/
+              PaneObject roomNameField = form.getObjectByName( TemplateCollection.ROOM_NAME );
+              if ( roomNameField != null && roomNameField instanceof Field ) {
+                /** Obtain text **/
+                String text = ( ( Field ) roomNameField ).getText();
+                /** Checking for text size **/
+                if(text.length() > Settings.ROOM_NAME_MAX_SIZE ) {
+                  /** Trimming **/
+                  ( ( Field ) roomNameField ).setText( text.substring( 0, Settings.ROOM_NAME_MAX_SIZE ) );
+                }
+                /** Defining room name max size **/
+                ( ( Field ) roomNameField ).setMaxSize( Settings.ROOM_NAME_MAX_SIZE );
+              }
+              /** Obtain room description object **/
+              PaneObject roomDescField = form.getObjectByName( TemplateCollection.ROOM_DESC );
+              if ( roomDescField != null && roomDescField instanceof Field ) {
+                /** Obtain text **/
+                String text = ( ( Field ) roomDescField ).getText();
+                /** Checking for text size **/
+                if(text.length() > Settings.ROOM_DESC_MAX_SIZE ) {
+                  /** Trimming **/
+                  ( ( Field ) roomDescField ).setText( text.substring( 0, Settings.ROOM_DESC_MAX_SIZE ) );
+                }
+                /** Defining room description max size **/
+                ( ( Field ) roomDescField ).setMaxSize( Settings.ROOM_DESC_MAX_SIZE );
+              }
               /** Setting up command fields **/
               command.form = form;
               /** Initialize left soft **/
