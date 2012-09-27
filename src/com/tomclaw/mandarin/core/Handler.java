@@ -468,8 +468,11 @@ public class Handler {
     String jid = BuddyList.getClearJid( fullJId );
     /** Searching for buddy **/
     BuddyItem buddyItem = MidletMain.mainFrame.buddyList.getBuddyItem( jid );
+    /** Checking for buddy is not null or room item **/
     if ( buddyItem == null ) {
       LogUtil.outMessage( "No such buddy in roster: ".concat( jid ) );
+    } else if(buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
+      LogUtil.outMessage( "Room nick name couldn't be set by this xmlns" );
     } else {
       /** Setting up nick name **/
       buddyItem.setNickName( nick );
