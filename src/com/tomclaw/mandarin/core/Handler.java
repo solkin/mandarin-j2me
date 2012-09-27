@@ -238,18 +238,19 @@ public class Handler {
               /** Inform occupants that a non-privacy-related room,
                * configuration change has occurred **/
             }
-            if ( ( params.containsKey( "STATUS_110" )
-                    || ( muc_jid != null
-                    && muc_jid.equals( AccountRoot.getFullJid() ) ) )
-                    && !params.containsKey( "STATUS_303" )
-                    && !roomItem.getRoomActive() ) {
+            if ( ( params.containsKey( "STATUS_110" ) )
+                    && !params.containsKey( "STATUS_303" ) ) {
               /** Setting up room active or inactive 
                * if it is not already active **/
+              boolean isRoomActive = roomItem.getRoomActive();
               if ( roomItem.setRoomActive(
                       t_resource.statusIndex != StatusUtil.offlineIndex ) ) {
-                /** Handling room entering is complete **/
-                Handler.roomEnteringComplete( roomItem,
-                        params.containsKey( "STATUS_201" ), true );
+                /** Checking for room became active **/
+                if ( !isRoomActive && roomItem.getRoomActive() ) {
+                  /** Handling room entering is complete **/
+                  Handler.roomEnteringComplete( roomItem,
+                          params.containsKey( "STATUS_201" ), true );
+                }
               } else {
                 /** Hiding wait screen **/
                 MidletMain.screen.setWaitScreenState( false );
@@ -293,28 +294,28 @@ public class Handler {
               /** Checking for this is our new nick **/
               if ( muc_nick.equals( roomItem.getRoomNick() ) ) {
                 /** This is our nick - update bookmark **/
-                RoomItem item = new RoomItem( roomItem.getJid(), 
-                        roomItem.getNickName(), roomItem.getMinimize(), 
+                RoomItem item = new RoomItem( roomItem.getJid(),
+                        roomItem.getNickName(), roomItem.getMinimize(),
                         roomItem.getAutoJoin() );
                 /** Updating parameters **/
                 item.setRoomNick( muc_nick );
                 item.setRoomPassword( roomItem.getRoomPassword() );
                 /** Mechanism invocation **/
-                Mechanism.sendBookmarksOperation( Mechanism.OPERATION_EDIT, 
+                Mechanism.sendBookmarksOperation( Mechanism.OPERATION_EDIT,
                         roomItem, item, false, true );
               }
               /** Checking for chat tab **/
-              ChatTab chatTab = MidletMain.chatFrame.getChatTab( clearJid, 
+              ChatTab chatTab = MidletMain.chatFrame.getChatTab( clearJid,
                       "", false );
               if ( chatTab != null ) {
                 /** Check and prepare message **/
-                String message = "[p][i][b][c=purple]".concat(resource).
+                String message = "[p][i][b][c=purple]".concat( resource ).
                         concat( "[/c][/b][/i] " ).concat(
                         Localization.getMessage( "CHANGED_NICK" ) ).
                         concat( " [i][b][c=purple]" ).concat( muc_nick ).
                         concat( "[/c][/b][/i][/p]" );
                 /** Showing message in chat tab **/
-                boolean isTabActive = MidletMain.chatFrame.addChatItem( 
+                boolean isTabActive = MidletMain.chatFrame.addChatItem(
                         chatTab, AccountRoot.generateCookie(),
                         ChatItem.TYPE_PLAIN_MSG, true, resource, message );
                 if ( !( isTabActive && MidletMain.screen.activeWindow.
