@@ -312,6 +312,8 @@ public class Parser {
             }
             Queue.runQueueAction( iqId, params );
           } else if ( xmlns.equals( "http://jabber.org/protocol/muc#admin" ) ) {
+            /** Creating items vector **/
+            Vector items = new Vector();
             /** Checking for tag type **/
             if ( xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
               /** Main variables **/
@@ -321,30 +323,35 @@ public class Parser {
                       && !( xmlReader.tagName.equals( "query" )
                       && ( xmlReader.tagType == XmlInputStream.TAG_CLOSING
                       || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING ) ) ) {
-                /** Checking for tag name is item **/
+                /** Checking for tag name **/
                 if ( xmlReader.tagName.equals( "item" ) ) {
                   /** Checking for tag type is plain or selfclosing **/
                   if ( xmlReader.tagType == XmlInputStream.TAG_PLAIN
                           || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING ) {
                     /** Creating visitor instance **/
-                    visitor = new Visitor( xmlReader.getAttrValue( "affiliation", false ),
-                            xmlReader.getAttrValue( "jid", false ) );
+                    visitor = new Visitor( xmlReader.getAttrValue( "jid", false ),
+                            xmlReader.getAttrValue( "affiliation", false ) );
                   }
                   /** Checking for tag type is any closing **/
                   if ( xmlReader.tagType == XmlInputStream.TAG_CLOSING
                           || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING ) {
                     /** Checking for visitor is not null **/
                     if ( visitor != null && visitor.jid != null ) {
-                      /** Checking for visitor is not already 
-                       * in list and adding it **/
-                      if ( !params.containsKey( visitor.jid ) ) {
-                        params.put( visitor.jid, visitor );
-                      }
+                      /** Adding visitor to list **/
+                      items.addElement( visitor );
                     }
+                  }
+                } else if ( xmlReader.tagName.equals( "reason" )
+                        && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) {
+                  /** Checking for visitor is not null **/
+                  if ( visitor != null ) {
+                    /** Updating reason **/
+                    visitor.reason = xmlReader.body;
                   }
                 }
               }
             }
+            params.put( "ITEMS", items );
             Queue.runQueueAction( iqId, params );
           }
         } else if ( xmlReader.tagName.equals( "command" ) ) {
@@ -394,7 +401,7 @@ public class Parser {
       }
     } else if ( iqType.equals( "error" ) ) {
       if ( xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
-        /** Skipping all tags until error block or iq closing **/
+        /** Skipping all tags until error block or IQ closing **/
         while ( xmlReader.nextTag()
                 && !( xmlReader.tagName.equals( "error" )
                 || ( xmlReader.tagName.equals( "iq" ) && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) ) ) {
@@ -429,7 +436,7 @@ public class Parser {
                     String subscription = xmlReader.getAttrValue( "subscription", true );
                     /** Obtain buddy item from list **/
                     buddyItem = buddyList.getBuddyItem( jid );
-                    /** Checkign name and buddy item for null-type **/
+                    /** Checking name and buddy item for null-type **/
                     if ( name == null && buddyItem != null ) {
                       /** Applying exist nick name to the new item **/
                       name = buddyItem.getNickName();
@@ -955,10 +962,19 @@ public class Parser {
             && xmlReader.tagType == XmlInputStream.TAG_PLAIN ) {
       while ( xmlReader.nextTag() && !( xmlReader.tagName.equals( "x" ) && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) ) {
         if ( xmlReader.tagName.equals( "item" ) ) {
-          params.put( "AFFILIATION", xmlReader.getAttrValue( "affiliation", false ) );
-          params.put( "JID", xmlReader.getAttrValue( "jid", false ) );
-          params.put( "ROLE", xmlReader.getAttrValue( "role", false ) );
-          params.put( "NICK", xmlReader.getAttrValue( "nick", false ) );
+          /** Checking for keys is present and reading values **/
+          if ( xmlReader.checkAttr( "affiliation" ) ) {
+            params.put( "AFFILIATION", xmlReader.getAttrValue( "affiliation", false ) );
+          }
+          if ( xmlReader.checkAttr( "jid" ) ) {
+            params.put( "JID", xmlReader.getAttrValue( "jid", false ) );
+          }
+          if ( xmlReader.checkAttr( "role" ) ) {
+            params.put( "ROLE", xmlReader.getAttrValue( "role", false ) );
+          }
+          if ( xmlReader.checkAttr( "nick" ) ) {
+            params.put( "NICK", xmlReader.getAttrValue( "nick", false ) );
+          }
         }
         if ( xmlReader.tagName.equals( "status" ) ) {
           String code = xmlReader.getAttrValue( "code", false );

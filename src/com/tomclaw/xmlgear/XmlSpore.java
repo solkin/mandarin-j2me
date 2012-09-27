@@ -10,7 +10,7 @@ import com.tomclaw.mandarin.core.Handler;
 public abstract class XmlSpore extends XmlOutputStream {
 
   /**
-   * Spore mechanism invokation
+   * Spore mechanism invocation
    */
   public void invoke() {
     try {

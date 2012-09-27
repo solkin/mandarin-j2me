@@ -167,7 +167,7 @@ public class RoomMoreFrame extends Window {
         Mechanism.sendBookmarksOperation( Mechanism.OPERATION_ADD, roomItem, false, false );
       }
     } else {
-      /** Checking for local bookmark temporarity is not the same on server **/
+      /** Checking for local bookmark temporary is not the same on server **/
       if ( !roomItem.getTemp() && isTemporaryRoom ) {
         /** On server is temporary bookmark, but local is persistent
          so, removing bookmark on server, reconfigure local **/

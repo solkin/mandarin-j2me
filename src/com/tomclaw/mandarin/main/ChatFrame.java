@@ -171,7 +171,7 @@ public class ChatFrame extends Window {
                       /** Checking for message type **/
                       if ( !isMucMessage ) {
                         /** Check and prepare message **/
-                        message = checkMessage( AccountRoot.getNickName(), 
+                        message = checkMessage( AccountRoot.getNickName(),
                                 message, null, chatTab.isMucTab() );
                         /** Add's chat item to selected chat frame **/
                         MidletMain.chatFrame.addChatItem( chatTab, cookie,
@@ -267,13 +267,12 @@ public class ChatFrame extends Window {
       message = "[i][b][c=purple]* ".concat( nickName ).concat( " " ).
               concat( Localization.getMessage( "CHANGED_ROOM_TOPIC_TO" ) ).
               concat( ":[/b][br/]" ).concat( subject ).concat( "[/i]" );
-    } else if ( isMuc && (subject == null || subject.length() == 0) 
-            && message == null ) {
+    } else if ( isMuc && StringUtil.isNullOrEmpty( subject ) && message == null ) {
       /** This is muc topic **/
       message = "[i][b][c=purple]* ".concat( nickName ).concat( " " ).
               concat( Localization.getMessage( "REMOVED_TOPIC" ) ).
               concat( "[/b][/i]" );
-    }  else {
+    } else {
       message = "[c=red][b]".concat( Localization.getMessage( "INVALID_MESSAGE_RECEIVED" ) ).concat( "[/b][/c]" );
     }
     return message;
@@ -339,7 +338,7 @@ public class ChatFrame extends Window {
   }
 
   /**
-   * Checking for chat tab existance
+   * Checking for chat tab existing
    * @param jid
    * @param resource 
    * @return ChatTab

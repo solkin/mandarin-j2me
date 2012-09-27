@@ -7,11 +7,7 @@ import com.tomclaw.mandarin.core.Settings;
 import com.tomclaw.mandarin.main.BuddyList;
 import com.tomclaw.mandarin.main.MidletMain;
 import com.tomclaw.mandarin.main.RoomEditFrame;
-import com.tomclaw.tcuilite.ChatItem;
-import com.tomclaw.tcuilite.Check;
-import com.tomclaw.tcuilite.PaneObject;
-import com.tomclaw.tcuilite.PopupItem;
-import com.tomclaw.tcuilite.Soft;
+import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
 import com.tomclaw.utils.StringUtil;
@@ -29,6 +25,7 @@ public class Mechanism {
   public static final int OPERATION_REMOVE = 0x01;
   public static final int OPERATION_EDIT = 0x02;
   public static final int OPERATION_ADD = 0x03;
+  public static final int OPERATION_GET = 0x04;
 
   /**
    * Login transactions method
@@ -43,7 +40,7 @@ public class Mechanism {
           /** Connecting to the specified in AccountRoot host **/
           session.establishConnection( AccountRoot.getRemoteHost(), AccountRoot.getRemotePort(), AccountRoot.getUseSsl() );
           session.start();
-          /** Creating xml spore **/
+          /** Creating XML spore **/
           XmlSpore xmlSpore = new XmlSpore() {
             public void onRun() throws Throwable {
               if ( AccountRoot.getUseSasl() ) {
@@ -67,7 +64,7 @@ public class Mechanism {
                       params.put( "username", AccountRoot.getUserName() );
                       params.put( "password", AccountRoot.getPassword() );
                       params.put( "resource", AccountRoot.getResource() );
-                      /** Creating xml spore **/
+                      /** Creating XML spore **/
                       XmlSpore xmlSpore = new XmlSpore() {
                         public void onRun() throws Throwable {
                           /** Sending login form **/
@@ -81,7 +78,7 @@ public class Mechanism {
                               if ( errorCause == null ) {
                                 /** No errors **/
                                 LogUtil.outMessage( "Login successfull" );
-                                /** Creating xml spore **/
+                                /** Creating XML spore **/
                                 XmlSpore xmlSpore = new XmlSpore() {
                                   public void onRun() throws Throwable {
                                     /** Sending service discovery request **/
@@ -96,7 +93,7 @@ public class Mechanism {
                                         if ( errorCause == null ) {
                                           LogUtil.outMessage( "Items received" );
                                           Handler.setServices( params );
-                                          /** Creating xml spore **/
+                                          /** Creating XML spore **/
                                           XmlSpore xmlSpore = new XmlSpore() {
                                             public void onRun() throws Throwable {
                                               /** Sending login form **/
@@ -111,7 +108,7 @@ public class Mechanism {
                                                     /** No errors **/
                                                     LogUtil.outMessage( "Bookmarks request successfull" );
                                                     Handler.setBookmarks( params );
-                                                    /** Creating xml spore **/
+                                                    /** Creating XML spore **/
                                                     XmlSpore xmlSpore = new XmlSpore() {
                                                       public void onRun() throws Throwable {
                                                         /** Sending roster request **/
@@ -121,7 +118,7 @@ public class Mechanism {
                                                             /** Roster received **/
                                                             LogUtil.outMessage( "Roster received" );
                                                             Handler.setRoster( params );
-                                                            /** Creating xml spore **/
+                                                            /** Creating XML spore **/
                                                             XmlSpore xmlSpore = new XmlSpore() {
                                                               public void onRun() throws Throwable {
                                                                 /** Sending presence info **/
@@ -141,7 +138,7 @@ public class Mechanism {
                                                                 Queue.pushQueueAction( queueAction );
                                                               }
                                                             };
-                                                            /** Releasing xml spore **/
+                                                            /** Releasing XML spore **/
                                                             session.getSporedStream().releaseSpore( xmlSpore );
                                                           }
                                                         };
@@ -149,7 +146,7 @@ public class Mechanism {
                                                         Queue.pushQueueAction( queueAction );
                                                       }
                                                     };
-                                                    /** Releasing xml spore **/
+                                                    /** Releasing XML spore **/
                                                     session.getSporedStream().releaseSpore( xmlSpore );
                                                   } else {
                                                     /** Showing error **/
@@ -162,7 +159,7 @@ public class Mechanism {
 
                                             }
                                           };
-                                          /** Releasing xml spore **/
+                                          /** Releasing XML spore **/
                                           session.getSporedStream().releaseSpore( xmlSpore );
                                         } else {
                                           /** Showing error **/
@@ -174,7 +171,7 @@ public class Mechanism {
                                     Queue.pushQueueAction( queueAction );
                                   }
                                 };
-                                /** Releasing xml spore **/
+                                /** Releasing XML spore **/
                                 session.getSporedStream().releaseSpore( xmlSpore );
                               } else {
                                 /** Showing error **/
@@ -186,7 +183,7 @@ public class Mechanism {
                           Queue.pushQueueAction( queueAction );
                         }
                       };
-                      /** Releasing xml spore **/
+                      /** Releasing XML spore **/
                       session.getSporedStream().releaseSpore( xmlSpore );
                     } else {
                       /** Showing error **/
@@ -199,7 +196,7 @@ public class Mechanism {
               }
             }
           };
-          /** Releasing xml spore **/
+          /** Releasing XML spore **/
           session.getSporedStream().releaseSpore( xmlSpore );
         } catch ( Throwable ex ) {
           Handler.showError( "IO_EXCEPTION" );
@@ -211,7 +208,7 @@ public class Mechanism {
   public static void setStatus( final int statusIndex ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         TemplateCollection.sendPresence(
@@ -221,14 +218,14 @@ public class Mechanism {
                 null, AccountRoot.getPriority(), true );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void accountLogout() {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         TemplateCollection.sendPresence(
@@ -247,7 +244,7 @@ public class Mechanism {
         session.disconnect();
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -260,7 +257,7 @@ public class Mechanism {
     final PopupItem popupItem = serviceItem.getNewPopupItem( false );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending service discovery request **/
@@ -282,7 +279,7 @@ public class Mechanism {
               if ( params.containsKey( "http://jabber.org/protocol/commands" ) ) {
                 /** Commands supported **/
                 LogUtil.outMessage( "Commands supported" );
-                /** Creating xml spore **/
+                /** Creating XML spore **/
                 XmlSpore xmlSpore = new XmlSpore() {
                   public void onRun() throws Throwable {
                     /** Sending service discovery request **/
@@ -305,7 +302,7 @@ public class Mechanism {
                     Queue.pushQueueAction( queueAction );
                   }
                 };
-                /** Releasing xml spore **/
+                /** Releasing XML spore **/
                 session.getSporedStream().releaseSpore( xmlSpore );
               } else {
                 /** Commands not supported, showing popup **/
@@ -318,7 +315,7 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -333,7 +330,7 @@ public class Mechanism {
   public static void executeCommand( final Item item, final Form form, final String command ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending command execute request **/
@@ -381,7 +378,7 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -389,7 +386,7 @@ public class Mechanism {
           final boolean isTemp ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending command execute request **/
@@ -420,7 +417,7 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -450,7 +447,7 @@ public class Mechanism {
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending command execute request **/
@@ -485,7 +482,7 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -509,7 +506,7 @@ public class Mechanism {
       /** Another connected service **/
       /** Obtain session object **/
       final Session session = AccountRoot.getSession();
-      /** Creating xml spore **/
+      /** Creating XML spore **/
       XmlSpore xmlSpore = new XmlSpore() {
         public void onRun() throws Throwable {
           /** Sending command execute request **/
@@ -537,7 +534,7 @@ public class Mechanism {
           Queue.pushQueueAction( queueAction );
         }
       };
-      /** Releasing xml spore **/
+      /** Releasing XML spore **/
       session.getSporedStream().releaseSpore( xmlSpore );
     }
   }
@@ -553,7 +550,7 @@ public class Mechanism {
           final String prompt, final String name, final String[] groups ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending command execute request **/
@@ -586,87 +583,87 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void sendSubscriptionRequest( final String jid ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending request **/
         TemplateCollection.sendSubscriptionRequest( this, jid );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void sendSubscriptionApprove( final String jid ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending request **/
         TemplateCollection.sendSubscriptionApprove( this, jid );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void sendSubscriptionReject( final String jid ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending request **/
         TemplateCollection.sendSubscriptionReject( this, jid );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void sendIqResult( final String iqId ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending result **/
         TemplateCollection.sendIqResult( this, iqId, null );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void sendPong( Session session, final String from, final String id ) {
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending pong **/
         TemplateCollection.sendIqResult( this, id, from );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void sendPing( Session session, final String from ) {
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending pong **/
         TemplateCollection.sendPing( this, from );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -675,7 +672,7 @@ public class Mechanism {
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending command execute request **/
@@ -688,7 +685,7 @@ public class Mechanism {
             /** Checking for error **/
             if ( errorCause == null ) {
               LogUtil.outMessage( "Gateway registration removed" );
-              /** Creating xml spore **/
+              /** Creating XML spore **/
               XmlSpore xmlSpore = new XmlSpore() {
                 public void onRun() throws Throwable {
                   /** Removing service from roster **/
@@ -701,7 +698,7 @@ public class Mechanism {
                   MidletMain.screen.setWaitScreenState( false );
                 }
               };
-              /** Releasing xml spore **/
+              /** Releasing XML spore **/
               session.getSporedStream().releaseSpore( xmlSpore );
               return;
             }
@@ -713,7 +710,7 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -726,7 +723,7 @@ public class Mechanism {
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending dump **/
@@ -759,7 +756,7 @@ public class Mechanism {
                   /** Updating room parameters **/
                   item.cloneInto( editItem );
                   editItem.setTemp( false );
-                  /** Updating Ui **/
+                  /** Updating UI **/
                   editItem.updateUi();
                   logInRoomItem = editItem;
                   break;
@@ -789,7 +786,7 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -798,7 +795,7 @@ public class Mechanism {
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending service discovery request **/
@@ -825,7 +822,7 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -838,7 +835,7 @@ public class Mechanism {
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending service discovery request **/
@@ -864,7 +861,7 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -876,7 +873,7 @@ public class Mechanism {
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending service discovery request **/
@@ -903,7 +900,7 @@ public class Mechanism {
                   Item item = ( Item ) items.elementAt( c );
                   /** Username detection **/
                   username = BuddyList.getJidUsername( item.jid );
-                  LogUtil.outMessage( username );
+                  LogUtil.outMessage( "Username: " + username );
                   /** Checking for username not null **/
                   if ( username != null ) {
                     try {
@@ -945,7 +942,7 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -954,14 +951,14 @@ public class Mechanism {
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
-        /** Sending room enering request **/
+        /** Sending room entering request **/
         TemplateCollection.enterRoom( this, AccountRoot.getFullJid(), roomItem );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -970,14 +967,14 @@ public class Mechanism {
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
-        /** Sending room enering request **/
+        /** Sending room leaving request **/
         TemplateCollection.leaveRoom( this, AccountRoot.getFullJid(), roomItem );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -986,21 +983,21 @@ public class Mechanism {
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending room updated nick request **/
         TemplateCollection.changeRoomNick( this, AccountRoot.getFullJid(), roomItem );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void editRoomTopicRequest( final RoomItem roomItem, final String topic ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending room updated nick request **/
@@ -1008,7 +1005,7 @@ public class Mechanism {
                 "groupchat", null, topic );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -1017,7 +1014,7 @@ public class Mechanism {
     final Item item = new Item( roomItem.getJid(), null, roomItem.getNickName() );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending command execute request **/
@@ -1034,12 +1031,7 @@ public class Mechanism {
               Form form = ( Form ) params.get( "FORM" );
               /** Adding execute command **/
               Command command = new Command( Localization.getMessage( "SAVE" ) ) {
-                /** Constants **/
-                private String ROOM_NAME = "muc#roomconfig_roomname";
-                private String ROOM_DESC = "muc#roomconfig_roomdesc";
-                private String ROOM_PERSISTENT = "muc#roomconfig_persistentroom";
-                private String ROOM_PASS_PROT = "muc#roomconfig_passwordprotectedroom";
-                private String ROOM_PASSWORD = "muc#roomconfig_roomsecret";
+                
                 /** State to continue if recommended value is not corrected **/
                 private int state;
 
@@ -1054,13 +1046,13 @@ public class Mechanism {
                   /** Showing wait screen **/
                   MidletMain.screen.setWaitScreenState( true );
                   /** Checking for enteried data **/
-                  if ( checkAndHaltOnEmptyValue( ROOM_NAME, "MUC_ROOM_NAME_IS_REQUIRED" ) ) {
-                    if ( checkAndHaltOnEmptyValue( ROOM_DESC, "MUC_ROOM_DESC_IS_REQUIRED" ) ) {
+                  if ( checkAndHaltOnEmptyValue( TemplateCollection.ROOM_NAME, "MUC_ROOM_NAME_IS_REQUIRED" ) ) {
+                    if ( checkAndHaltOnEmptyValue( TemplateCollection.ROOM_DESC, "MUC_ROOM_DESC_IS_REQUIRED" ) ) {
                       if ( state >= 1 || checkForRecommendedValue(
-                              ROOM_PERSISTENT, true,
+                              TemplateCollection.ROOM_PERSISTENT, true,
                               "MUC_ROOM_PERS_IS_RECOMMENDED" ) ) {
                         if ( state >= 2 || checkForRecommendedValue(
-                                ROOM_PASS_PROT, false,
+                                TemplateCollection.ROOM_PASS_PROT, false,
                                 "MUC_ROOM_PROT_IS_UNRECOMMENDED" ) ) {
                           /** Saving bookmark **/
                           updateBookmark();
@@ -1080,29 +1072,29 @@ public class Mechanism {
                 private void updateBookmark() {
                   /** Obtain room properties object **/
                   PaneObject paneObject;
-                  paneObject = form.getObjectByName( ROOM_NAME );
+                  paneObject = form.getObjectByName( TemplateCollection.ROOM_NAME );
                   /** Defining room name **/
                   String roomName = paneObject.getStringValue();
                   /** Checking for room is temporary **/
-                  paneObject = form.getObjectByName( ROOM_PERSISTENT );
+                  paneObject = form.getObjectByName( TemplateCollection.ROOM_PERSISTENT );
                   boolean isPersistent = ( ( Check ) paneObject ).state;
-                  /** Checking for room is password protcted **/
-                  paneObject = form.getObjectByName( ROOM_PASS_PROT );
+                  /** Checking for room is password protected **/
+                  paneObject = form.getObjectByName( TemplateCollection.ROOM_PASS_PROT );
                   boolean isPassProt = ( ( Check ) paneObject ).state;
                   /** Checking for protection is enabled **/
                   String password = "";
                   if ( isPassProt ) {
                     /** Obtain room password object **/
-                    paneObject = form.getObjectByName( ROOM_PASSWORD );
+                    paneObject = form.getObjectByName( TemplateCollection.ROOM_PASSWORD );
                     if ( paneObject != null ) {
                       if ( StringUtil.isEmptyOrNull( paneObject.getStringValue() ) ) {
-                        LogUtil.outMessage( ROOM_PASSWORD.concat( " is empty" ) );
+                        LogUtil.outMessage( TemplateCollection.ROOM_PASSWORD.concat( " is empty" ) );
                       } else {
                         password = paneObject.getStringValue();
                       }
                     }
                   }
-                  /** Checking for persistant configuration before and now **/
+                  /** Checking for persistent configuration before and now **/
                   if ( !roomItem.getTemp() && isPersistent == false ) {
                     /** Removing bookmark from server but edit local **/
                     Mechanism.sendBookmarksOperation( OPERATION_REMOVE, roomItem, false, false );
@@ -1135,7 +1127,7 @@ public class Mechanism {
                   if ( paneObject != null && paneObject instanceof Check
                           && ( ( Check ) paneObject ).state != recValue ) {
                     LogUtil.outMessage( var.concat( " is in unrecommended value" ) );
-                    /** Showing warnong **/
+                    /** Showing warning **/
                     showUnrecommendedWarn( ( Check ) paneObject, dialogDescr );
                     return false;
                   }
@@ -1143,7 +1135,7 @@ public class Mechanism {
                 }
 
                 /**
-                 * Showing dialog of warining and opportunity to correct value
+                 * Showing dialog of warning and opportunity to correct value
                  */
                 private void showUnrecommendedWarn( final Check paneObject, String dialogDescr ) {
                   Soft dialogSoft = new Soft( MidletMain.screen );
@@ -1168,6 +1160,33 @@ public class Mechanism {
                           "WARNING", Localization.getMessage( dialogDescr ) );
                 }
               };
+              /** Checking form for ROOM_NAME and ROOM_DESC fields **/
+              /** Obtain room name object **/
+              PaneObject roomNameField = form.getObjectByName( TemplateCollection.ROOM_NAME );
+              if ( roomNameField != null && roomNameField instanceof Field ) {
+                /** Obtain text **/
+                String text = ( ( Field ) roomNameField ).getText();
+                /** Checking for text size **/
+                if(text.length() > Settings.ROOM_NAME_MAX_SIZE ) {
+                  /** Trimming **/
+                  ( ( Field ) roomNameField ).setText( text.substring( 0, Settings.ROOM_NAME_MAX_SIZE ) );
+                }
+                /** Defining room name max size **/
+                ( ( Field ) roomNameField ).setMaxSize( Settings.ROOM_NAME_MAX_SIZE );
+              }
+              /** Obtain room description object **/
+              PaneObject roomDescField = form.getObjectByName( TemplateCollection.ROOM_DESC );
+              if ( roomDescField != null && roomDescField instanceof Field ) {
+                /** Obtain text **/
+                String text = ( ( Field ) roomDescField ).getText();
+                /** Checking for text size **/
+                if(text.length() > Settings.ROOM_DESC_MAX_SIZE ) {
+                  /** Trimming **/
+                  ( ( Field ) roomDescField ).setText( text.substring( 0, Settings.ROOM_DESC_MAX_SIZE ) );
+                }
+                /** Defining room description max size **/
+                ( ( Field ) roomDescField ).setMaxSize( Settings.ROOM_DESC_MAX_SIZE );
+              }
               /** Setting up command fields **/
               command.form = form;
               /** Initialize left soft **/
@@ -1209,7 +1228,7 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -1217,7 +1236,7 @@ public class Mechanism {
           final RoomItem roomItem, final Form form, final boolean enterRoom ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending command execute request **/
@@ -1249,39 +1268,107 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
-  public static void roomVisitorsListRequest( final RoomItem roomItem, final String affiliation ) {
+  public static void roomVisitorsListRequest( final RoomItem roomItem,
+          final String affiliation ) {
+    roomVisitorsListOperation( null, roomItem, affiliation, null, null,
+            OPERATION_GET );
+  }
+
+  public static void roomVisitorsListRemoveItem( final Vector items,
+          final RoomItem roomItem, final String jid ) {
+    roomVisitorsListOperation( items, roomItem, TemplateCollection.VAL_NONE,
+            jid, null, OPERATION_REMOVE );
+  }
+
+  public static void roomVisitorsListAddItem( final Vector items,
+          final RoomItem roomItem, final String affiliation, final String jid,
+          final String reason ) {
+    roomVisitorsListOperation( items, roomItem, affiliation, jid, reason,
+            OPERATION_ADD );
+  }
+
+  private static void roomVisitorsListOperation( final Vector items,
+          final RoomItem roomItem, final String affiliation, final String jid,
+          final String reason, final int operation ) {
     /** Showing wait screen **/
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending room destroy request **/
-        String cookie = TemplateCollection.sendRoomVisitorsListRequest(
-                this, roomItem.getJid(), affiliation );
+        String cookie = TemplateCollection.sendRoomVisitorsListOperation(
+                this, roomItem.getJid(), affiliation, jid, reason, operation );
         QueueAction queueAction = new QueueAction() {
           public void actionPerformed( Hashtable params ) {
             /** Room returns list **/
             String errorCause = ( String ) params.get( "ERROR_CAUSE" );
             /** Checking for error **/
             if ( errorCause == null ) {
-              LogUtil.outMessage( "Room's list of ".concat( affiliation ).concat( " received." ) );
+              LogUtil.outMessage( "Room's list operation #" + operation + " of ".concat( affiliation ).concat( " completed." ) );
+              /** Switching by operation type **/
+              switch ( operation ) {
+                case OPERATION_GET: {
+                  /** Obtain items vector **/
+                  Vector items = ( Vector ) params.get( "ITEMS" );
+                  /** Sending event to handler **/
+                  Handler.showRoomVisitorsListEditFrame( roomItem, affiliation, items );
+                  break;
+                }
+                case OPERATION_ADD: {
+                  boolean uniqueJid = true;
+                  /** Searching for item in visitors vector **/
+                  for ( int c = 0; c < items.size(); c++ ) {
+                    /** Checking for visitor is equal **/
+                    if ( ( ( Visitor ) items.elementAt( c ) ).jid.equals( jid ) ) {
+                      /** Visitor is already present in list **/
+                      uniqueJid = false;
+                      break;
+                    }
+                  }
+                  /** Checking for JID is not present in list items **/
+                  if ( uniqueJid ) {
+                    /** Creating new visitor item **/
+                    Visitor visitor = new Visitor( jid, affiliation );
+                    visitor.reason = reason;
+                    /** Adding new visitor to items list **/
+                    items.addElement( visitor );
+                  }
+                  /** Showing wait screen **/
+                  MidletMain.screen.setWaitScreenState( false );
+                  break;
+                }
+                case OPERATION_REMOVE: {
+                  /** Searching for item in visitors vector **/
+                  for ( int c = 0; c < items.size(); c++ ) {
+                    /** Checking for visitor is equal **/
+                    if ( ( ( Visitor ) items.elementAt( c ) ).jid.equals( jid ) ) {
+                      /** Removing buddy from items **/
+                      items.removeElementAt( c );
+                      break;
+                    }
+                  }
+                  /** Showing wait screen **/
+                  MidletMain.screen.setWaitScreenState( false );
+                  break;
+                }
+              }
               return;
             }
             /* Handling error case **/
-            Handler.showError( errorCause );
+            Handler.showError( "VIS_".concat( errorCause ) );
           }
         };
         queueAction.setCookie( cookie );
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
@@ -1290,7 +1377,7 @@ public class Mechanism {
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending room destroy request **/
@@ -1327,59 +1414,59 @@ public class Mechanism {
         Queue.pushQueueAction( queueAction );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void sendDiscoInfo( final String cookie, final String jid ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending disco info query request **/
         TemplateCollection.sendDiscoInfo( this, cookie, jid );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void sendLastActivity( final String cookie, final String jid ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Obtain last activity delay **/
         long lastActivity = ( System.currentTimeMillis()
                 - MidletMain.screen.lastActivity ) / 1000;
-        /** Sending room enering request **/
+        /** Sending last activity response **/
         TemplateCollection.sendLastActivity( this, cookie, jid, lastActivity );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void sendEntityTime( final String cookie, final String jid ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
-        /** Sending room enering request **/
+        /** Sending entity time response **/
         TemplateCollection.sendEntityTime( this, cookie, jid );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 
   public static void sendVersion( final String cookie, final String jid ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating xml spore **/
+    /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Obtain version info **/
@@ -1395,11 +1482,11 @@ public class Mechanism {
         } catch ( Throwable ex1 ) {
           device = "J2ME";
         }
-        /** Sending room enering request **/
+        /** Sending client version response **/
         TemplateCollection.sendVersion( this, cookie, jid, device, version );
       }
     };
-    /** Releasing xml spore **/
+    /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
   }
 }

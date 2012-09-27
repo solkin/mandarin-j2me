@@ -106,7 +106,7 @@ public class XmlOutputStream extends ByteArrayOutputStream {
   }
 
   /**
-   * Writting tag body
+   * Writing tag body
    * @param str
    * @throws IOException 
    */

@@ -50,6 +50,11 @@ public class XmlInputStream {
     this.inputStream = inputStream;
   }
 
+  /**
+   * Parsing next tag from input stream
+   * @return boolean document end
+   * @throws Throwable 
+   */
   public boolean nextTag() throws Throwable {
     tagName = null;
     tagType = TAG_UNKNOWN;
@@ -180,7 +185,22 @@ public class XmlInputStream {
     LogUtil.outMessage( "<-- " + debug_full_tag.toString() );
     return false;
   }
+  
+  /**
+   * Checks for an attribute is present
+   * @param attribute
+   * @return boolean
+   */
+  public boolean checkAttr(String attribute) {
+    return attributes.containsKey( attribute );
+  }
 
+  /**
+   * Returns attribute for specified key
+   * @param attribute
+   * @param isNullMayBe
+   * @return String
+   */
   public String getAttrValue( String attribute, boolean isNullMayBe ) {
     /* Obtain value from hashtable **/
     String value = ( String ) attributes.get( attribute );
@@ -188,6 +208,11 @@ public class XmlInputStream {
     return isNullMayBe ? value : ( value == null ? "" : value );
   }
 
+  /**
+   * Returns boolean attribute value
+   * @param attribute
+   * @return boolean
+   */
   public boolean getAttrBoolean( String attribute ) {
     /** Obtain value string for attribute **/
     String value = getAttrValue( attribute, false );
@@ -198,15 +223,27 @@ public class XmlInputStream {
     return false;
   }
 
-  public String subChars( StringBuffer sb, int start, int end ) {
-    return toStringFromXmlWellFormed( byteArrayToString( sb, start, end ) );
-  }
-
+  /**
+   * Returns before current tag body
+   * @return String body
+   */
   public String getBody() {
     return body == null ? "" : body;
   }
 
-  public String byteArrayToString( StringBuffer sb, int start, int end ) {
+  /**
+   * Closing input stream
+   * @throws IOException 
+   */
+  public void close() throws IOException {
+    inputStream.close();
+  }
+  
+  private String subChars( StringBuffer sb, int start, int end ) {
+    return toStringFromXmlWellFormed( byteArrayToString( sb, start, end ) );
+  }
+  
+  private String byteArrayToString( StringBuffer sb, int start, int end ) {
     str = "";
     utf_offset = start;
     while ( utf_offset < end ) {
@@ -221,7 +258,7 @@ public class XmlInputStream {
     return str;
   }
 
-  public String toStringFromXmlWellFormed( String string ) {
+  private String toStringFromXmlWellFormed( String string ) {
     for ( int c = 0; c < symbols.length; c++ ) {
       location = string.indexOf( symbols[c], 0 );
       if ( location >= 0 ) {
@@ -230,9 +267,5 @@ public class XmlInputStream {
       }
     }
     return string;
-  }
-
-  public void close() throws IOException {
-    inputStream.close();
   }
 }

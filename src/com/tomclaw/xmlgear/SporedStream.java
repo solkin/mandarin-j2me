@@ -17,6 +17,10 @@ public class SporedStream extends OutputStream {
   public boolean isAlive;
   public Thread thread;
 
+  /**
+   * Constructs SporedStream from output stream
+   * @param outputStream 
+   */
   public SporedStream( OutputStream outputStream ) {
     this.outputStream = outputStream;
     sporeQueue = new Vector();
@@ -25,6 +29,10 @@ public class SporedStream extends OutputStream {
     start();
   }
 
+  /**
+   * Inserts XmlSpore into queue
+   * @param xmlSpore 
+   */
   public void releaseSpore( XmlSpore xmlSpore ) {
     sporeQueue.addElement( xmlSpore );
   }
@@ -33,7 +41,7 @@ public class SporedStream extends OutputStream {
    * Starting listener thread
    */
   private void start() {
-    /** Stopping thread if it is already runnting **/
+    /** Stopping thread if it is already running **/
     stop();
     /** Creating thread instance **/
     thread = new Thread() {
@@ -52,13 +60,13 @@ public class SporedStream extends OutputStream {
               LogUtil.outMessage( "Spore preparing... " );
               /** Obtain first XML spore item **/
               XmlSpore xmlSpore = ( XmlSpore ) sporeQueue.firstElement();
-              /** XML build invokation **/
+              /** XML build invocation **/
               xmlSpore.invoke();
-              /** Sening data **/
+              /** Sending data **/
               outputStream.write( xmlSpore.toByteArray() );
               /** Flushing **/
               outputStream.flush();
-              /** Remoing first spore item **/
+              /** Removing first spore item **/
               sporeQueue.removeElementAt( 0 );
               LogUtil.outMessage( "Spore sent. " );
             }
@@ -107,20 +115,35 @@ public class SporedStream extends OutputStream {
     }
   }
 
+  /**
+   * Flushing stream
+   * @throws IOException 
+   */
   public void flush() throws IOException {
     outputStream.flush();
   }
 
+  /**
+   * Direct writing char to output stream; may cause stream fall
+   * @param b
+   * @throws IOException 
+   */
   public void write( int b ) throws IOException {
     outputStream.write( b );
   }
 
+  /**
+   * Direct writing byte array to output stream; may cause stream fall
+   * @param b
+   * @throws IOException 
+   */
   public void write( byte[] b ) throws IOException {
     outputStream.write( b );
   }
   
   /**
    * Stopping thread cycle and closing output stream
+   * @throws IOException 
    */
   public void close() throws IOException {
     stop();

@@ -6,7 +6,6 @@ import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.StringUtil;
 import com.tomclaw.utils.TimeUtil;
 import com.tomclaw.xmlgear.XmlOutputStream;
-import com.tomclaw.xmlgear.XmlSpore;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -19,6 +18,12 @@ import java.util.Vector;
  */
 public class TemplateCollection {
 
+  /** Constants **/
+  public static String ROOM_NAME = "muc#roomconfig_roomname";
+  public static String ROOM_DESC = "muc#roomconfig_roomdesc";
+  public static String ROOM_PERSISTENT = "muc#roomconfig_persistentroom";
+  public static String ROOM_PASS_PROT = "muc#roomconfig_passwordprotectedroom";
+  public static String ROOM_PASSWORD = "muc#roomconfig_roomsecret";
   /** Tags **/
   public static final String TAG_IQ = "iq";
   public static final String TAG_QUERY = "query";
@@ -31,6 +36,7 @@ public class TemplateCollection {
   public static final String TAG_REMOVE = "remove";
   public static final String TAG_CONFERENCE = "conference";
   public static final String TAG_PASSWORD = "password";
+  public static final String TAG_REASON = "reason";
   /** Attributes **/
   public static final String ATT_TYPE = "type";
   public static final String ATT_ID = "id";
@@ -52,6 +58,7 @@ public class TemplateCollection {
   public static final String VAL_ADMIN = "admin";
   public static final String VAL_MEMBER = "member";
   public static final String VAL_OUTCAST = "outcast";
+  public static final String VAL_NONE = "none";
   public static final String[] FEATURES = new String[]{
     "http://jabber.org/protocol/disco#info",
     "http://jabber.org/protocol/caps",
@@ -822,12 +829,13 @@ public class TemplateCollection {
     return cookie;
   }
   
-  public static String sendRoomVisitorsListRequest( XmlOutputStream xmlWriter,
-          String roomJid, String affiliation ) throws IOException {
+  public static String sendRoomVisitorsListOperation( XmlOutputStream xmlWriter,
+          String roomJid, String affiliation, String jid, String reason, int operation ) throws IOException {
     /** Generating request cookie **/
     String cookie = AccountRoot.generateCookie();
     xmlWriter.startTag( TAG_IQ );
-    xmlWriter.attribute( ATT_TYPE, VAL_GET );
+    xmlWriter.attribute( ATT_TYPE, operation == Mechanism.OPERATION_GET
+            ? VAL_GET : VAL_SET );
     xmlWriter.attribute( ATT_TO, roomJid );
     xmlWriter.attribute( ATT_ID, cookie );
     xmlWriter.startTag( TAG_QUERY );
@@ -835,6 +843,16 @@ public class TemplateCollection {
     /** Destroying room tag **/
     xmlWriter.startTag( "item" );
     xmlWriter.attribute( ATT_AFFILIATION, affiliation );
+    /** Checking for operation type to append JID **/
+    if(operation != Mechanism.OPERATION_GET) {
+      xmlWriter.attribute( ATT_JID, jid );
+    }
+    /** Checking for operation to add reason tag **/
+    if(operation == Mechanism.OPERATION_ADD && reason != null) {
+      xmlWriter.startTag( TAG_REASON );
+      xmlWriter.text( reason );
+      xmlWriter.endTag();
+    }
     xmlWriter.endTag();
     xmlWriter.endTag();
     xmlWriter.endTag();
