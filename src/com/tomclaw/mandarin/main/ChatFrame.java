@@ -481,6 +481,10 @@ public class ChatFrame extends Window {
                 concat( chatTab.buddyItem.getJid() ).concat( " item in roser" ) );
         MidletMain.mainFrame.buddyList.makeBuddyItemTemp( chatTab.buddyItem );
       }
+      /** Applying updated buddy item **/
+      chatTab.buddyItem = buddyItem;
+      /** Creating resource **/
+      chatTab.resource = buddyItem.getResource( chatTab.resource.resource );
     }
   }
 
@@ -512,18 +516,20 @@ public class ChatFrame extends Window {
   public static Label getTabLabel( String message, Label label ) {
     /** Checking for tab label is null **/
     if ( label == null ) {
-      /** Creting tab label instance **/
+      /** Creating tab label instance **/
       label = new Label( message );
       label.setHeader( true );
     }
     return label;
   }
 
-  public static void repaintFrame() {
+  public static boolean repaintFrame() {
     /** Checking and repainting main frame  on the screen **/
     if ( MidletMain.screen.activeWindow.equals( MidletMain.chatFrame ) ) {
       MidletMain.screen.repaint();
+      return true;
     }
+    return false;
   }
 
   public void windowActivated() {

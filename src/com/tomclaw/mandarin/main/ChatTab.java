@@ -45,6 +45,8 @@ public class ChatTab extends TabItem {
    * Update chat tab caption and icon
    */
   public void updateUi() {
+    LogUtil.outMessage( "Updating chat tab UI" );
+    /** Updating chat tab title **/
     this.title = buddyItem.getNickName();
     /** Checking for unread count **/
     if ( resource.unreadCount == 0 ) {

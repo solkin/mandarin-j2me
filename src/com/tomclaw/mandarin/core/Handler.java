@@ -485,6 +485,8 @@ public class Handler {
     /** Changing user theme **/
     LogUtil.outMessage( "Connected event" );
     Theme.startThemeChange( Settings.themeOfflineResPath, Settings.themeOnlineResPath );
+    /** Updating chat frame **/
+    MidletMain.chatFrame.updateTabs();
   }
 
   /** User-side disconnect showing **/
