@@ -6,6 +6,7 @@ import com.tomclaw.mandarin.molecus.GroupItem;
 import com.tomclaw.tcuilite.Group;
 import com.tomclaw.tcuilite.GroupChild;
 import com.tomclaw.tcuilite.GroupEvent;
+import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
 import java.util.Vector;
 import javax.microedition.rms.RecordStore;
@@ -38,7 +39,6 @@ public class BuddyList extends Group {
     };
     /** Action **/
     actionPerformedEvent = new GroupEvent() {
-
       public void actionPerformed( GroupChild buddyItem ) {
         LogUtil.outMessage( "BuddyList action" );
         MidletMain.mainFrame.getKeyEvent( "KEY_DIALOG" ).actionPerformed();
@@ -229,31 +229,56 @@ public class BuddyList extends Group {
   /**
    * Creates buddy item in temporary group
    * @param jid
-   * @return 
+   * @return BuddyItem
    */
   public BuddyItem createTempBuddyItem( String jid ) {
-    /** Creating buddy item **/
-    BuddyItem buddyItem = new BuddyItem( jid );
-    buddyItem.setSubscription( "none" );
-    buddyItem.updateUi();
+    BuddyItem buddyItem;
+    /** Checking for buddy item is already exist **/
+    buddyItem = getBuddyItem( jid );
+    if ( buddyItem == null ) {
+      /** Creating buddy item **/
+      buddyItem = new BuddyItem( jid );
+      buddyItem.setSubscription( "none" );
+      buddyItem.updateUi();
+    } else {
+      /** Removing buddy from other groups **/
+      removeBuddyFromGroups( buddyItem );
+    }
     /** Adding buddy item to temporary group **/
     MidletMain.mainFrame.buddyList.tempGroupItem.addChild( buddyItem );
     return buddyItem;
   }
-  
+
   /**
-   * 
+   * Makes specified buddy item temporary and removes from any groups but temp
    * @param jid
-   * @return 
+   * @return BuddyItem
    */
   public BuddyItem makeBuddyItemTemp( BuddyItem buddyItem ) {
     /** Creating buddy item **/
     buddyItem.setSubscription( "none" );
     buddyItem.setTemp( true );
     buddyItem.updateUi();
+    /** Removing buddy from other groups **/
+    removeBuddyFromGroups( buddyItem );
     /** Adding buddy item to temporary group **/
     MidletMain.mainFrame.buddyList.tempGroupItem.addChild( buddyItem );
     return buddyItem;
+  }
+
+  /**
+   * Creates group item or returns existed
+   * @return tempGroupItem
+   */
+  public GroupItem initTempGroupItem() {
+    /** Checking for temp group item is null **/
+    if ( tempGroupItem == null ) {
+      /** Creating temp group item **/
+      MidletMain.mainFrame.buddyList.tempGroupItem = new GroupItem( Localization.getMessage( "TEMPORARY" ) );
+      MidletMain.mainFrame.buddyList.tempGroupItem.internalGroupId = GroupItem.GROUP_TEMP_ID;
+      MidletMain.mainFrame.buddyList.tempGroupItem.isCollapsed = false;
+    }
+    return tempGroupItem;
   }
 
   /** 

@@ -255,9 +255,11 @@ public class MainFrame extends Window {
     };
     final PopupItem hotkeysSubItem = new PopupItem( Localization.getMessage( "HOTKEYS" ) ) {
       public void actionPerformed() {
-        BuddyItem roomItem = new BuddyItem("kkx@akl.com", "KKX", "none", true);
-        roomItem.updateUi();
-        MidletMain.mainFrame.buddyList.roomsGroupItem.addChild( roomItem );
+        // BuddyItem roomItem = new BuddyItem("kkx@akl.com", "KKX", "none", true);
+        // roomItem.updateUi();
+        // MidletMain.mainFrame.buddyList.makeBuddyItemTemp( roomItem );
+        MidletMain.mainFrame.buddyList.createTempBuddyItem( "kkx@akl.com" );
+        // MidletMain.mainFrame.buddyList.roomsGroupItem.addChild( roomItem );
       }
     };
     settngPopupItem.addSubItem( accountSubItem );

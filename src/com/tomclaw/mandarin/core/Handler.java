@@ -51,10 +51,7 @@ public class Handler {
     /** Inserting rooms group into second index **/
     rosterItems.insertElementAt( MidletMain.mainFrame.buddyList.roomsGroupItem, 1 );
     /** Creating and inserting temporary items group **/
-    MidletMain.mainFrame.buddyList.tempGroupItem = new GroupItem( Localization.getMessage( "TEMPORARY" ) );
-    MidletMain.mainFrame.buddyList.tempGroupItem.internalGroupId = GroupItem.GROUP_TEMP_ID;
-    MidletMain.mainFrame.buddyList.tempGroupItem.isCollapsed = false;
-    rosterItems.addElement( MidletMain.mainFrame.buddyList.tempGroupItem );
+    rosterItems.addElement( MidletMain.mainFrame.buddyList.initTempGroupItem() );
     /** Inserting general group to the end **/
     MidletMain.mainFrame.buddyList.generalGroupItem = ( GroupItem ) params.get( "GENERAL" );
     MidletMain.mainFrame.buddyList.generalGroupItem.isGroupVisible = true;
@@ -471,7 +468,7 @@ public class Handler {
     /** Checking for buddy is not null or room item **/
     if ( buddyItem == null ) {
       LogUtil.outMessage( "No such buddy in roster: ".concat( jid ) );
-    } else if(buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
+    } else if ( buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
       LogUtil.outMessage( "Room nick name couldn't be set by this xmlns" );
     } else {
       /** Setting up nick name **/
@@ -946,10 +943,8 @@ public class Handler {
   public static void checkBuddyUsage( BuddyItem buddyItem ) {
     /** Checking for opened dialogs **/
     if ( MidletMain.chatFrame.getBuddyResourceUsed( buddyItem.getJid(), null ) ) {
-      /** Setting up "temp" flag **/
-      buddyItem.setTemp( true );
       /** Carry this buddy in temporary group **/
-      MidletMain.mainFrame.buddyList.tempGroupItem.addChild( buddyItem );
+      MidletMain.mainFrame.buddyList.makeBuddyItemTemp( buddyItem );
     }
   }
 
