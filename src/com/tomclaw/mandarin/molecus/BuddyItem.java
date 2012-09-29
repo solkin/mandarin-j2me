@@ -340,7 +340,7 @@ public class BuddyItem extends GroupChild {
   public void updateUi() {
     /** Left icons **/
     weight = 0;
-    /** Checking buddy status to reaise online **/
+    /** Checking buddy status to raise online **/
     if ( getStatusIndex() != StatusUtil.offlineIndex && Settings.isSortOnline ) {
       weight = -2;
     }

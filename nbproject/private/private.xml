@@ -11,12 +11,12 @@
             <line>717</line>
         </file>
     </editor-bookmarks>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
         <file>
             <url>src/com/tomclaw/mandarin/molecus/Parser.java</url>
-            <bookmark id="0">
+            <bookmark id="2">
                 <name/>
-                <line>113</line>
+                <line>76</line>
                 <key/>
             </bookmark>
             <bookmark id="0">
@@ -29,7 +29,7 @@
             <url>src/com/tomclaw/mandarin/main/MainFrame.java</url>
             <bookmark id="0">
                 <name/>
-                <line>733</line>
+                <line>737</line>
                 <key/>
             </bookmark>
         </file>

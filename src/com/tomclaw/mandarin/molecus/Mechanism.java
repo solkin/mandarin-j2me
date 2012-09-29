@@ -200,6 +200,7 @@ public class Mechanism {
           session.getSporedStream().releaseSpore( xmlSpore );
         } catch ( Throwable ex ) {
           Handler.showError( "IO_EXCEPTION" );
+          ex.printStackTrace();
         }
       }
     }.start();
@@ -1045,7 +1046,7 @@ public class Mechanism {
                 public void startCheckProcess() {
                   /** Showing wait screen **/
                   MidletMain.screen.setWaitScreenState( true );
-                  /** Checking for enteried data **/
+                  /** Checking for entered data **/
                   if ( checkAndHaltOnEmptyValue( TemplateCollection.ROOM_NAME, "MUC_ROOM_NAME_IS_REQUIRED" ) ) {
                     if ( checkAndHaltOnEmptyValue( TemplateCollection.ROOM_DESC, "MUC_ROOM_DESC_IS_REQUIRED" ) ) {
                       if ( state >= 1 || checkForRecommendedValue(

@@ -61,7 +61,7 @@ public class Handler {
     rosterItems.addElement( MidletMain.mainFrame.buddyList.generalGroupItem );
     /** Setting up collected roster vector **/
     MidletMain.mainFrame.buddyList.setBuddyItems( rosterItems );
-    /** Sending request to chatframe for update 
+    /** Sending request to chat frame for update 
      * buddy items and resources for opened tabs **/
     MidletMain.chatFrame.updateBuddyItems();
     /** Repainting **/
@@ -74,7 +74,7 @@ public class Handler {
    * @param services 
    */
   public static void setServices( Hashtable services ) {
-    /** Definig services group **/
+    /** Defining services group **/
     MidletMain.mainFrame.buddyList.servicesGroupItem = new GroupItem( Localization.getMessage( "SERVICES" ) );
     MidletMain.mainFrame.buddyList.servicesGroupItem.internalGroupId = GroupItem.GROUP_SERVICES_ID;
     /** Cycling elements **/
@@ -96,7 +96,7 @@ public class Handler {
    * @param services 
    */
   public static void setBookmarks( Vector items ) {
-    /** Checking for items existance **/
+    /** Checking for items existing **/
     if ( items != null ) {
       MidletMain.mainFrame.buddyList.roomsGroupItem.setChilds( items );
     }
@@ -107,7 +107,7 @@ public class Handler {
    * @param services 
    */
   public static void setBookmarks( Hashtable params ) {
-    /** Definig rooms group **/
+    /** Defining rooms group **/
     MidletMain.mainFrame.buddyList.roomsGroupItem = new GroupItem( Localization.getMessage( "ROOMS" ) );
     MidletMain.mainFrame.buddyList.roomsGroupItem.internalGroupId = GroupItem.GROUP_ROOMS_ID;
     /** Obtain elements **/

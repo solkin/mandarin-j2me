@@ -477,13 +477,10 @@ public class ChatFrame extends Window {
       /** Checking for buddy item existance **/
       if ( buddyItem == null ) {
         /** Have no more this item **/
-        LogUtil.outMessage( "Have no more this item" );
-        buddyItem = MidletMain.mainFrame.buddyList.createTempBuddyItem( chatTab.buddyItem.getJid() );
+        LogUtil.outMessage( "Have no more ".
+                concat( chatTab.buddyItem.getJid() ).concat( " item in roser" ) );
+        MidletMain.mainFrame.buddyList.makeBuddyItemTemp( chatTab.buddyItem );
       }
-      /** Creating resource **/
-      chatTab.resource = buddyItem.getResource( chatTab.resource.resource );
-      /** Applying updated buddy item **/
-      chatTab.buddyItem = buddyItem;
     }
   }
 

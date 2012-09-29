@@ -255,6 +255,9 @@ public class MainFrame extends Window {
     };
     final PopupItem hotkeysSubItem = new PopupItem( Localization.getMessage( "HOTKEYS" ) ) {
       public void actionPerformed() {
+        BuddyItem roomItem = new BuddyItem("kkx@akl.com", "KKX", "none", true);
+        roomItem.updateUi();
+        MidletMain.mainFrame.buddyList.roomsGroupItem.addChild( roomItem );
       }
     };
     settngPopupItem.addSubItem( accountSubItem );
@@ -440,7 +443,7 @@ public class MainFrame extends Window {
           /** Obtain buddy item selected **/
           final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
           /** Checking selected item type **/
-          if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+          if ( buddyItem != null && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
             /** Mechanism invocation **/
             Mechanism.enterRoomRequest( ( RoomItem ) buddyItem );
           }
@@ -456,7 +459,7 @@ public class MainFrame extends Window {
           /** Obtain buddy item selected **/
           final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
           /** Checking selected item type **/
-          if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+          if ( buddyItem != null && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
             /** Mechanism invocation **/
             Mechanism.leaveRoomRequest( ( RoomItem ) buddyItem );
           }
@@ -472,7 +475,7 @@ public class MainFrame extends Window {
           /** Obtain buddy item selected **/
           final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
           /** Checking selected item type **/
-          if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+          if ( buddyItem != null && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
             RoomEditFrame roomEditFrame = new RoomEditFrame( ( RoomItem ) buddyItem );
             MidletMain.screen.setActiveWindow( roomEditFrame );
           }
@@ -488,7 +491,7 @@ public class MainFrame extends Window {
           /** Obtain buddy item selected **/
           final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
           /** Checking selected item type **/
-          if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+          if ( buddyItem != null && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
             final Soft dialogSoft = new Soft( screen );
             dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
               public void actionPerformed() {
@@ -569,7 +572,7 @@ public class MainFrame extends Window {
           /** Obtain buddy item selected **/
           final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
           /** Checking selected item type **/
-          if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+          if ( buddyItem != null && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
             /** Showing wait screen **/
             MidletMain.screen.setWaitScreenState( true );
             /** Mechanism invocation **/
@@ -587,7 +590,7 @@ public class MainFrame extends Window {
           /** Obtain buddy item selected **/
           final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
           /** Checking selected item type **/
-          if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+          if ( buddyItem != null && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
             /** Show topic edit frame **/
             RoomTopicEditFrame roomTopicEditFrame = new RoomTopicEditFrame( ( RoomItem ) buddyItem );
             MidletMain.screen.setActiveWindow( roomTopicEditFrame );
@@ -604,7 +607,7 @@ public class MainFrame extends Window {
           /** Obtain buddy item selected **/
           final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
           /** Checking selected item type **/
-          if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+          if ( buddyItem != null && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
             /** Show nick change frame **/
             RoomNickChangeFrame roomNickChangeFrame = new RoomNickChangeFrame( ( RoomItem ) buddyItem );
             MidletMain.screen.setActiveWindow( roomNickChangeFrame );
@@ -712,7 +715,7 @@ public class MainFrame extends Window {
       GroupItem groupItem = buddyList.getSelectedGroupItem();
       /** Checking for group selected **/
       if ( groupItem != null ) {
-        /** GroupItem seelcted **/
+        /** GroupItem selected **/
         LogUtil.outMessage( "Group selected: " + groupItem.getGroupName() );
         setGroupPopup();
       } else {
@@ -723,13 +726,13 @@ public class MainFrame extends Window {
       LogUtil.outMessage( "temp: " + buddyItem.getTemp() );
       LogUtil.outMessage( "subscription: " + buddyItem.getSubscription() );
       /** BudyItem selected **/
-      if ( buddyItem instanceof ServiceItem ) {
+      if ( buddyItem.getInternalType() == BuddyItem.TYPE_SERVICE_ITEM ) {
         /** BuddyItem is service **/
         LogUtil.outMessage( "Service selected: " + buddyItem.getJid() );
         LogUtil.outMessage( "Protocol offset: " + buddyItem.getProtocolOffset() );
         LogUtil.outMessage( "connected: " + ( ( ServiceItem ) buddyItem ).isConnected() );
         setServicePopup( ( ServiceItem ) buddyItem );
-      } else if ( buddyItem instanceof RoomItem ) {
+      } else if ( buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
         /** BuddyItem is room **/
         LogUtil.outMessage( "Room selected: " + buddyItem.getJid() );
         setRoomPopup( ( RoomItem ) buddyItem );
@@ -928,7 +931,7 @@ public class MainFrame extends Window {
     }
     /** Checking for more than one resource **/
     if ( buddyItem.getResourcesCount() > 1 ) {
-      /** Openin "All resource" resource **/
+      /** Opening "All resource" resource **/
       buddyItem.getResource( "" );
       /** Appending all resource items **/
       for ( int c = 0; c < buddyItem.getResourcesCount(); c++ ) {
@@ -959,7 +962,8 @@ public class MainFrame extends Window {
       /** Obtain buddy item selected **/
       final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
       /** Checking selected item type **/
-      if ( buddyItem != null && buddyItem instanceof RoomItem ) {
+      if ( buddyItem != null && buddyItem.getInternalType()
+              == BuddyItem.TYPE_ROOM_ITEM ) {
         /** Mechanism invocation **/
         Mechanism.roomVisitorsListRequest( ( RoomItem ) buddyItem,
                 affiliation );

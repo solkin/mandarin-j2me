@@ -83,7 +83,6 @@ public class BuddyList extends Group {
       for ( int c = 0; c < items.size(); c++ ) {
         groupHeader = ( GroupItem ) items.elementAt( c );
         abyte0 = RmsRenderer.getRmsData( groupHeader );
-        // HexUtil.dump_ ( abyte0, groupHeader.title );
         t_recordStore.addRecord( abyte0, 0, abyte0.length );
       }
       t_recordStore.closeRecordStore();
@@ -227,6 +226,36 @@ public class BuddyList extends Group {
     return null;
   }
 
+  /**
+   * Creates buddy item in temporary group
+   * @param jid
+   * @return 
+   */
+  public BuddyItem createTempBuddyItem( String jid ) {
+    /** Creating buddy item **/
+    BuddyItem buddyItem = new BuddyItem( jid );
+    buddyItem.setSubscription( "none" );
+    buddyItem.updateUi();
+    /** Adding buddy item to temporary group **/
+    MidletMain.mainFrame.buddyList.tempGroupItem.addChild( buddyItem );
+    return buddyItem;
+  }
+  
+  /**
+   * 
+   * @param jid
+   * @return 
+   */
+  public BuddyItem makeBuddyItemTemp( BuddyItem buddyItem ) {
+    /** Creating buddy item **/
+    buddyItem.setSubscription( "none" );
+    buddyItem.setTemp( true );
+    buddyItem.updateUi();
+    /** Adding buddy item to temporary group **/
+    MidletMain.mainFrame.buddyList.tempGroupItem.addChild( buddyItem );
+    return buddyItem;
+  }
+
   /** 
    * Returns clear JID
    * @param fullJid
@@ -277,15 +306,5 @@ public class BuddyList extends Group {
       tempJid = null;
     }
     return tempJid;
-  }
-
-  public BuddyItem createTempBuddyItem( String jid ) {
-    /** Creating buddy item **/
-    BuddyItem buddyItem = new BuddyItem( jid );
-    buddyItem.setSubscription( "none" );
-    buddyItem.updateUi();
-    /** Adding buddy item to temporary group **/
-    MidletMain.mainFrame.buddyList.tempGroupItem.addChild( buddyItem );
-    return buddyItem;
   }
 }
