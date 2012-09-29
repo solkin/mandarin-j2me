@@ -1,6 +1,7 @@
 package com.tomclaw.mandarin.main;
 
 import com.tomclaw.mandarin.core.Handler;
+import com.tomclaw.mandarin.core.Storage;
 import com.tomclaw.mandarin.molecus.*;
 import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
@@ -110,12 +111,26 @@ public class MainFrame extends Window {
     /** Filter popup item **/
     final PopupItem groupSubFilter = new PopupItem( "" ) {
       public void actionPerformed() {
-        com.tomclaw.mandarin.core.Settings.showGroups = !com.tomclaw.mandarin.core.Settings.showGroups;
+        /** Inverting flag in settings **/
+        com.tomclaw.mandarin.core.Settings.showGroups = 
+                !com.tomclaw.mandarin.core.Settings.showGroups;
+        /** Applying settings **/
+        buddyList.updateSettings();
+        /** Saving updated settings **/
+        com.tomclaw.mandarin.core.Settings.saveAll();
+        Storage.save();
       }
     };
     final PopupItem offlineSubFilter = new PopupItem( "" ) {
       public void actionPerformed() {
-        com.tomclaw.mandarin.core.Settings.showOffline = !com.tomclaw.mandarin.core.Settings.showOffline;
+        /** Inverting flag in settings **/
+        com.tomclaw.mandarin.core.Settings.showOffline = 
+                !com.tomclaw.mandarin.core.Settings.showOffline;
+        /** Applying settings **/
+        buddyList.updateSettings();
+        /** Saving updated settings **/
+        com.tomclaw.mandarin.core.Settings.saveAll();
+        Storage.save();
       }
     };
     /** Contacts popup item **/
@@ -127,7 +142,7 @@ public class MainFrame extends Window {
     /** Main menu popup item **/
     soft.leftSoft = new PopupItem( Localization.getMessage( "MENU" ) ) {
       public void actionPerformed() {
-        /** Creting statuses if it's list is empty **/
+        /** Creating statuses if it's list is empty **/
         if ( statusPopupItem.isEmpty() ) {
           final int statusCount = StatusUtil.getStatusCount();
           for ( int c = 0; c < statusCount; c++ ) {
@@ -142,7 +157,7 @@ public class MainFrame extends Window {
                 }
                 if ( AccountRoot.getStatusIndex() == StatusUtil.offlineIndex
                         && statusIndex != StatusUtil.offlineIndex ) {
-                  /** User establises connection **/
+                  /** User establishes connection **/
                   Mechanism.accountLogin( statusIndex );
                 } else if ( AccountRoot.getStatusIndex() != StatusUtil.offlineIndex
                         && statusIndex == StatusUtil.offlineIndex ) {
@@ -161,9 +176,9 @@ public class MainFrame extends Window {
         statusPopupItem.imageIndex = AccountRoot.getStatusIndex();
         /** Filter name detecting **/
         groupSubFilter.setTitle( com.tomclaw.mandarin.core.Settings.showGroups
-                ? Localization.getMessage( "SHOW_GROUPS" ) : Localization.getMessage( "HIDE_GROUPS" ) );
+                ? Localization.getMessage( "HIDE_GROUPS" ) : Localization.getMessage( "SHOW_GROUPS" ) );
         offlineSubFilter.setTitle( com.tomclaw.mandarin.core.Settings.showOffline
-                ? Localization.getMessage( "SHOW_OFFLINE" ) : Localization.getMessage( "HIDE_OFFLINE" ) );
+                ? Localization.getMessage( "HIDE_OFFLINE" ) : Localization.getMessage( "SHOW_OFFLINE" ) );
         /** Appending all connected services **/
         GroupItem services = MidletMain.mainFrame.buddyList.servicesGroupItem;
         if ( !addBuddySubItem.isEmpty() ) {

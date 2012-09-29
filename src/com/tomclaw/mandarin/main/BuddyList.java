@@ -27,7 +27,7 @@ public class BuddyList extends Group {
   public BuddyList() {
     super();
     /** Setup parameters **/
-    isHideEmptyGroups = true;
+    updateSettings();
     /** Left images **/
     imageLeftFileHash = new int[]{
       com.tomclaw.mandarin.core.Settings.IMG_CHAT.hashCode(),
@@ -46,6 +46,16 @@ public class BuddyList extends Group {
     };
     /** Setup RMS file **/
     loadOfflineBuddyList();
+  }
+  
+  /**
+   * Updating settings from Settings class
+   */
+  public final void updateSettings() {
+    /** Show groups **/
+    isHideEmptyGroups = com.tomclaw.mandarin.core.Settings.hideEmptyGroups;
+    isShowGroups = com.tomclaw.mandarin.core.Settings.showGroups;
+    maxWeight = com.tomclaw.mandarin.core.Settings.showOffline ? 0 : -1;
   }
 
   private void loadOfflineBuddyList() {
@@ -115,6 +125,8 @@ public class BuddyList extends Group {
     }
     /** Applying roster to items **/
     items = roster;
+    /** Saving roster to the RMS storage **/
+    updateOfflineBuddylist();
   }
 
   /**

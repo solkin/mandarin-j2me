@@ -37,7 +37,7 @@ public class MidletMain extends MIDlet {
     build = getAppProperty( "Build" );
     /** Main **/
     midletMain = this;
-    /** Logger for debuging **/
+    /** Logger for debugging **/
     LogUtil.initLogger( true, false, "92.36.93.99", 2000, false, "" );
     /** Initialize localization support **/
     Localization.initLocalizationSupport();
