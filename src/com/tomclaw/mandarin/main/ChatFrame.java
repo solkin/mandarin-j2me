@@ -1,7 +1,10 @@
 package com.tomclaw.mandarin.main;
 
+import com.tomclaw.mandarin.core.Handler;
 import com.tomclaw.mandarin.molecus.AccountRoot;
 import com.tomclaw.mandarin.molecus.BuddyItem;
+import com.tomclaw.mandarin.molecus.RoomItem;
+import com.tomclaw.mandarin.molecus.RoomUtil;
 import com.tomclaw.mandarin.molecus.StatusUtil;
 import com.tomclaw.mandarin.molecus.TemplateCollection;
 import com.tomclaw.tcuilite.*;
@@ -42,6 +45,34 @@ public class ChatFrame extends Window {
         ChatTab chatTab = getSelectedChatTab();
         /** Checking for something strange **/
         if ( chatTab != null ) {
+          /** Checking for this is MUC tab **/
+          if ( chatTab.isMucTab() ) {
+            /** Obtain room item **/
+            RoomItem roomItem = ( RoomItem ) chatTab.buddyItem;
+            /** Checking MUC tab type **/
+            boolean isMainRoomTab =
+                    StringUtil.isEmptyOrNull( chatTab.resource.resource );
+            /** Error cause **/
+            String errorCause = null;
+            /** Checking privileges **/
+            if ( isMainRoomTab
+                    && !RoomUtil.checkPrivilege( roomItem.getRole(),
+                    roomItem.getAffiliation(),
+                    RoomUtil.SEND_MESSAGES_TO_ALL ) ) {
+              errorCause = "NO_SEND_MESS_TO_ALL_PRIV";
+            } else if ( !isMainRoomTab
+                    && !RoomUtil.checkPrivilege( roomItem.getRole(),
+                    roomItem.getAffiliation(),
+                    RoomUtil.SEND_PRIVATE_MESSAGES ) ) {
+              errorCause = "NO_SEND_PRIVATE_MESS_PRIV";
+            }
+            /** Checking for error **/
+            if ( errorCause != null ) {
+              /** Showing error **/
+              Handler.showError( errorCause );
+              return;
+            }
+          }
           /** Setup text box title as buddy item nick name **/
           textBox.setTitle( chatTab.title );
           /** Setup text box as current display **/
@@ -83,7 +114,7 @@ public class ChatFrame extends Window {
     chatTabs.tabEvent = new TabEvent() {
       public void stateChanged( int prevIndex, int currIndex, int totlItems ) {
         try {
-          /** Checking for nulltype of chat items **/
+          /** Checking for null type of chat items **/
           ChatTab chatTab = ( ( ChatTab ) chatTabs.items.elementAt( currIndex ) );
           if ( chatTab.chatItems == null ) {
             chatTab.chatItems = new Vector();
