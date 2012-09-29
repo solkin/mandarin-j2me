@@ -96,9 +96,25 @@ public class BuddyList extends Group {
    * @param roster 
    */
   public void setBuddyItems( Vector roster ) {
+    GroupItem t_itemsGroupItem;
+    GroupItem t_rosterGroupItem;
+    /** Searching for the same groups in items and roster **/
+    for ( int c = 0; c < items.size(); c++ ) {
+      /** Obtain items group item **/
+      t_itemsGroupItem = ( GroupItem ) items.elementAt( c );
+      for ( int i = 0; i < roster.size(); i++ ) {
+        /** Obtain roster group item **/
+        t_rosterGroupItem = ( GroupItem ) roster.elementAt( i );
+        /** Checking for group names are equals **/
+        if ( t_itemsGroupItem.getGroupName().
+                equals( t_rosterGroupItem.getGroupName() ) ) {
+          /** Updating collapsed status **/
+          t_rosterGroupItem.isCollapsed = t_itemsGroupItem.isCollapsed;
+        }
+      }
+    }
+    /** Applying roster to items **/
     items = roster;
-    selectedRow = 0;
-    selectedColumn = 0;
   }
 
   /**

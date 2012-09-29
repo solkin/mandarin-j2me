@@ -34,6 +34,8 @@ public class RmsRenderer {
     offset += 1;
     groupItem.isItemsVisible = DataUtil.get8( data, offset ) == 1;
     offset += 1;
+    groupItem.isCollapsed = DataUtil.get8( data, offset ) == 1;
+    offset += 1;
     BuddyItem groupChild;
     int t_Int;
     String t_Id;
@@ -120,13 +122,14 @@ public class RmsRenderer {
   public static byte[] getRmsData( GroupItem groupItem ) {
     byte[] data;
     byte[] titleData = StringUtil.stringToByteArray( groupItem.title, true );
-    data = new byte[ 8 + titleData.length ];
+    data = new byte[ 9 + titleData.length ];
     DataUtil.put16( data, 0, titleData.length );
     DataUtil.putArray( data, 2, titleData );
     DataUtil.put16( data, 2 + titleData.length, groupItem.getChildsCount() );
     DataUtil.put16( data, 4 + titleData.length, groupItem.internalGroupId );
     DataUtil.put8( data, 6 + titleData.length, groupItem.isGroupVisible ? 1 : 0 );
     DataUtil.put8( data, 7 + titleData.length, groupItem.isItemsVisible ? 1 : 0 );
+    DataUtil.put8( data, 8 + titleData.length, groupItem.isCollapsed ? 1 : 0 );
     byte[] itemData;
     byte[] t_Byte;
     int offset;
