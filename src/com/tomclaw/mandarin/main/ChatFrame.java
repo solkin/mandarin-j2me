@@ -45,17 +45,23 @@ public class ChatFrame extends Window {
         ChatTab chatTab = getSelectedChatTab();
         /** Checking for something strange **/
         if ( chatTab != null ) {
-          /** Checking for this is MUC tab **/
-          if ( chatTab.isMucTab() ) {
+          /** Error cause **/
+          String errorCause = null;
+          /** Checking for user is offline **/
+          if ( AccountRoot.isOffline() ) {
+            errorCause = "YOU_ARE_OFFLINE";
+          }
+          /** Checking for o error ant this is MUC tab **/
+          if ( errorCause == null && chatTab.isMucTab() ) {
             /** Obtain room item **/
             RoomItem roomItem = ( RoomItem ) chatTab.buddyItem;
             /** Checking MUC tab type **/
             boolean isMainRoomTab =
                     StringUtil.isEmptyOrNull( chatTab.resource.resource );
-            /** Error cause **/
-            String errorCause = null;
             /** Checking privileges **/
-            if ( isMainRoomTab
+            if ( !roomItem.getRoomActive() ) {
+              errorCause = "ROOM_IS_INACTIVE";
+            } else if ( isMainRoomTab
                     && !RoomUtil.checkPrivilege( roomItem.getRole(),
                     roomItem.getAffiliation(),
                     RoomUtil.SEND_MESSAGES_TO_ALL ) ) {
@@ -66,17 +72,17 @@ public class ChatFrame extends Window {
                     RoomUtil.SEND_PRIVATE_MESSAGES ) ) {
               errorCause = "NO_SEND_PRIVATE_MESS_PRIV";
             }
-            /** Checking for error **/
-            if ( errorCause != null ) {
-              /** Showing error **/
-              Handler.showError( errorCause );
-              return;
-            }
           }
-          /** Setup text box title as buddy item nick name **/
-          textBox.setTitle( chatTab.title );
-          /** Setup text box as current display **/
-          Display.getDisplay( MidletMain.midletMain ).setCurrent( textBox );
+          /** Checking for error is null **/
+          if ( errorCause == null ) {
+            /** Setup text box title as buddy item nick name **/
+            textBox.setTitle( chatTab.title );
+            /** Setup text box as current display **/
+            Display.getDisplay( MidletMain.midletMain ).setCurrent( textBox );
+          } else {
+            /** Showing error **/
+            Handler.showError( errorCause );
+          }
         }
       }
     } );
