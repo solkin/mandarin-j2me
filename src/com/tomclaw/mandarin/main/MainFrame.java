@@ -112,7 +112,7 @@ public class MainFrame extends Window {
     final PopupItem groupSubFilter = new PopupItem( "" ) {
       public void actionPerformed() {
         /** Inverting flag in settings **/
-        com.tomclaw.mandarin.core.Settings.showGroups = 
+        com.tomclaw.mandarin.core.Settings.showGroups =
                 !com.tomclaw.mandarin.core.Settings.showGroups;
         /** Applying settings **/
         buddyList.updateSettings();
@@ -124,7 +124,7 @@ public class MainFrame extends Window {
     final PopupItem offlineSubFilter = new PopupItem( "" ) {
       public void actionPerformed() {
         /** Inverting flag in settings **/
-        com.tomclaw.mandarin.core.Settings.showOffline = 
+        com.tomclaw.mandarin.core.Settings.showOffline =
                 !com.tomclaw.mandarin.core.Settings.showOffline;
         /** Applying settings **/
         buddyList.updateSettings();

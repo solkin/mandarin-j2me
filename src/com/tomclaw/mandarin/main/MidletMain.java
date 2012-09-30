@@ -1,6 +1,7 @@
 package com.tomclaw.mandarin.main;
 
 import com.tomclaw.images.Splitter;
+import com.tomclaw.mandarin.core.Handler;
 import com.tomclaw.mandarin.core.Settings;
 import com.tomclaw.mandarin.core.Storage;
 import com.tomclaw.tcuilite.Screen;
@@ -69,6 +70,11 @@ public class MidletMain extends MIDlet {
     screen.activeWindow = mainFrame;
     /** Showing **/
     screen.show();
+    /** Checking for main frame object **/
+    if ( mainFrame.getGObject().equals( mainFrame.blank ) ) {
+      /** Showing warning **/
+      Handler.showDialog( "WARNING", "TEST_VERSION" );
+    }
   }
 
   public void pauseApp() {
