@@ -14,7 +14,7 @@ public class StatusUtil {
   public static int xmppOffset = 0;
   public static int roomOffset = 7;
   public static int icqOffset = 9;
-  public static int mmpOffset = 23;
+  public static int mmpOffset = 16;
 
   public static int getStatusIndex( String status ) {
     for ( int c = 0; c < statuses.length; c++ ) {
