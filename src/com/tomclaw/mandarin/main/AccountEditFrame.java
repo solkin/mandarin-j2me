@@ -198,6 +198,8 @@ public class AccountEditFrame extends Window {
                     LogUtil.outMessage( "Registration form received!" );
                     Form form = ( Form ) params.get( "FORM" );
                     showRegisterAccountPane( form );
+                    /** Disconnect session **/
+                    session.disconnect();
                     return;
                   } else if ( errorCause.equals( "" ) ) {
                     /** Cause unknown **/
@@ -206,6 +208,8 @@ public class AccountEditFrame extends Window {
                   }
                   LogUtil.outMessage( "Error cause: " + errorCause );
                   showResult( true, Localization.getMessage( errorCause ) );
+                  /** Disconnect session **/
+                  session.disconnect();
                 }
               };
               action.setCookie( cookie );
@@ -238,55 +242,79 @@ public class AccountEditFrame extends Window {
   private void sendRegistrationForm() {
     /** Showing wait screen **/
     MidletMain.screen.setWaitScreenState( true );
-    /** Creating xml spore **/
-    XmlSpore xmlSpore = new XmlSpore() {
-      public void onRun() throws Throwable {
-        /** Sending registration form **/
-        form.objects = pane.items;
-        String cookie = TemplateCollection.sendRegistrationForm(
-                this, form, AccountRoot.getRegisterHost() );
-        QueueAction action = new QueueAction() {
-          public void actionPerformed( Hashtable params ) {
-            /** Registration form sent **/
-            LogUtil.outMessage( "Registration ack received!" );
-            String errorCause = ( String ) params.get( "ERROR_CAUSE" );
-            if ( errorCause == null ) {
-              /** No errors **/
-              LogUtil.outMessage( "No errors" );
-              if ( saveAccountInfo() ) {
-                showResult( false, Localization.getMessage( "YOU_REGISTERED" ) );
-              } else {
-                /** Fields username and password not found **/
-                LogUtil.outMessage( "Fields username and password not found" );
-                showResult( true, Localization.getMessage( "FIELDS_NOT_DEFINED" ) );
-              }
-              return;
-            } else if ( errorCause.equals( "" ) ) {
-              /** Cause unknown **/
-              LogUtil.outMessage( "Cause unknown" );
-              errorCause = Localization.getMessage( "CAUSE_UNKNOWN" );
-            }
-            LogUtil.outMessage( "Error cause: " + errorCause );
-            showResult( true, Localization.getMessage( errorCause ) );
+    /** Creating new thread because of new connection start **/
+    new Thread() {
+      public void run() {
+        try {
+          /** Creating session instance for registration **/
+          if ( session == null ) {
+            session = new Session( false );
+          } else {
+            session.disconnect();
           }
-        };
-        action.setCookie( cookie );
-        Queue.pushQueueAction( action );
-      }
+          session.establishConnection( AccountRoot.getRegisterHost(), AccountRoot.getRegisterPort(), AccountRoot.getUseSsl() );
+          session.start();
+          /** Creating xml spore **/
+          XmlSpore xmlSpore = new XmlSpore() {
+            public void onRun() throws Throwable {
+              /** Sending registration form **/
+              form.objects = pane.items;
+              /** Starting stream **/
+              TemplateCollection.sendStartXmlStream( this, AccountRoot.getRegisterHost(), null );
+              /** Sending registration forms **/
+              String cookie = TemplateCollection.sendRegistrationForm(
+                      this, form, AccountRoot.getRegisterHost() );
+              QueueAction action = new QueueAction() {
+                public void actionPerformed( Hashtable params ) {
+                  /** Registration form sent **/
+                  LogUtil.outMessage( "Registration ack received!" );
+                  String errorCause = ( String ) params.get( "ERROR_CAUSE" );
+                  if ( errorCause == null ) {
+                    /** No errors **/
+                    LogUtil.outMessage( "No errors" );
+                    if ( saveAccountInfo() ) {
+                      showResult( false, Localization.getMessage( "YOU_REGISTERED" ) );
+                    } else {
+                      /** Fields username and password not found **/
+                      LogUtil.outMessage( "Fields username and password not found" );
+                      showResult( true, Localization.getMessage( "FIELDS_NOT_DEFINED" ) );
+                    }
+                    /** Disconnect session **/
+                    session.disconnect();
+                    return;
+                  } else if ( errorCause.equals( "" ) ) {
+                    /** Cause unknown **/
+                    LogUtil.outMessage( "Cause unknown" );
+                    errorCause = Localization.getMessage( "CAUSE_UNKNOWN" );
+                  }
+                  LogUtil.outMessage( "Error cause: " + errorCause );
+                  showResult( true, Localization.getMessage( errorCause ) );
+                  /** Disconnect session **/
+                  session.disconnect();
+                }
+              };
+              action.setCookie( cookie );
+              Queue.pushQueueAction( action );
+            }
 
-      public void onError( Throwable ex ) {
-        String errorCause;
-        if ( ex instanceof IOException ) {
-          errorCause = Localization.getMessage( "IO_EXCEPTION" );
-        } else {
-          errorCause = Localization.getMessage( "FEEDBACK_THIS" ).concat( ex.getMessage() );
+            public void onError( Throwable ex ) {
+              String errorCause;
+              if ( ex instanceof IOException ) {
+                errorCause = Localization.getMessage( "IO_EXCEPTION" );
+              } else {
+                errorCause = Localization.getMessage( "FEEDBACK_THIS" ).concat( ex.getMessage() );
+              }
+              showResult( true, errorCause );
+              LogUtil.outMessage( "Error while register request: " + errorCause, true );
+            }
+          };
+          /** Releasing XML spore **/
+          session.getSporedStream().releaseSpore( xmlSpore );
+        } catch ( Throwable ex ) {
+          showResult( true, Localization.getMessage( "IO_EXCEPTION" ) );
         }
-        showResult( true, errorCause );
-        LogUtil.outMessage( "Error while register request: " + errorCause, true );
       }
-    };
-    /** Releasing xml spore **/
-    session.getSporedStream().releaseSpore( xmlSpore );
+    }.start();
   }
 
   /**

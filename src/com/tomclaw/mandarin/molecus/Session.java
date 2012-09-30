@@ -31,7 +31,7 @@ public class Session {
    * Constructs session class instance for main or not role
    * @param isMain 
    */
-  public Session ( boolean isMain ) {
+  public Session( boolean isMain ) {
     this.isMain = isMain;
   }
 
@@ -39,7 +39,7 @@ public class Session {
    * Returns net connection
    * @return NetConnection
    */
-  public NetConnection getNetConnection () {
+  public NetConnection getNetConnection() {
     return netConnection;
   }
 
@@ -50,121 +50,125 @@ public class Session {
    * @param isUseSsl
    * @throws IOException 
    */
-  public void establishConnection ( String host, int port, boolean isUseSsl ) throws IOException {
+  public void establishConnection( String host, int port, boolean isUseSsl ) throws IOException {
     /** Trying to stop previous connection **/
-    disconnect ();
+    disconnect();
     /** Creating new connection **/
-    netConnection = new NetConnection ();
-    netConnection.connectAddress ( host, port, isUseSsl );
-    xmlInputStream = new XmlInputStream ( netConnection.inputStream );
-    sporedStream = new SporedStream ( netConnection.outputStream );
+    netConnection = new NetConnection();
+    netConnection.connectAddress( host, port, isUseSsl );
+    xmlInputStream = new XmlInputStream( netConnection.inputStream );
+    sporedStream = new SporedStream( netConnection.outputStream );
   }
 
-  public void disconnect () {
+  public void disconnect() {
     /** Disconnecting from server **/
     if ( netConnection != null ) {
       try {
         /** Flushing data **/
-        netConnection.flush ();
-        netConnection.disconnect ();
+        netConnection.flush();
+        netConnection.disconnect();
+        /** Closing streams **/
+        xmlInputStream.close();
+        sporedStream.close();
       } catch ( Throwable ex ) {
-        LogUtil.outMessage ( "Exception while disconnecting: " + ex.getMessage (), true );
+        LogUtil.outMessage( "Exception while disconnecting: " + ex.getMessage(), true );
       }
     }
     netConnection = null;
     /** Trying to stop active thread **/
-    stop ();
-    /** Checking for main sesion role**/
+    stop();
+    /** Checking for main session role**/
     if ( isMain ) {
       /** Sending disconnect event to handler **/
-      LogUtil.outMessage ( "Disconnected" );
-      Handler.disconnectEvent ();
+      LogUtil.outMessage( "Disconnected" );
+      Handler.disconnectEvent();
     }
   }
 
   /**
    * Starting listener thread
    */
-  public void start () {
-    /** Stopping thread if it is already runnting **/
-    stop ();
+  public void start() {
+    /** Stopping thread if it is already running **/
+    stop();
     /** Checking for netConnection initialized **/
     if ( netConnection != null ) {
       /** Creating thread instance **/
-      thread = new Thread () {
-
-        public void run () {
+      thread = new Thread() {
+        public void run() {
           /** Setting up isAlive to true value **/
           isAlive = true;
-          LogUtil.outMessage ( "Session now alive. " );
+          LogUtil.outMessage( "Session now alive. " );
           try {
-            while ( isAlive && xmlInputStream.nextTag () ) {
-              Parser.process ( Session.this, xmlInputStream );
+            while ( isAlive && xmlInputStream.nextTag() ) {
+              Parser.process( Session.this, xmlInputStream );
             }
             /** We are normally disconnected **/
-            LogUtil.outMessage ( "Cycle exit (main). " );
+            LogUtil.outMessage( "Cycle exit (main). " );
           } catch ( Throwable ex ) {
             /** Something strange in stream **/
-            LogUtil.outMessage ( "Exception in main session stream thread: " + ex.getMessage (), true );
+            LogUtil.outMessage( "Exception in main session stream thread: " + ex.getMessage(), true );
           }
           /** Destroying thread **/
           isAlive = false;
-          disconnect ();
-          LogUtil.outMessage ( "Connection destroyed (main). " );
+          disconnect();
+          LogUtil.outMessage( "Connection destroyed (main). " );
         }
       };
       /** Setting up new thread **/
-      thread.setPriority ( Thread.MIN_PRIORITY );
+      thread.setPriority( Thread.MIN_PRIORITY );
       /** Thread start **/
-      thread.start ();
-      /** Creting ping thread to keep connection alive **/
-      ping = new Thread () {
-
-        public void run () {
+      thread.start();
+      /** Creating ping thread to keep connection alive **/
+      ping = new Thread() {
+        public void run() {
           try {
             /** Sending ping every delay seconds **/
             while ( isAlive ) {
-              sleep ( Settings.pingDelay );
-              /** Sending ping data directly **/
-              LogUtil.outMessage ( "Sending ping" );
-              Mechanism.sendPing ( Session.this, netConnection.host );
+              sleep( Settings.pingDelay );
+              /** Checking for the session is main **/
+              if ( isMain ) {
+                /** Sending ping data directly **/
+                LogUtil.outMessage( "Sending ping" );
+                Mechanism.sendPing( Session.this, netConnection.host );
+              }
             }
             /** Normally ping cycle exit **/
-            LogUtil.outMessage ( "Ping cycle exit. " );
+            LogUtil.outMessage( "Ping cycle exit. " );
           } catch ( Throwable ex ) {
             /** Something strange in ping stream **/
-            LogUtil.outMessage ( "Exception in ping thread thread: " + ex.getMessage (), true );
+            LogUtil.outMessage( "Exception in ping thread thread: " + ex.getMessage(), true );
           }
         }
       };
       /** Setting up minimum priority to the ping thread **/
-      ping.setPriority ( Thread.MIN_PRIORITY );
+      ping.setPriority( Thread.MIN_PRIORITY );
       /** Staring ping thread **/
-      ping.start ();
+      ping.start();
     }
   }
 
   /**
    * Stopping listener thread
    */
-  private void stop () {
+  private void stop() {
     /** Checking thread for non-null **/
     if ( thread != null ) {
-      LogUtil.outMessage ( "Thread stopping (session)..." );
+      LogUtil.outMessage( "Thread stopping (session)..." );
       if ( isAlive ) {
         /** Stopping parser cycle **/
         isAlive = false;
         try {
           /** Waiting for thread to stop **/
-          thread.join ();
+          thread.join();
           ping.join();
         } catch ( InterruptedException ex ) {
-          LogUtil.outMessage ( "Exception while stopping main session thread: " + ex.getMessage (), true );
+          LogUtil.outMessage( "Exception while stopping main session thread: " + ex.getMessage(), true );
         }
       }
       thread = null;
       ping = null;
-      LogUtil.outMessage ( "Thread stopped (session)." );
+      LogUtil.outMessage( "Thread stopped (session)." );
     } else {
       /** Stopping parser cycle **/
       isAlive = false;
@@ -175,7 +179,7 @@ public class Session {
    * Returns XmlWriter 
    * @return xmlWriter
    */
-  public SporedStream getSporedStream () {
+  public SporedStream getSporedStream() {
     return sporedStream;
   }
 
@@ -183,7 +187,7 @@ public class Session {
    * Returns XmlInputStream
    * @return xmlInputStream
    */
-  public XmlInputStream getXmlReader () {
+  public XmlInputStream getXmlReader() {
     return xmlInputStream;
   }
 }
