@@ -11,7 +11,9 @@ import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
 import com.tomclaw.utils.StringUtil;
+import com.tomclaw.xmlgear.XmlOutputStream;
 import com.tomclaw.xmlgear.XmlSpore;
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -121,6 +123,8 @@ public class Mechanism {
                                                             /** Creating XML spore **/
                                                             XmlSpore xmlSpore = new XmlSpore() {
                                                               public void onRun() throws Throwable {
+                                                                /** Update bookmarks presence **/
+                                                                updateRoomsPresence( this, StatusUtil.getStatus( statusIndex ), true );
                                                                 /** Sending presence info **/
                                                                 String cookie = TemplateCollection.sendPresence(
                                                                         this, AccountRoot.getFullJid(),
@@ -156,7 +160,6 @@ public class Mechanism {
                                               };
                                               queueAction.setCookie( cookie );
                                               Queue.pushQueueAction( queueAction );
-
                                             }
                                           };
                                           /** Releasing XML spore **/
@@ -200,23 +203,26 @@ public class Mechanism {
           session.getSporedStream().releaseSpore( xmlSpore );
         } catch ( Throwable ex ) {
           Handler.showError( "IO_EXCEPTION" );
-          ex.printStackTrace();
         }
       }
     }.start();
   }
 
-  public static void setStatus( final int statusIndex ) {
+  public static void setStatus( final int statusIndex,
+          final boolean isConnect ) {
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
     /** Creating XML spore **/
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
+        /** Sending global presence **/
         TemplateCollection.sendPresence(
                 this, AccountRoot.getFullJid(),
                 null, null,
                 StatusUtil.getStatus( statusIndex ),
                 null, AccountRoot.getPriority(), true );
+        /** Update bookmarks presence **/
+        updateRoomsPresence( this, StatusUtil.getStatus( statusIndex ), isConnect );
       }
     };
     /** Releasing XML spore **/
@@ -956,7 +962,8 @@ public class Mechanism {
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
         /** Sending room entering request **/
-        TemplateCollection.enterRoom( this, AccountRoot.getFullJid(), roomItem );
+        TemplateCollection.enterRoom( this, AccountRoot.getFullJid(), roomItem,
+                StatusUtil.getStatus( AccountRoot.getStatusIndex() ) );
       }
     };
     /** Releasing XML spore **/
@@ -1032,7 +1039,6 @@ public class Mechanism {
               Form form = ( Form ) params.get( "FORM" );
               /** Adding execute command **/
               Command command = new Command( Localization.getMessage( "SAVE" ) ) {
-                
                 /** State to continue if recommended value is not corrected **/
                 private int state;
 
@@ -1168,7 +1174,7 @@ public class Mechanism {
                 /** Obtain text **/
                 String text = ( ( Field ) roomNameField ).getText();
                 /** Checking for text size **/
-                if(text.length() > Settings.ROOM_NAME_MAX_SIZE ) {
+                if ( text.length() > Settings.ROOM_NAME_MAX_SIZE ) {
                   /** Trimming **/
                   ( ( Field ) roomNameField ).setText( text.substring( 0, Settings.ROOM_NAME_MAX_SIZE ) );
                 }
@@ -1181,7 +1187,7 @@ public class Mechanism {
                 /** Obtain text **/
                 String text = ( ( Field ) roomDescField ).getText();
                 /** Checking for text size **/
-                if(text.length() > Settings.ROOM_DESC_MAX_SIZE ) {
+                if ( text.length() > Settings.ROOM_DESC_MAX_SIZE ) {
                   /** Trimming **/
                   ( ( Field ) roomDescField ).setText( text.substring( 0, Settings.ROOM_DESC_MAX_SIZE ) );
                 }
@@ -1489,5 +1495,28 @@ public class Mechanism {
     };
     /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
+  }
+
+  private static void updateRoomsPresence( XmlOutputStream xmlWriter,
+          String show, boolean isConnect ) throws IOException {
+    /** Checking for bookmarks exist **/
+    if ( MidletMain.mainFrame.buddyList.roomsGroupItem != null
+            && MidletMain.mainFrame.buddyList.roomsGroupItem.getChildsCount() > 0 ) {
+      Vector items = MidletMain.mainFrame.buddyList.roomsGroupItem.getChilds();
+      /** Searching for auto join items **/
+      for ( int c = 0; c < items.size(); c++ ) {
+        /** Obtain room item **/
+        RoomItem roomItem = ( RoomItem ) items.elementAt( c );
+        /** Checking for item is active or auto join and first status set **/
+        if ( roomItem.getRoomActive()
+                || ( roomItem.getAutoJoin() && isConnect ) ) {
+          /** Setup auto join flag **/
+          roomItem.setAutoJoinInvoked( isConnect );
+          /** Sending room presence **/
+          TemplateCollection.enterRoom( xmlWriter, AccountRoot.getFullJid(),
+                  roomItem, show );
+        }
+      }
+    }
   }
 }

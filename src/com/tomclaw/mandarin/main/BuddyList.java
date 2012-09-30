@@ -47,7 +47,7 @@ public class BuddyList extends Group {
     /** Setup RMS file **/
     loadOfflineBuddyList();
   }
-  
+
   /**
    * Updating settings from Settings class
    */

@@ -672,6 +672,9 @@ public class Handler {
     if ( isCreated ) {
       /** Loading room configuration frame */
       Mechanism.configureRoomRequest( roomItem, true );
+    } else if ( roomItem.getAutoJoinInvoked() ) {
+      /** Removing auto join flag **/
+      roomItem.setAutoJoinInvoked( false );
     } else {
       /** Opening room in chat frame **/
       MidletMain.mainFrame.openDialog( roomItem, roomItem.getResource( "" ), isCleanChat );

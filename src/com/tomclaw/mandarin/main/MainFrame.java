@@ -76,7 +76,7 @@ public class MainFrame extends Window {
    * Initialize buddy list and main menus
    */
   private void initGui() {
-    /** Checking fot AccountRoot ready **/
+    /** Checking for AccountRoot ready **/
     if ( AccountRoot.isReady() ) {
       header = getImHeader();
       initBuddyList();
@@ -165,7 +165,7 @@ public class MainFrame extends Window {
                   Mechanism.accountLogout();
                 } else {
                   /** Plain status change **/
-                  Mechanism.setStatus( statusIndex );
+                  Mechanism.setStatus( statusIndex, false );
                 }
               }
             };

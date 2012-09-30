@@ -17,6 +17,7 @@ public class RoomItem extends BuddyItem {
   private boolean isNonAnonimous;
   private boolean isRoomActive;
   private String topic;
+  private boolean isAutoJoinInvoked;
 
   /**
    * Creates configured service item
@@ -242,5 +243,13 @@ public class RoomItem extends BuddyItem {
       return "";
     }
     return topic;
+  }
+  
+  public void setAutoJoinInvoked(boolean isAutoJoinInvoked) {
+    this.isAutoJoinInvoked = isAutoJoinInvoked;
+  }
+  
+  public boolean getAutoJoinInvoked() {
+    return isAutoJoinInvoked;
   }
 }

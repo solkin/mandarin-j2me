@@ -37,6 +37,7 @@ public class TemplateCollection {
   public static final String TAG_CONFERENCE = "conference";
   public static final String TAG_PASSWORD = "password";
   public static final String TAG_REASON = "reason";
+  public static final String TAG_SHOW = "show";
   /** Attributes **/
   public static final String ATT_TYPE = "type";
   public static final String ATT_ID = "id";
@@ -313,7 +314,7 @@ public class TemplateCollection {
       xmlWriter.attribute( ATT_TYPE, type );
     }
     if ( statusId != null ) {
-      xmlWriter.startTag( "show" );
+      xmlWriter.startTag( TAG_SHOW );
       xmlWriter.text( statusId );
       xmlWriter.endTag();
     }
@@ -734,14 +735,21 @@ public class TemplateCollection {
   }
 
   public static String enterRoom(
-          XmlOutputStream xmlWriter, String from, RoomItem roomItem )
-          throws IOException {
+          XmlOutputStream xmlWriter, String from, RoomItem roomItem,
+          String show ) throws IOException {
     /** Generating request cookie **/
     String cookie = AccountRoot.generateCookie();
     xmlWriter.startTag( TAG_PRESENCE );
     xmlWriter.attribute( ATT_FROM, from );
     xmlWriter.attribute( ATT_ID, cookie );
     xmlWriter.attribute( ATT_TO, roomItem.getJid().concat( "/" ).concat( roomItem.getRoomNick() ) );
+    /** Checking for show status is not null **/
+    if ( !StringUtil.isEmptyOrNull( show ) ) {
+      xmlWriter.startTag( TAG_SHOW );
+      xmlWriter.text( show );
+      xmlWriter.endTag();
+    }
+    /** MUC xmlns **/
     xmlWriter.startTag( TAG_X );
     xmlWriter.attribute( ATT_XMLNS, "http://jabber.org/protocol/muc" );
     /** Checking for password is not null **/
@@ -828,7 +836,7 @@ public class TemplateCollection {
     xmlWriter.flush();
     return cookie;
   }
-  
+
   public static String sendRoomVisitorsListOperation( XmlOutputStream xmlWriter,
           String roomJid, String affiliation, String jid, String reason, int operation ) throws IOException {
     /** Generating request cookie **/
@@ -844,11 +852,11 @@ public class TemplateCollection {
     xmlWriter.startTag( "item" );
     xmlWriter.attribute( ATT_AFFILIATION, affiliation );
     /** Checking for operation type to append JID **/
-    if(operation != Mechanism.OPERATION_GET) {
+    if ( operation != Mechanism.OPERATION_GET ) {
       xmlWriter.attribute( ATT_JID, jid );
     }
     /** Checking for operation to add reason tag **/
-    if(operation == Mechanism.OPERATION_ADD && reason != null) {
+    if ( operation == Mechanism.OPERATION_ADD && reason != null ) {
       xmlWriter.startTag( TAG_REASON );
       xmlWriter.text( reason );
       xmlWriter.endTag();
