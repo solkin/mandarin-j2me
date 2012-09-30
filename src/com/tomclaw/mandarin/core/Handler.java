@@ -306,10 +306,10 @@ public class Handler {
                       "", false );
               if ( chatTab != null ) {
                 /** Check and prepare message **/
-                String message = "[p][i][b][c=purple]".concat( resource ).
-                        concat( "[/c][/b][/i] " ).concat(
+                String message = "[p][i]* [b][c=purple]".concat( resource ).
+                        concat( " [/c][/b] " ).concat(
                         Localization.getMessage( "CHANGED_NICK" ) ).
-                        concat( " [i][b][c=purple]" ).concat( muc_nick ).
+                        concat( " [b][c=purple]" ).concat( muc_nick ).
                         concat( "[/c][/b][/i][/p]" );
                 /** Showing message in chat tab **/
                 boolean isTabActive = MidletMain.chatFrame.addChatItem(

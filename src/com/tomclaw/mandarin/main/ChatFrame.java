@@ -292,6 +292,11 @@ public class ChatFrame extends Window {
       message = StringUtil.replace( message, "]", "\\]" );
       // message = Smiles.replaceSmilesForCodes( message );
       message = StringUtil.replace( message, "\n", "[br/]" );
+      /** Checking for /me command (XEP-0245) in muc **/
+      if ( isMuc && message.startsWith( "/me " ) ) {
+        message = "[i]* [b][c=purple]".concat( nickName ).concat( " [/c][/b]" ).
+                concat( message.substring( 4 ) ).concat( "[/i]" );
+      }
       message = "[p]".concat( message ).concat( "[/p]" );
       /** Checking for subject is not null, not equals to the body 
        * and nick name present **/
@@ -301,14 +306,14 @@ public class ChatFrame extends Window {
       }
     } else if ( isMuc && subject != null && message == null ) {
       /** This is muc topic **/
-      message = "[i][b][c=purple]* ".concat( nickName ).concat( " " ).
+      message = "[i]* [b][c=purple]".concat( nickName ).concat( " " ).
               concat( Localization.getMessage( "CHANGED_ROOM_TOPIC_TO" ) ).
-              concat( ":[/b][br/]" ).concat( subject ).concat( "[/i]" );
+              concat( ": [/c][/b][br/]" ).concat( subject ).concat( "[/i]" );
     } else if ( isMuc && StringUtil.isNullOrEmpty( subject ) && message == null ) {
       /** This is muc topic **/
-      message = "[i][b][c=purple]* ".concat( nickName ).concat( " " ).
+      message = "[i]* [b][c=purple]".concat( nickName ).concat( " " ).
               concat( Localization.getMessage( "REMOVED_TOPIC" ) ).
-              concat( "[/b][/i]" );
+              concat( "[/c][/b][/i]" );
     } else {
       message = "[c=red][b]".concat( Localization.getMessage( "INVALID_MESSAGE_RECEIVED" ) ).concat( "[/b][/c]" );
     }
