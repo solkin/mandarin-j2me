@@ -276,6 +276,8 @@ public class ChatFrame extends Window {
       prepareGraphics();
       chatTabs.switchTabTo( chatTabs.items.size() - 1 );
     }
+    /** Switching buddy item flag, that dialog is opened **/
+    chatTab.buddyItem.setDialogOpened( true );
     /** Update buddy item UI **/
     chatTab.buddyItem.updateUi();
     /** Checking for main frame new window **/
@@ -436,17 +438,19 @@ public class ChatFrame extends Window {
         LogUtil.outMessage( "Removing resource: ".concat( chatTab.resource.resource ) );
         chatTab.buddyItem.removeResource( chatTab.resource.resource );
       }
+      /** Switching buddy item flag, that dialog is closed **/
+      chatTab.buddyItem.setDialogOpened( false );
       /** Updating UI **/
       chatTab.buddyItem.updateUi();
     }
   }
 
   /**
-   * Removing all chat tabs by jid
+   * Removing all chat tabs by JID
    * @param jid 
    */
   public void removeChatTabs( String jid ) {
-    /** Checking for jid is not null-type or empty 
+    /** Checking for JID is not null-type or empty 
      and non-empty chat tabs items **/
     if ( !( StringUtil.isEmptyOrNull( jid )
             || chatTabs.items.isEmpty() ) ) {
@@ -455,10 +459,14 @@ public class ChatFrame extends Window {
       for ( int c = 0; c < chatTabs.items.size(); c++ ) {
         /** Obtain chat tab item by index **/
         chatTab = ( ChatTab ) chatTabs.items.elementAt( c );
-        /** Checking for chat tab jid equals **/
+        /** Checking for chat tab JID equals **/
         if ( chatTab.buddyItem.getJid().equals( jid ) ) {
           /** Removing item **/
           chatTabs.items.removeElementAt( c );
+          /** Switching buddy item flag, that dialog is closed **/
+          chatTab.buddyItem.setDialogOpened( false );
+          /** Updating UI **/
+          chatTab.buddyItem.updateUi();
           /** Decrementing index **/
           c--;
         }

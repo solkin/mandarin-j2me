@@ -29,6 +29,7 @@ public class BuddyItem extends GroupChild {
   public Resource[] resources = new Resource[ 0 ];
   private boolean isBuddyInvalid = false;
   private boolean isTemp;
+  private boolean isDialogOpened = false;
 
   /**
    * Creates temporary buddy item
@@ -36,11 +37,11 @@ public class BuddyItem extends GroupChild {
    */
   public BuddyItem( String jid ) {
     this( jid, null, null, true );
-    BuddyItem.this.setSubscription(null);
+    BuddyItem.this.setSubscription( null );
   }
 
   /**
-   * Creates confidured buddy item
+   * Creates configured buddy item
    * @param jid
    * @param itemName
    * @param subscription
@@ -344,13 +345,22 @@ public class BuddyItem extends GroupChild {
     if ( getStatusIndex() != StatusUtil.offlineIndex && Settings.isSortOnline ) {
       weight = -2;
     }
+    /** Checking for opened dialog **/
+    if ( isDialogOpened ) {
+      /** Updating weight and bold status **/
+      weight = -3;
+      isBold = true;
+    } else {
+      /** Updating bold status **/
+      isBold = false;
+    }
     int chatImage = -1;
     /** Checking for unread messages **/
     if ( getUnreadCount() > 0 ) {
       chatImage = ChatItem.TYPE_PLAIN_MSG;
       /** Checking setting to raise unread **/
       if ( Settings.isRaiseUnread ) {
-        weight = -3;
+        weight = -4;
       }
     }
     /** Applying left images **/
@@ -359,8 +369,8 @@ public class BuddyItem extends GroupChild {
     int subscriptionImage = -1;
     /** Checking for subscription is not null-type and not service 
      * or room item **/
-    if ( subscription != null && !isService() && 
-            getInternalType() != BuddyItem.TYPE_ROOM_ITEM) {
+    if ( subscription != null && !isService()
+            && getInternalType() != BuddyItem.TYPE_ROOM_ITEM ) {
       if ( subscription.equals( "from" ) ) {
         subscriptionImage = IMG_SUBSCRIPTION_FROM;
       } else if ( subscription.equals( "to" ) ) {
@@ -379,5 +389,21 @@ public class BuddyItem extends GroupChild {
 
   public int getInternalType() {
     return BuddyItem.TYPE_BUDDY_ITEM;
+  }
+
+  /**
+   * Setting up that dialog with this buddy is opened or closed
+   * @param isDialogOpened 
+   */
+  public void setDialogOpened( boolean isDialogOpened ) {
+    this.isDialogOpened = isDialogOpened;
+  }
+
+  /**
+   * Returns the dialog opened flag
+   * @return isDialogOpened (boolean)
+   */
+  public boolean getDialogOpened() {
+    return isDialogOpened;
   }
 }
