@@ -204,14 +204,14 @@ public class BuddyItem extends GroupChild {
   public Resource getResource( String resource ) {
     /** Cycling resources **/
     for ( int c = 0; c < resources.length; c++ ) {
-      /** Checking for resource existant **/
+      /** Checking for resource existance **/
       if ( resources[c].resource.equals( resource ) ) {
         return resources[c];
       }
     }
-    /** Reating new resource **/
+    /** Creating new resource **/
     Resource t_resource = new Resource( resource );
-    /** Creating new reources array **/
+    /** Creating new resources array **/
     Resource[] enl_resources = new Resource[ resources.length + 1 ];
     /** Copying exist resources to the new array **/
     System.arraycopy( resources, 0, enl_resources, 0, resources.length );

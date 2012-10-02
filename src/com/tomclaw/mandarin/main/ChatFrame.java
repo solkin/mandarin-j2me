@@ -210,7 +210,7 @@ public class ChatFrame extends Window {
                         /** Check and prepare message **/
                         message = checkMessage( AccountRoot.getNickName(),
                                 message, null, chatTab.isMucTab() );
-                        /** Add's chat item to selected chat frame **/
+                        /** Adds chat item to selected chat frame **/
                         MidletMain.chatFrame.addChatItem( chatTab, cookie,
                                 ChatItem.TYPE_PLAIN_MSG, false,
                                 AccountRoot.getNickName(), message );
@@ -522,9 +522,12 @@ public class ChatFrame extends Window {
         LogUtil.outMessage( "Have no more ".
                 concat( chatTab.buddyItem.getJid() ).concat( " item in roser" ) );
         MidletMain.mainFrame.buddyList.makeBuddyItemTemp( chatTab.buddyItem );
+        /** Equating buddy item **/
+        buddyItem = chatTab.buddyItem;
+      } else {
+        /** Applying updated buddy item **/
+        chatTab.buddyItem = buddyItem;
       }
-      /** Applying updated buddy item **/
-      chatTab.buddyItem = buddyItem;
       /** Creating resource **/
       chatTab.resource = buddyItem.getResource( chatTab.resource.resource );
     }

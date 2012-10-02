@@ -28,6 +28,7 @@ public class MainFrame extends Window {
   private PopupItem subscrApprPopup;
   private PopupItem subscrRejtPopup;
   private PopupItem dialogPopupItem;
+  private PopupItem editPopupItem;
   private PopupItem enterRoomPopupItem;
   private PopupItem editBookmarkPopupItem;
   private PopupItem removeBookmarkPopupItem;
@@ -362,7 +363,7 @@ public class MainFrame extends Window {
       }
     };
     buddyPopup.addSubItem( dialogPopupItem );
-    buddyPopup.addSubItem( new PopupItem( Localization.getMessage( "EDIT" ) ) {
+    editPopupItem = new PopupItem( Localization.getMessage( "EDIT" ) ) {
       public void actionPerformed() {
         /** Checking for online **/
         if ( Handler.sureIsOnline() ) {
@@ -375,7 +376,8 @@ public class MainFrame extends Window {
           }
         }
       }
-    } );
+    };
+    buddyPopup.addSubItem( editPopupItem );
     buddyPopup.addSubItem( new PopupItem( Localization.getMessage( "REMOVE" ) ) {
       public void actionPerformed() {
         /** Checking for online **/
@@ -387,7 +389,17 @@ public class MainFrame extends Window {
             final Soft dialogSoft = new Soft( screen );
             dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
               public void actionPerformed() {
-                Mechanism.rosterRemoveRequest( buddyItem.getJid() );
+                /** Checking for buddy is temporary **/
+                if ( buddyItem.getTemp() ) {
+                  /** Removing buddy locally **/
+                  MidletMain.mainFrame.buddyList.removeBuddyFromGroups( buddyItem );
+                  /** Checking for chat frame buddy items **/
+                  MidletMain.chatFrame.updateBuddyItems();
+                } else {
+                  /** Mechanism invocation **/
+                  Mechanism.rosterRemoveRequest( buddyItem.getJid() );
+                }
+                /** Closing dialog **/
                 dialogSoft.rightSoft.actionPerformed();
               }
             };
@@ -514,7 +526,7 @@ public class MainFrame extends Window {
               public void actionPerformed() {
                 /** Obtain bookmarks **/
                 final RoomItem roomItem = ( ( RoomItem ) buddyItem );
-                /** Checking for privilegue to destroy room **/
+                /** Checking for privilege to destroy room **/
                 if ( RoomUtil.checkPrivilege( roomItem.getRole(), roomItem.getAffiliation(), RoomUtil.DESTROY_ROOM ) ) {
                   final Soft dialogSoft = new Soft( screen );
                   dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
@@ -770,16 +782,24 @@ public class MainFrame extends Window {
     buddyPopup.subPopup.items.removeElement( subscrReqtPopup );
     buddyPopup.subPopup.items.removeElement( subscrApprPopup );
     buddyPopup.subPopup.items.removeElement( subscrRejtPopup );
-    /** Checking for necessary items **/
-    if ( buddyItem.getSubscription().equals( "none" ) ) {
-      buddyPopup.subPopup.items.addElement( subscrReqtPopup );
-    } else if ( buddyItem.getSubscription().equals( "from" ) ) {
-      buddyPopup.subPopup.items.addElement( subscrReqtPopup );
-      buddyPopup.subPopup.items.addElement( subscrRejtPopup );
-    } else if ( buddyItem.getSubscription().equals( "to" ) ) {
-      buddyPopup.subPopup.items.addElement( subscrApprPopup );
-    } else if ( buddyItem.getSubscription().equals( "both" ) ) {
-      buddyPopup.subPopup.items.addElement( subscrRejtPopup );
+    /** Updating remove/add item and adding subscription items **/
+    if ( buddyItem.getTemp() ) {
+      /** Updating popup item title **/
+      editPopupItem.setTitle( Localization.getMessage( "ADD" ) );
+    } else {
+      /** Checking for necessary items **/
+      if ( buddyItem.getSubscription().equals( "none" ) ) {
+        buddyPopup.subPopup.items.addElement( subscrReqtPopup );
+      } else if ( buddyItem.getSubscription().equals( "from" ) ) {
+        buddyPopup.subPopup.items.addElement( subscrReqtPopup );
+        buddyPopup.subPopup.items.addElement( subscrRejtPopup );
+      } else if ( buddyItem.getSubscription().equals( "to" ) ) {
+        buddyPopup.subPopup.items.addElement( subscrApprPopup );
+      } else if ( buddyItem.getSubscription().equals( "both" ) ) {
+        buddyPopup.subPopup.items.addElement( subscrRejtPopup );
+      }
+      /** Updating popup item title **/
+      editPopupItem.setTitle( Localization.getMessage( "EDIT" ) );
     }
     /** Updating "Dialog" menu **/
     updateDialogPopupItem( buddyItem );
