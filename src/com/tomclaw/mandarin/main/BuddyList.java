@@ -27,6 +27,7 @@ public class BuddyList extends Group {
   public BuddyList() {
     super();
     /** Setup parameters **/
+    minWeight = -4;
     updateSettings();
     /** Left images **/
     imageLeftFileHash = new int[]{
