@@ -66,13 +66,14 @@ public class AccountEditFrame extends Window {
                     /** Showing wait screen **/
                     MidletMain.screen.setWaitScreenState( true );
                     /** Saving account info **/
-                    if ( saveAccountInfo() ) {
+                    String errorCause;
+                    if ( ( errorCause = saveAccountInfo() ) == null ) {
                       /** Switching to main frame **/
                       showResult( false, Localization.getMessage( "ACCOUNT_SAVED" ) );
                     } else {
                       /** Fields username and password not defined **/
-                      LogUtil.outMessage( "Fields username and password not found" );
-                      showResult( true, Localization.getMessage( "FIELDS_NOT_DEFINED" ) );
+                      LogUtil.outMessage( "Fields username and password incorrect" );
+                      showResult( true, Localization.getMessage( errorCause ) );
                     }
                   }
                 }.start();
@@ -110,7 +111,7 @@ public class AccountEditFrame extends Window {
   }
 
   /**
-   * Decrimine step
+   * Decrease step
    */
   private void stepOver() {
     stepIndex--;
@@ -120,7 +121,7 @@ public class AccountEditFrame extends Window {
    * Searches pane.items for fields "username" and "password"
    * and starts saveAccountInfo( username, password );
    */
-  public boolean saveAccountInfo() {
+  public String saveAccountInfo() {
     String username = "";
     String password = "";
     /** Searching for fields named as "username" and "password" **/
@@ -136,11 +137,21 @@ public class AccountEditFrame extends Window {
     }
     /** Checking compliance of username and password **/
     if ( username.length() > 0 && password.length() > 0 ) {
+      /** Checking for domain in username **/
+      if ( username.indexOf( '@' ) != -1 ) {
+        if ( username.substring( username.indexOf( '@' ) ).
+                equals( "@".concat( AccountRoot.getRemoteHost() ) ) ) {
+          /** Removing any domain from username **/
+          username = username.substring( 0, username.indexOf( '@' ) );
+        } else {
+          return "UNKNOWN_HOST";
+        }
+      }
       /** Saving registration info **/
       saveAccountInfo( username, password );
-      return true;
+      return null;
     }
-    return false;
+    return "FIELDS_NOT_DEFINED";
   }
 
   /** 
@@ -157,7 +168,7 @@ public class AccountEditFrame extends Window {
       com.tomclaw.mandarin.core.Settings.saveAll();
       Storage.save();
     } else {
-      /** Showing error popup dialog **/
+      /** Showing error pop-up dialog **/
       LogUtil.outMessage( "Both fields required" );
       showResult( true, Localization.getMessage( "BOTH_FIELDS_REQUIRED" ) );
     }
@@ -182,7 +193,7 @@ public class AccountEditFrame extends Window {
           }
           session.establishConnection( AccountRoot.getRegisterHost(), AccountRoot.getRegisterPort(), AccountRoot.getUseSsl() );
           session.start();
-          /** Creating xml spore **/
+          /** Creating XML spore **/
           XmlSpore xmlSpore = new XmlSpore() {
             public void onRun() throws Throwable {
               /** Starting stream **/
@@ -227,7 +238,7 @@ public class AccountEditFrame extends Window {
               LogUtil.outMessage( "Error while register request: " + errorCause, true );
             }
           };
-          /** Releasing xml spore **/
+          /** Releasing XML spore **/
           session.getSporedStream().releaseSpore( xmlSpore );
         } catch ( Throwable ex ) {
           showResult( true, Localization.getMessage( "IO_EXCEPTION" ) );
@@ -254,7 +265,7 @@ public class AccountEditFrame extends Window {
           }
           session.establishConnection( AccountRoot.getRegisterHost(), AccountRoot.getRegisterPort(), AccountRoot.getUseSsl() );
           session.start();
-          /** Creating xml spore **/
+          /** Creating XML spore **/
           XmlSpore xmlSpore = new XmlSpore() {
             public void onRun() throws Throwable {
               /** Sending registration form **/
@@ -272,12 +283,12 @@ public class AccountEditFrame extends Window {
                   if ( errorCause == null ) {
                     /** No errors **/
                     LogUtil.outMessage( "No errors" );
-                    if ( saveAccountInfo() ) {
+                    if ( ( errorCause = saveAccountInfo() ) == null ) {
                       showResult( false, Localization.getMessage( "YOU_REGISTERED" ) );
                     } else {
                       /** Fields username and password not found **/
-                      LogUtil.outMessage( "Fields username and password not found" );
-                      showResult( true, Localization.getMessage( "FIELDS_NOT_DEFINED" ) );
+                      LogUtil.outMessage( "Fields username and password are incorrect" );
+                      showResult( true, Localization.getMessage( errorCause ) );
                     }
                     /** Disconnect session **/
                     session.disconnect();
@@ -333,7 +344,7 @@ public class AccountEditFrame extends Window {
   }
 
   /**
-   * Shows popup window
+   * Shows pop-up window
    * @param isError
    * @param errorCause 
    */
@@ -342,17 +353,17 @@ public class AccountEditFrame extends Window {
     if ( isError ) {
       /** On error step over required **/
       stepOver();
-      /** Determing window for following operations **/
+      /** Determine window for following operations **/
       window = this;
     } else {
-      /** Determing window for following operations **/
+      /** Determine window for following operations **/
       window = MidletMain.mainFrame;
       /** Update main frame **/
       MidletMain.mainFrame.checkGui();
       /** Switching **/
       MidletMain.screen.setActiveWindow( MidletMain.mainFrame );
     }
-    /** Creating requireddialog frame **/
+    /** Creating required dialog frame **/
     String title = Localization.getMessage( isError ? "ERROR" : "SUCCESS" );
     Soft dialogSoft = new Soft( MidletMain.screen );
     if ( isError ) {
