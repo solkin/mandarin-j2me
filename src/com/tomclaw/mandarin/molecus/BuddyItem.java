@@ -74,8 +74,6 @@ public class BuddyItem extends GroupChild {
       protocolOffset = StatusUtil.icqOffset;
     } else if ( BuddyList.getJidHost( jid ).toLowerCase().startsWith( "mrim" ) ) {
       protocolOffset = StatusUtil.mmpOffset;
-    } else if ( BuddyList.getJidHost( jid ).toLowerCase().startsWith( "conference" ) ) {
-      protocolOffset = StatusUtil.roomOffset;
     }
   }
 

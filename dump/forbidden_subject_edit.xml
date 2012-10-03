@@ -1,0 +1,11 @@
+<message from='jab@conference.molecus.com' to='kkx@molecus.com/Mandarin' type='error' xml:lang='ru' id='eiAtfAzb'>
+	<subject>
+		ÐÐ¾Ð¼Ð¸Ðº ÐºÐ¾Ð¼Ð°Ð½Ð´Ñ Ð¼Ð°Ð½Ð³Ð¾ (ÑÐµÐ·ÐµÑÐ²)
+	</subject>
+	<error code='403' type='auth'>
+		<forbidden xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>
+		<text xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'>
+			Ð¢Ð¾Ð»ÑÐºÐ¾ Ð¼Ð¾Ð´ÐµÑÐ°ÑÐ¾ÑÑ Ð¼Ð¾Ð³ÑÑ Ð¸Ð·Ð¼ÐµÐ½ÑÑÑ ÑÐµÐ¼Ñ Ð² ÑÑÐ¾Ð¹ ÐºÐ¾Ð¼Ð½Ð°ÑÐµ
+		</text>
+	</error>
+</message>

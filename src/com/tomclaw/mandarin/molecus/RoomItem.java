@@ -35,6 +35,8 @@ public class RoomItem extends BuddyItem {
     affiliation = RoomUtil.AFFL_NONE;
     isNonAnonimous = false;
     isRoomActive = false;
+    /** Updating protocol offset **/
+    setProtocolOffset( StatusUtil.roomOffset );
   }
 
   /**
@@ -244,11 +246,11 @@ public class RoomItem extends BuddyItem {
     }
     return topic;
   }
-  
-  public void setAutoJoinInvoked(boolean isAutoJoinInvoked) {
+
+  public void setAutoJoinInvoked( boolean isAutoJoinInvoked ) {
     this.isAutoJoinInvoked = isAutoJoinInvoked;
   }
-  
+
   public boolean getAutoJoinInvoked() {
     return isAutoJoinInvoked;
   }
