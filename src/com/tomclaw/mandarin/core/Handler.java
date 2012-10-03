@@ -5,6 +5,7 @@ import com.tomclaw.mandarin.molecus.*;
 import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
+import com.tomclaw.utils.TimeUtil;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -122,7 +123,7 @@ public class Handler {
    */
   public static void setPresence( String from, String show, int priority,
           String status, String caps, String ver, boolean isInvalidBuddy,
-          Hashtable params ) {
+          String stamp, Hashtable params ) {
     String clearJid = BuddyList.getClearJid( from );
     String resource = BuddyList.getJidResource( from );
     LogUtil.outMessage( "Presence: " + from );
@@ -314,7 +315,7 @@ public class Handler {
                 /** Showing message in chat tab **/
                 boolean isTabActive = MidletMain.chatFrame.addChatItem(
                         chatTab, AccountRoot.generateCookie(),
-                        ChatItem.TYPE_PLAIN_MSG, true, resource, message );
+                        ChatItem.TYPE_PLAIN_MSG, true, resource, message, stamp );
                 if ( !( isTabActive && MidletMain.screen.activeWindow.
                         equals( MidletMain.chatFrame ) ) ) {
                   /** Chat tab is not active or ChatFrame 
@@ -387,7 +388,8 @@ public class Handler {
    * @param id
    * @param message 
    */
-  public static void setMessage( String from, String type, String id, String message, String subject ) {
+  public static void setMessage( String from, String type, String id,
+          String message, String subject, String stamp ) {
     String jid = BuddyList.getClearJid( from );
     String nickName;
     String resource;
@@ -440,7 +442,7 @@ public class Handler {
     message = ChatFrame.checkMessage( nickName, message, subject, chatTab.isMucTab() );
     /** Showing message in chat tab **/
     boolean isTabActive = MidletMain.chatFrame.addChatItem( chatTab, id,
-            ChatItem.TYPE_PLAIN_MSG, true, nickName, message );
+            ChatItem.TYPE_PLAIN_MSG, true, nickName, message, stamp );
     if ( !( isTabActive && MidletMain.screen.activeWindow.equals( MidletMain.chatFrame ) ) ) {
       /** Chat tab is not active or ChatFrame is not on the screen **/
       chatTab.resource.unreadCount++;
