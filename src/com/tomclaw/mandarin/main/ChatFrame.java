@@ -337,49 +337,13 @@ public class ChatFrame extends Window {
       nickName = Localization.getMessage( "ROOM_SYSTEM" );
     }
     /** Calculating time **/
+    long time;
     if ( stamp == null ) {
       /** Current time **/
-      stamp = TimeUtil.getTimeString( TimeUtil.getCurrentTimeGMT(), false );
+      time = TimeUtil.getCurrentTimeGMT();
     } else {
       /** Time from stamp by XEP-0082 **/
-      int tIndex = stamp.indexOf( 'T' );
-      /** Checking for date and time **/
-      if ( tIndex != -1 ) {
-        String date = stamp.substring( 0, tIndex );
-        String time = stamp.substring( tIndex + 1 );
-        LogUtil.outMessage( "Date: " + date );
-        LogUtil.outMessage( "Time: " + time );
-        int zIndex = Math.max( time.indexOf( '+' ), time.indexOf( '-' ) );
-        zIndex = Math.max( zIndex, time.indexOf( 'Z' ) );
-        /** Checking for time zone **/
-        if ( zIndex != -1 ) {
-          String clearTime = time.substring( 0, zIndex );
-          String timeZone = time.substring( zIndex );
-          LogUtil.outMessage( "Clear time: " + clearTime );
-          LogUtil.outMessage( "Time zone: " + timeZone );
-          /** Checking for UTC **/
-          if ( timeZone.equals( "Z" ) ) {
-            stamp = clearTime;
-          } else {
-            boolean isPlus = ( timeZone.charAt( 0 ) == '+' );
-            int dIndex = timeZone.indexOf( ':' );
-            /** Checking for delimiter **/
-            if ( dIndex != -1 ) {
-              int zHours = Integer.parseInt( timeZone.substring( 1, dIndex ) );
-              int zMinutes = Integer.parseInt( timeZone.substring( dIndex ) );
-              /** Correcting time **/
-              dIndex = clearTime.indexOf( ':' );
-              int rHours = Integer.parseInt( clearTime.substring( 0, dIndex ) )
-                      - ( isPlus ? zHours : -zHours );
-              int mIndex = clearTime.indexOf( ':', dIndex );
-              int rMinutes = Integer.parseInt( clearTime.substring( dIndex, mIndex ) )
-                      - ( isPlus ? zMinutes : -zMinutes );
-              LogUtil.outMessage( "Real hours: " + rHours );
-              LogUtil.outMessage( "Real minutes: " + rMinutes );
-            }
-          }
-        }
-      }
+      time = TimeUtil.getUtcTimeLong( stamp, true );
     }
     /** Creating chat item instance **/
     ChatItem chatItem = new com.tomclaw.tcuilite.ChatItem( chatPane, message );
@@ -388,7 +352,7 @@ public class ChatFrame extends Window {
     chatItem.itemType = type;
     chatItem.buddyNick = nickName;
     chatItem.buddyId = isIncoming ? chatTab.buddyItem.getJid() : AccountRoot.getClearJid();
-    chatItem.itemDateTime = stamp;
+    chatItem.itemDateTime = TimeUtil.getTimeString( time, false );
     /** Adding chat item **/
     chatTab.addChatItem( chatItem );
     /** Checking for focus **/
