@@ -72,7 +72,7 @@ public class AccountEditFrame extends Window {
                       showResult( false, Localization.getMessage( "ACCOUNT_SAVED" ) );
                     } else {
                       /** Fields username and password not defined **/
-                      LogUtil.outMessage( "Fields username and password incorrect" );
+                      LogUtil.outMessage( "Incorrect username or a password" );
                       showResult( true, Localization.getMessage( errorCause ) );
                     }
                   }
