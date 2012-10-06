@@ -59,7 +59,7 @@ public class Parser {
           if ( xmlns.equals( "jabber:iq:register" ) ) {
             /** Checking for tag type **/
             if ( xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
-              /** Registation form **/
+              /** Registration form **/
               Form form = processForm( xmlReader, "query" );
               params.put( "FORM", form );
             }
@@ -561,7 +561,8 @@ public class Parser {
     String caps = null;
     String ver = null;
     String nick = null;
-    /** Checking even presence tag selfclosed **/
+    String stamp = null;
+    /** Checking even presence tag self-closed **/
     if ( xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
       /** Cycling all the tags **/
       while ( xmlReader.nextTag()
@@ -610,18 +611,26 @@ public class Parser {
           /** Processing error **/
           processX( xmlReader, params );
         }
+        if ( xmlReader.tagName.equals( "delay" )
+                && ( xmlReader.tagType == XmlInputStream.TAG_PLAIN 
+                || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING )
+                && xmlReader.getAttrValue( "xmlns", false).equals( "urn:xmpp:delay" ) ) {
+          stamp = xmlReader.getAttrValue( "stamp", true);
+        }
       }
     }
     /** Checking status value **/
     boolean isInvalidBuddy = presenceType.equals( "error" );
     show = ( presenceType.equals( "unavailable" ) || isInvalidBuddy )
             ? StatusUtil.getStatus( StatusUtil.offlineIndex ) : show;
-    /** Checkign for presence type **/
+    /** Checking for presence type **/
     if ( plainPresence ) {
       LogUtil.outMessage( "Presence received: from = " + presenceFrom
-              + " show = " + show + " priority = " + priority + " status = " + status );
+              + " show = " + show + " priority = " + priority 
+              + " status = " + status + " stamp = " + stamp );
       /** Sending event to Handler **/
-      Handler.setPresence( presenceFrom, show, priority, status, caps, ver, isInvalidBuddy, params );
+      Handler.setPresence( presenceFrom, show, priority, status, caps, ver, 
+              isInvalidBuddy, stamp, params );
     }
     /** Update nick name if available **/
     if ( nick != null ) {
@@ -637,7 +646,8 @@ public class Parser {
     String messageType = xmlReader.getAttrValue( "type", false );
     String body = null;
     String subject = null;
-    /** Checking even presence tag selfclosed **/
+    String stamp = null;
+    /** Checking even presence tag self-closed **/
     if ( xmlReader.tagType != XmlInputStream.TAG_SELFCLOSING ) {
       /** Cycling all the tags **/
       while ( xmlReader.nextTag()
@@ -651,10 +661,15 @@ public class Parser {
                 && xmlReader.tagType == XmlInputStream.TAG_CLOSING ) {
           /** Reading subject value **/
           subject = xmlReader.body;
+        } else if ( xmlReader.tagName.equals( "delay" )
+                && ( xmlReader.tagType == XmlInputStream.TAG_PLAIN 
+                || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING )
+                && xmlReader.getAttrValue( "xmlns", false).equals( "urn:xmpp:delay" ) ) {
+          stamp = xmlReader.getAttrValue( "stamp", true);
         }
       }
-      /** Handler method invokation **/
-      Handler.setMessage( messageFrom, messageType, messageId, body, subject );
+      /** Handler method invocation **/
+      Handler.setMessage( messageFrom, messageType, messageId, body, subject, stamp );
     }
   }
 

@@ -70,6 +70,7 @@ public class TemplateCollection {
     "jabber:iq:time",
     "urn:xmpp:time",
     "urn:xmpp:ping",
+    "urn:xmpp:delay",
     "jabber:iq:private"
   };
 
@@ -932,7 +933,7 @@ public class TemplateCollection {
       { "software", "Mandarin IM" },
       { "software_version", version }
     };
-    /** Writting X fields **/
+    /** Writing X fields **/
     xmlWriter.startTag( TAG_X );
     xmlWriter.attribute( ATT_XMLNS, "jabber:x:data" );
     xmlWriter.attribute( ATT_TYPE, "result" );

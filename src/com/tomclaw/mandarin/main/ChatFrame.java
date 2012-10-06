@@ -213,7 +213,7 @@ public class ChatFrame extends Window {
                         /** Adds chat item to selected chat frame **/
                         MidletMain.chatFrame.addChatItem( chatTab, cookie,
                                 ChatItem.TYPE_PLAIN_MSG, false,
-                                AccountRoot.getNickName(), message );
+                                AccountRoot.getNickName(), message, null );
                         /** Repainting **/
                         MidletMain.screen.repaint();
                       }
@@ -330,11 +330,20 @@ public class ChatFrame extends Window {
    * @return boolean
    */
   public boolean addChatItem( ChatTab chatTab, String cookie, int type,
-          boolean isIncoming, String nickName, String message ) {
+          boolean isIncoming, String nickName, String message, String stamp ) {
     LogUtil.outMessage( "message = " + message );
     /** Checking for room item and nick is empty **/
     if ( chatTab.isMucTab() && nickName.length() == 0 ) {
       nickName = Localization.getMessage( "ROOM_SYSTEM" );
+    }
+    /** Calculating time **/
+    long time;
+    if ( stamp == null ) {
+      /** Current time **/
+      time = TimeUtil.getCurrentTimeGMT();
+    } else {
+      /** Time from stamp by XEP-0082 **/
+      time = TimeUtil.getUtcTimeLong( stamp, true );
     }
     /** Creating chat item instance **/
     ChatItem chatItem = new com.tomclaw.tcuilite.ChatItem( chatPane, message );
@@ -343,7 +352,7 @@ public class ChatFrame extends Window {
     chatItem.itemType = type;
     chatItem.buddyNick = nickName;
     chatItem.buddyId = isIncoming ? chatTab.buddyItem.getJid() : AccountRoot.getClearJid();
-    chatItem.itemDateTime = TimeUtil.getTimeString( TimeUtil.getCurrentTimeGMT(), false );
+    chatItem.itemDateTime = TimeUtil.getTimeString( time, false );
     /** Adding chat item **/
     chatTab.addChatItem( chatItem );
     /** Checking for focus **/
