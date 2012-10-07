@@ -14,7 +14,7 @@ public class RoomItem extends BuddyItem {
   private String roomPassword;
   private int role;
   private int affiliation;
-  private boolean isNonAnonimous;
+  private boolean isNonAnonymous;
   private boolean isRoomActive;
   private String topic;
   private boolean isAutoJoinInvoked;
@@ -33,7 +33,7 @@ public class RoomItem extends BuddyItem {
     this.isAutoJoin = isAutoJoin;
     role = RoomUtil.ROLE_NONE;
     affiliation = RoomUtil.AFFL_NONE;
-    isNonAnonimous = false;
+    isNonAnonymous = false;
     isRoomActive = false;
     /** Updating protocol offset **/
     setProtocolOffset( StatusUtil.roomOffset );
@@ -64,7 +64,7 @@ public class RoomItem extends BuddyItem {
   }
 
   /**
-   * Setting up autojoin parameter
+   * Setting up auto-join parameter
    * @param isAutoJoin 
    */
   public void setAutoJoin( boolean isAutoJoin ) {
@@ -229,11 +229,11 @@ public class RoomItem extends BuddyItem {
   }
 
   /**
-   * Setting up anonimous room status
-   * @param isNonAnonimous 
+   * Setting up anonymous room status
+   * @param isNonAnonymous 
    */
-  public void setNonAnonimous( boolean isNonAnonimous ) {
-    this.isNonAnonimous = isNonAnonimous;
+  public void setNonAnonymous( boolean isNonAnonymous ) {
+    this.isNonAnonymous = isNonAnonymous;
   }
 
   public void setRoomTopic( String subject ) {

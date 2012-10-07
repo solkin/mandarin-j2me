@@ -57,7 +57,7 @@ public class RoomEditFrame extends Window {
             roomItem.getNickName() ) ? "" : roomItem.getNickName() );
     nameField.setFocused( true );
     pane.addItem( nameField );
-    /** Autojoin check **/
+    /** Auto-join check **/
     autoJounCheck = new Check(
             Localization.getMessage( "AUTO_JOIN" ), roomItem.getAutoJoin() );
     pane.addItem( autoJounCheck );
