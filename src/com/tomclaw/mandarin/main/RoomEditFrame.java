@@ -27,7 +27,7 @@ public class RoomEditFrame extends Window {
     s_prevWindow = MidletMain.mainFrame;
     /** Header **/
     header = new Header( Localization.getMessage( "ROOM_EDIT" ).
-            concat( ": " ).concat( roomItem.getUserName() ) );
+            concat( " " ).concat( roomItem.getRoomTitle() ) );
     /** Soft **/
     soft = new Soft( screen );
     /** Right soft **/

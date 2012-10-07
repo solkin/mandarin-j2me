@@ -16,13 +16,13 @@ public class AccountRoot {
   private static String resource = "Mandarin";
   private static boolean isUseSsl = false;
   private static boolean isUseSasl = false;
-  private static String remoteHost = "localhost"; // "molecus.com"; // "jabberon.ru"; // "molecus.com"; // "jabber.mipt.ru"; // "localhost"; // 
+  private static String remoteHost = "molecus.com"; // "molecus.com"; // "jabberon.ru"; // "molecus.com"; // "jabber.mipt.ru"; // "localhost"; // 
   private static int remotePort = 5222;
-  private static String registerHost = "localhost"; // "molecus.com"; // "jabberon.ru"; // "molecus.com"; // "jabber.mipt.ru"; // "localhost"; // 
+  private static String registerHost = "molecus.com"; // "molecus.com"; // "jabberon.ru"; // "molecus.com"; // "jabber.mipt.ru"; // "localhost"; // 
   private static int registerPort = 5222;
-  private static String servicesHost = "localhost"; // "molecus.com"; // "jabberon.ru"; // "molecus.com"; // "jabber.mipt.ru"; // "localhost"; // 
+  private static String servicesHost = "molecus.com"; // "molecus.com"; // "jabberon.ru"; // "molecus.com"; // "jabber.mipt.ru"; // "localhost"; // 
   private static int priority = 5;
-  private static String roomHost = "conference".concat( "." ).concat( "localhost" );
+  private static String roomHost = "conference".concat( "." ).concat( "molecus.com" );
   /** Runtime session **/
   private static Session session;
   private static int statusIndex = StatusUtil.offlineIndex;

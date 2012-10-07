@@ -145,12 +145,12 @@ public class RoomItem extends BuddyItem {
   public String getRoomTitle() {
     String roomTitle;
     try {
-      /** Checking for room jid is number **/
+      /** Checking for room JID is number **/
       Integer.parseInt( getUserName() );
-      /** Room's jid is number **/
+      /** Room JID is number **/
       roomTitle = "№".concat( getUserName() );
     } catch ( Throwable ex ) {
-      /** Room's jid is not number **/
+      /** Room JID is not number **/
       roomTitle = "\"".concat( getUserName() ).concat( "\"" );
     }
     return roomTitle;

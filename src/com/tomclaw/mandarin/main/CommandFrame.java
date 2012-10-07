@@ -45,7 +45,7 @@ public class CommandFrame extends Window {
     header = new Header( item.name );
     /** Soft **/
     soft = new Soft( screen );
-    /** Checking for right soft is ot defined **/
+    /** Checking for right soft is not defined **/
     if ( rightSoft == null ) {
       /** Creating default and setting up right soft **/
       soft.rightSoft = new PopupItem( Localization.getMessage( "CLOSE" ) ) {
@@ -65,7 +65,7 @@ public class CommandFrame extends Window {
   }
 
   public void setFormData( Form form ) {
-    /** Updateing form object **/
+    /** Updating form object **/
     this.form = form;
     /** Checking for soft existance **/
     if ( form.leftSoft != null && !form.leftSoft.isEmpty() ) {

@@ -1019,7 +1019,9 @@ public class Mechanism {
 
   public static void configureRoomRequest( final RoomItem roomItem, final boolean isRoomCreating ) {
     /** Creating item instance **/
-    final Item item = new Item( roomItem.getJid(), null, roomItem.getNickName() );
+    final Item item = new Item( roomItem.getJid(), null,
+            Localization.getMessage( "ROOM_NUMBER" ).concat( " " ).
+            concat( roomItem.getRoomTitle() ) );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
     /** Creating XML spore **/
@@ -1063,7 +1065,7 @@ public class Mechanism {
                                 "MUC_ROOM_PROT_IS_UNRECOMMENDED" ) ) {
                           /** Saving bookmark **/
                           updateBookmark();
-                          /** Command invokation to send form data **/
+                          /** Command invocation to send form data **/
                           LogUtil.outMessage( "Save form invokation: " + item.jid + ", " + name );
                           Mechanism.roomConfigurationFormSetRequest( roomItem, form, isRoomCreating );
                         } else {
