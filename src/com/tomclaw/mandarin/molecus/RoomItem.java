@@ -1,5 +1,7 @@
 package com.tomclaw.mandarin.molecus;
 
+import com.tomclaw.utils.StringUtil;
+
 /**
  * Solkin Igor Viktorovich, TomClaw Software, 2003-2012
  * http://www.tomclaw.com/
@@ -156,6 +158,24 @@ public class RoomItem extends BuddyItem {
     return roomTitle;
   }
 
+  /**
+   * Returns online visitors count
+   * @return visitors (int)
+   */
+  public int getRoomVisitors() {
+    int visitors = 0;
+    /** Cycling all resources **/
+    for ( int c = 0; c < this.resources.length; c++ ) {
+      /** Checking for resource is not empty and not offline **/
+      if ( !StringUtil.isNullOrEmpty( resources[c].resource )
+              && resources[c].statusIndex != StatusUtil.offlineIndex ) {
+        /** Append visitor **/
+        visitors++;
+      }
+    }
+    return visitors;
+  }
+  
   /**
    * Clones all room parameters into specified room item
    * @param roomItem 

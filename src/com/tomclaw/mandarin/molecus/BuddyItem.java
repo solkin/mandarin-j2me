@@ -24,6 +24,7 @@ public class BuddyItem extends GroupChild {
   public static final int IMG_SUBSCRIPTION_ERROR = 3;
   /** Buddy fields **/
   private String jid;
+  private String nick;
   private String subscription;
   private int protocolOffset = StatusUtil.xmppOffset;
   public Resource[] resources = new Resource[ 0 ];
@@ -85,7 +86,7 @@ public class BuddyItem extends GroupChild {
     if ( nickName == null ) {
       nickName = getUserName();
     }
-    this.title = nickName;
+    nick = nickName;
   }
 
   /**
@@ -161,7 +162,7 @@ public class BuddyItem extends GroupChild {
    * @return nickName
    */
   public String getNickName() {
-    return title;
+    return nick;
   }
 
   /**
@@ -337,6 +338,18 @@ public class BuddyItem extends GroupChild {
    * Bold font, icons
    */
   public void updateUi() {
+    /** Updating nick name **/
+    title = nick;
+    /** Checking for buddy type **/
+    if ( getInternalType() == TYPE_ROOM_ITEM ) {
+      /** Obtain room visitors count **/
+      int roomVisitorsCount = ( ( RoomItem ) this ).getRoomVisitors();
+      /** Checking for visitors exist **/
+      if ( roomVisitorsCount > 0 ) {
+        /** Modifying title **/
+        title += " (" + roomVisitorsCount + " чел.)";
+      }
+    }
     /** Left icons **/
     weight = 0;
     /** Checking buddy status to raise online **/
