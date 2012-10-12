@@ -1,5 +1,7 @@
 package com.tomclaw.mandarin.molecus;
 
+import com.tomclaw.utils.StringUtil;
+
 /**
  * Solkin Igor Viktorovich, TomClaw Software, 2003-2012
  * http://www.tomclaw.com/
@@ -14,7 +16,7 @@ public class RoomItem extends BuddyItem {
   private String roomPassword;
   private int role;
   private int affiliation;
-  private boolean isNonAnonimous;
+  private boolean isNonAnonymous;
   private boolean isRoomActive;
   private String topic;
   private boolean isAutoJoinInvoked;
@@ -33,7 +35,7 @@ public class RoomItem extends BuddyItem {
     this.isAutoJoin = isAutoJoin;
     role = RoomUtil.ROLE_NONE;
     affiliation = RoomUtil.AFFL_NONE;
-    isNonAnonimous = false;
+    isNonAnonymous = false;
     isRoomActive = false;
     /** Updating protocol offset **/
     setProtocolOffset( StatusUtil.roomOffset );
@@ -64,7 +66,7 @@ public class RoomItem extends BuddyItem {
   }
 
   /**
-   * Setting up autojoin parameter
+   * Setting up auto-join parameter
    * @param isAutoJoin 
    */
   public void setAutoJoin( boolean isAutoJoin ) {
@@ -157,6 +159,24 @@ public class RoomItem extends BuddyItem {
   }
 
   /**
+   * Returns online visitors count
+   * @return visitors (int)
+   */
+  public int getRoomVisitors() {
+    int visitors = 0;
+    /** Cycling all resources **/
+    for ( int c = 0; c < this.resources.length; c++ ) {
+      /** Checking for resource is not empty and not offline **/
+      if ( !StringUtil.isNullOrEmpty( resources[c].resource )
+              && resources[c].statusIndex != StatusUtil.offlineIndex ) {
+        /** Append visitor **/
+        visitors++;
+      }
+    }
+    return visitors;
+  }
+  
+  /**
    * Clones all room parameters into specified room item
    * @param roomItem 
    */
@@ -229,11 +249,11 @@ public class RoomItem extends BuddyItem {
   }
 
   /**
-   * Setting up anonimous room status
-   * @param isNonAnonimous 
+   * Setting up anonymous room status
+   * @param isNonAnonymous 
    */
-  public void setNonAnonimous( boolean isNonAnonimous ) {
-    this.isNonAnonimous = isNonAnonimous;
+  public void setNonAnonymous( boolean isNonAnonymous ) {
+    this.isNonAnonymous = isNonAnonymous;
   }
 
   public void setRoomTopic( String subject ) {

@@ -215,10 +215,10 @@ public class Handler {
             if ( params.containsKey( "STATUS_100" ) ) {
               /** Inform user that any occupant is 
                * allowed to see the user’s full JID **/
-              roomItem.setNonAnonimous( true );
+              roomItem.setNonAnonymous( true );
             } else {
               /** Room is anonymous **/
-              roomItem.setNonAnonimous( false );
+              roomItem.setNonAnonymous( false );
             }
             if ( params.containsKey( "STATUS_101" ) ) {
               /** Inform user that his or her affiliation 
@@ -262,11 +262,11 @@ public class Handler {
             }
             if ( params.containsKey( "STATUS_172" ) ) {
               /** Room is now non-anonymous **/
-              roomItem.setNonAnonimous( true );
+              roomItem.setNonAnonymous( true );
             }
             if ( params.containsKey( "STATUS_173" ) ) {
               /** Room is now semi-anonymous **/
-              roomItem.setNonAnonimous( false );
+              roomItem.setNonAnonymous( false );
             }
             if ( params.containsKey( "STATUS_201" ) ) {
               /** Room is created **/
