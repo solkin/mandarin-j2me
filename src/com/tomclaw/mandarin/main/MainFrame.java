@@ -928,6 +928,19 @@ public class MainFrame extends Window {
     }
     /** Checking for null-type **/
     if ( buddyItem != null ) {
+      /** Checking for item is bookmark **/
+      if ( buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
+        /** Checking for room is inactive and have no dialog **/
+        if ( !( ( ( RoomItem ) buddyItem ).getRoomActive()
+                || buddyItem.getDialogOpened() ) ) {
+          /** Checking for online **/
+          if ( Handler.sureIsOnline() ) {
+            /** Entering into the room **/
+            Mechanism.enterRoomRequest( ( RoomItem ) buddyItem );
+          }
+          return;
+        }
+      }
       /** Checking for null-resource **/
       if ( resource == null ) {
         /** Checking for unread resource **/
