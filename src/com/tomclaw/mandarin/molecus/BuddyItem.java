@@ -30,7 +30,7 @@ public class BuddyItem extends GroupChild {
   public Resource[] resources = new Resource[ 0 ];
   private boolean isBuddyInvalid = false;
   private boolean isTemp;
-  private boolean isDialogOpened = false;
+  private int openedDialogsCount = 0;
 
   /**
    * Creates temporary buddy item
@@ -357,7 +357,7 @@ public class BuddyItem extends GroupChild {
       weight = -2;
     }
     /** Checking for opened dialog **/
-    if ( isDialogOpened ) {
+    if ( getDialogOpened() ) {
       /** Updating weight and bold status **/
       weight = -3;
       isBold = true;
@@ -407,7 +407,7 @@ public class BuddyItem extends GroupChild {
    * @param isDialogOpened 
    */
   public void setDialogOpened( boolean isDialogOpened ) {
-    this.isDialogOpened = isDialogOpened;
+    openedDialogsCount += isDialogOpened ? 1 : -1;
   }
 
   /**
@@ -415,6 +415,6 @@ public class BuddyItem extends GroupChild {
    * @return isDialogOpened (boolean)
    */
   public boolean getDialogOpened() {
-    return isDialogOpened;
+    return ( openedDialogsCount > 0 );
   }
 }
