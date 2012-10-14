@@ -1,11 +1,11 @@
 package com.tomclaw.mandarin.core;
 
+import com.tomclaw.mandarin.core.Settings;
 import com.tomclaw.mandarin.main.*;
 import com.tomclaw.mandarin.molecus.*;
 import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
-import com.tomclaw.utils.TimeUtil;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;

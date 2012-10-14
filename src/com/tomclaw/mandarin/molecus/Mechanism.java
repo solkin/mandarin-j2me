@@ -222,7 +222,8 @@ public class Mechanism {
                 StatusUtil.getStatus( statusIndex ),
                 null, AccountRoot.getPriority(), true );
         /** Update bookmarks presence **/
-        updateRoomsPresence( this, StatusUtil.getStatus( statusIndex ), isConnect );
+        updateRoomsPresence( this, StatusUtil.getStatus( statusIndex ),
+                isConnect );
       }
     };
     /** Releasing XML spore **/
@@ -357,9 +358,13 @@ public class Mechanism {
                 /** Adding execute command **/
                 Command command = new Command( Localization.getMessage( "EXECUTE" ) ) {
                   public void actionPerformed() {
+                    /** Checking for user is online **/
+                    if ( !Handler.sureIsOnline() ) {
+                      return;
+                    }
                     /** Showing wait screen **/
                     MidletMain.screen.setWaitScreenState( true );
-                    /** Command invokation **/
+                    /** Command invocation **/
                     LogUtil.outMessage( "Command invokation: " + item.jid + ", " + name );
                     Mechanism.executeCommand( item, form );
                   }
@@ -1045,10 +1050,13 @@ public class Mechanism {
                 private int state;
 
                 public void actionPerformed() {
-                  /** Resetting state **/
-                  state = 0;
-                  /** Starting process **/
-                  startCheckProcess();
+                  /** Checking for user is online **/
+                  if ( Handler.sureIsOnline() ) {
+                    /** Resetting state **/
+                    state = 0;
+                    /** Starting process **/
+                    startCheckProcess();
+                  }
                 }
 
                 public void startCheckProcess() {
@@ -1206,7 +1214,7 @@ public class Mechanism {
               PopupItem rightSoft = new PopupItem( Localization.getMessage( "CANCEL" ) ) {
                 public void actionPerformed() {
                   /** Checking for online connection **/
-                  if ( !AccountRoot.isOffline() ) {
+                  if ( Handler.sureIsOnline() ) {
                     /** Checking for room creating status **/
                     if ( isRoomCreating ) {
                       /** Destroying room, removing empty temp bookmark **/
