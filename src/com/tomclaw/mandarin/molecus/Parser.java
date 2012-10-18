@@ -612,10 +612,10 @@ public class Parser {
           processX( xmlReader, params );
         }
         if ( xmlReader.tagName.equals( "delay" )
-                && ( xmlReader.tagType == XmlInputStream.TAG_PLAIN 
+                && ( xmlReader.tagType == XmlInputStream.TAG_PLAIN
                 || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING )
-                && xmlReader.getAttrValue( "xmlns", false).equals( "urn:xmpp:delay" ) ) {
-          stamp = xmlReader.getAttrValue( "stamp", true);
+                && xmlReader.getAttrValue( "xmlns", false ).equals( "urn:xmpp:delay" ) ) {
+          stamp = xmlReader.getAttrValue( "stamp", true );
         }
       }
     }
@@ -626,10 +626,10 @@ public class Parser {
     /** Checking for presence type **/
     if ( plainPresence ) {
       LogUtil.outMessage( "Presence received: from = " + presenceFrom
-              + " show = " + show + " priority = " + priority 
+              + " show = " + show + " priority = " + priority
               + " status = " + status + " stamp = " + stamp );
       /** Sending event to Handler **/
-      Handler.setPresence( presenceFrom, show, priority, status, caps, ver, 
+      Handler.setPresence( presenceFrom, show, priority, status, caps, ver,
               isInvalidBuddy, stamp, params );
     }
     /** Update nick name if available **/
@@ -662,10 +662,10 @@ public class Parser {
           /** Reading subject value **/
           subject = xmlReader.body;
         } else if ( xmlReader.tagName.equals( "delay" )
-                && ( xmlReader.tagType == XmlInputStream.TAG_PLAIN 
+                && ( xmlReader.tagType == XmlInputStream.TAG_PLAIN
                 || xmlReader.tagType == XmlInputStream.TAG_SELFCLOSING )
-                && xmlReader.getAttrValue( "xmlns", false).equals( "urn:xmpp:delay" ) ) {
-          stamp = xmlReader.getAttrValue( "stamp", true);
+                && xmlReader.getAttrValue( "xmlns", false ).equals( "urn:xmpp:delay" ) ) {
+          stamp = xmlReader.getAttrValue( "stamp", true );
         }
       }
       /** Handler method invocation **/
@@ -910,7 +910,7 @@ public class Parser {
                 LogUtil.outMessage( "Command found: " + xmlReader.tagName );
                 /** Checking for default action **/
                 Command command = new Command( Localization.getMessage( xmlReader.tagName.toUpperCase() ) ) {
-                  public void actionPerformed() {
+                  public void actionAttempt() {
                     /** Showing wait screen **/
                     MidletMain.screen.setWaitScreenState( true );
                     /** Command invocation **/

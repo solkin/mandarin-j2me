@@ -222,7 +222,8 @@ public class Mechanism {
                 StatusUtil.getStatus( statusIndex ),
                 null, AccountRoot.getPriority(), true );
         /** Update bookmarks presence **/
-        updateRoomsPresence( this, StatusUtil.getStatus( statusIndex ), isConnect );
+        updateRoomsPresence( this, StatusUtil.getStatus( statusIndex ),
+                isConnect );
       }
     };
     /** Releasing XML spore **/
@@ -356,10 +357,10 @@ public class Mechanism {
                       && form.status.equals( "executing" ) ) {
                 /** Adding execute command **/
                 Command command = new Command( Localization.getMessage( "EXECUTE" ) ) {
-                  public void actionPerformed() {
+                  public void actionAttempt() {
                     /** Showing wait screen **/
                     MidletMain.screen.setWaitScreenState( true );
-                    /** Command invokation **/
+                    /** Command invocation **/
                     LogUtil.outMessage( "Command invokation: " + item.jid + ", " + name );
                     Mechanism.executeCommand( item, form );
                   }
@@ -1044,7 +1045,7 @@ public class Mechanism {
                 /** State to continue if recommended value is not corrected **/
                 private int state;
 
-                public void actionPerformed() {
+                public void actionAttempt() {
                   /** Resetting state **/
                   state = 0;
                   /** Starting process **/
@@ -1206,7 +1207,7 @@ public class Mechanism {
               PopupItem rightSoft = new PopupItem( Localization.getMessage( "CANCEL" ) ) {
                 public void actionPerformed() {
                   /** Checking for online connection **/
-                  if ( !AccountRoot.isOffline() ) {
+                  if ( Handler.sureIsOnline() ) {
                     /** Checking for room creating status **/
                     if ( isRoomCreating ) {
                       /** Destroying room, removing empty temp bookmark **/

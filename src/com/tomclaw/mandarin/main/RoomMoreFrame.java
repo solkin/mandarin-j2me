@@ -7,8 +7,8 @@ import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
 import com.tomclaw.utils.StringUtil;
 import java.util.Vector;
-import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.*;
+import javax.microedition.lcdui.Command;
 
 /**
  * Solkin Igor Viktorovich, TomClaw Software, 2003-2012
@@ -37,7 +37,6 @@ public class RoomMoreFrame extends Window {
     soft = new Soft( screen );
     /** Right soft **/
     soft.rightSoft = new PopupItem( Localization.getMessage( "BACK" ) ) {
-
       public void actionPerformed() {
         /** Returning to the previous frame **/
         MidletMain.screen.setActiveWindow( s_prevWindow );
@@ -45,7 +44,6 @@ public class RoomMoreFrame extends Window {
     };
     /** Left soft **/
     soft.leftSoft = new PopupItem( Localization.getMessage( "ENTER" ) ) {
-
       public void actionPerformed() {
         /** Checking for password-protected and temporary feature **/
         boolean isPasswordProtected = false;
@@ -69,7 +67,6 @@ public class RoomMoreFrame extends Window {
           Soft t_soft = new Soft( screen );
           /** Left soft **/
           t_soft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
-
             public void actionPerformed() {
               /** Closing dialog**/
               RoomMoreFrame.this.closeDialog();
@@ -84,7 +81,6 @@ public class RoomMoreFrame extends Window {
           };
           /** Right soft **/
           t_soft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
-
             public void actionPerformed() {
               /** Closing dialog**/
               RoomMoreFrame.this.closeDialog();
@@ -144,6 +140,10 @@ public class RoomMoreFrame extends Window {
    * @param password 
    */
   private void mechanismInvokation( String password ) {
+    /** Checking for user is online **/
+    if ( !Handler.sureIsOnline() ) {
+      return;
+    }
     /** Obtain room item instance **/
     RoomItem roomItem;
     /** Checking for bookmark exists in roster **/

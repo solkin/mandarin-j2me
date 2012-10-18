@@ -593,20 +593,18 @@ public class MainFrame extends Window {
     };
     roomSettingsPopupItem = new PopupItem( Localization.getMessage( "ROOM_SETTINGS" ) );
     roomConfigurationPopupItem = new Command( Localization.getMessage( "ROOM_CONFIG" ) ) {
-      public void actionPerformed() {
+      public void actionAttempt() {
         /** Edit selected room **/
         LogUtil.outMessage( "Room configuration action" );
-        /** Checking for online **/
-        if ( Handler.sureIsOnline() ) {
-          /** Obtain buddy item selected **/
-          final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
-          /** Checking selected item type **/
-          if ( buddyItem != null && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
-            /** Showing wait screen **/
-            MidletMain.screen.setWaitScreenState( true );
-            /** Mechanism invocation **/
-            Mechanism.configureRoomRequest( ( RoomItem ) buddyItem, false );
-          }
+        /** Obtain buddy item selected **/
+        final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
+        /** Checking selected item type **/
+        if ( buddyItem != null && 
+                buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
+          /** Showing wait screen **/
+          MidletMain.screen.setWaitScreenState( true );
+          /** Mechanism invocation **/
+          Mechanism.configureRoomRequest( ( RoomItem ) buddyItem, false );
         }
       }
     };
@@ -771,6 +769,11 @@ public class MainFrame extends Window {
         setBuddyPopup( buddyItem );
       }
     }
+    /** Checking for right soft is empty **/
+    if ( soft.rightSoft.isEmpty() ) {
+      /** Updating popup as empty **/
+      setEmptyPopup();
+    }
   }
 
   private void setGroupPopup() {
@@ -814,11 +817,19 @@ public class MainFrame extends Window {
       PopupItem popupItem = serviceItem.getNewPopupItem( true );
       Handler.appendRegisterEvent( popupItem, serviceItem );
     } else {
+      /** Checking for no cached menu **/
       if ( serviceItem.isNoCachedPopup() ) {
-        /** Locking screen **/
-        screen.setWaitScreenState( true );
-        /** Obtain service items **/
-        Mechanism.inspectService( serviceItem );
+        /** Checking for user is online **/
+        if ( Handler.sureIsOnline() ) {
+          /** Locking screen **/
+          screen.setWaitScreenState( true );
+          /** Obtain service items **/
+          Mechanism.inspectService( serviceItem );
+        } else {
+          /** Updating right popup as empty **/
+          setEmptyPopup();
+          return;
+        }
       }
     }
     /** Showing popup **/
@@ -902,8 +913,16 @@ public class MainFrame extends Window {
     soft.rightSoft = roomPopup;
   }
 
-  private void setEmptyPopup() {
+  /**
+   * Setting empty menu to the right popup
+   */
+  public void setEmptyPopup() {
     soft.rightSoft = emptyPopup;
+    /** Setting right soft is not pressed **/
+    soft.setRightSoftPressed( false );
+    if ( soft.activePopups != null ) {
+      soft.activePopups.removeAllElements();
+    }
   }
 
   /**

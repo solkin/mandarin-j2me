@@ -1,11 +1,11 @@
 package com.tomclaw.mandarin.core;
 
+import com.tomclaw.mandarin.core.Settings;
 import com.tomclaw.mandarin.main.*;
 import com.tomclaw.mandarin.molecus.*;
 import com.tomclaw.tcuilite.*;
 import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
-import com.tomclaw.utils.TimeUtil;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -533,10 +533,13 @@ public class Handler {
         final Item item = ( Item ) items.elementAt( c );
         PopupItem popupItem = new PopupItem( item.name ) {
           public void actionPerformed() {
-            /** Showing wait screen **/
-            MidletMain.screen.setWaitScreenState( true );
-            LogUtil.outMessage( "Command execute: " + item.node + " for: " + item.jid );
-            Mechanism.executeCommand( item );
+            /** Checking for online **/
+            if ( Handler.sureIsOnline() ) {
+              /** Showing wait screen **/
+              MidletMain.screen.setWaitScreenState( true );
+              LogUtil.outMessage( "Command execute: " + item.node + " for: " + item.jid );
+              Mechanism.executeCommand( item );
+            }
           }
         };
         popupItem.name = item.node;
@@ -769,9 +772,14 @@ public class Handler {
    * @param popupItem 
    */
   public static void showMainFrameElementPopup( PopupItem popupItem ) {
-    /** Showing right soft **/
-    MidletMain.mainFrame.soft.rightSoft = popupItem;
-    MidletMain.mainFrame.soft.setRightSoftPressed( true );
+    if ( popupItem == null || popupItem.isEmpty() ) {
+      /** Stay right popup closed **/
+      MidletMain.mainFrame.setEmptyPopup();
+    } else {
+      /** Showing right soft **/
+      MidletMain.mainFrame.soft.rightSoft = popupItem;
+      MidletMain.mainFrame.soft.setRightSoftPressed( true );
+    }
     /** Hiding wait screen state **/
     MidletMain.screen.setWaitScreenState( false );
   }

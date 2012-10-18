@@ -1,5 +1,6 @@
 package com.tomclaw.mandarin.main;
 
+import com.tomclaw.mandarin.core.Handler;
 import com.tomclaw.mandarin.molecus.DiscoItem;
 import com.tomclaw.mandarin.molecus.Mechanism;
 import com.tomclaw.tcuilite.*;
@@ -60,7 +61,8 @@ public class RoomsFrame extends Window {
     if ( list.selectedIndex > 0 && list.selectedIndex < list.items.size() ) {
       /** Obtain disco item **/
       DiscoItem discoItem = ( DiscoItem ) list.items.elementAt( list.selectedIndex );
-      if ( discoItem != null ) {
+      /** Checking for disco item is not online and user is online **/
+      if ( discoItem != null && Handler.sureIsOnline() ) {
         /** Mechanism invocation **/
         Mechanism.sendRoomsInfoDiscoveryRequest( discoItem );
       }
