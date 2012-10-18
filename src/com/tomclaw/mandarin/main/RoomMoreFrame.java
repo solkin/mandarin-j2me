@@ -45,10 +45,6 @@ public class RoomMoreFrame extends Window {
     /** Left soft **/
     soft.leftSoft = new PopupItem( Localization.getMessage( "ENTER" ) ) {
       public void actionPerformed() {
-        /** Checking for user is online **/
-        if ( !Handler.sureIsOnline() ) {
-          return;
-        }
         /** Checking for password-protected and temporary feature **/
         boolean isPasswordProtected = false;
         isTemporaryRoom = false;
@@ -144,6 +140,10 @@ public class RoomMoreFrame extends Window {
    * @param password 
    */
   private void mechanismInvokation( String password ) {
+    /** Checking for user is online **/
+    if ( !Handler.sureIsOnline() ) {
+      return;
+    }
     /** Obtain room item instance **/
     RoomItem roomItem;
     /** Checking for bookmark exists in roster **/

@@ -357,11 +357,7 @@ public class Mechanism {
                       && form.status.equals( "executing" ) ) {
                 /** Adding execute command **/
                 Command command = new Command( Localization.getMessage( "EXECUTE" ) ) {
-                  public void actionPerformed() {
-                    /** Checking for user is online **/
-                    if ( !Handler.sureIsOnline() ) {
-                      return;
-                    }
+                  public void actionAttempt() {
                     /** Showing wait screen **/
                     MidletMain.screen.setWaitScreenState( true );
                     /** Command invocation **/
@@ -1049,14 +1045,11 @@ public class Mechanism {
                 /** State to continue if recommended value is not corrected **/
                 private int state;
 
-                public void actionPerformed() {
-                  /** Checking for user is online **/
-                  if ( Handler.sureIsOnline() ) {
-                    /** Resetting state **/
-                    state = 0;
-                    /** Starting process **/
-                    startCheckProcess();
-                  }
+                public void actionAttempt() {
+                  /** Resetting state **/
+                  state = 0;
+                  /** Starting process **/
+                  startCheckProcess();
                 }
 
                 public void startCheckProcess() {

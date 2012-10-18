@@ -533,10 +533,13 @@ public class Handler {
         final Item item = ( Item ) items.elementAt( c );
         PopupItem popupItem = new PopupItem( item.name ) {
           public void actionPerformed() {
-            /** Showing wait screen **/
-            MidletMain.screen.setWaitScreenState( true );
-            LogUtil.outMessage( "Command execute: " + item.node + " for: " + item.jid );
-            Mechanism.executeCommand( item );
+            /** Checking for online **/
+            if ( Handler.sureIsOnline() ) {
+              /** Showing wait screen **/
+              MidletMain.screen.setWaitScreenState( true );
+              LogUtil.outMessage( "Command execute: " + item.node + " for: " + item.jid );
+              Mechanism.executeCommand( item );
+            }
           }
         };
         popupItem.name = item.node;
@@ -769,9 +772,14 @@ public class Handler {
    * @param popupItem 
    */
   public static void showMainFrameElementPopup( PopupItem popupItem ) {
-    /** Showing right soft **/
-    MidletMain.mainFrame.soft.rightSoft = popupItem;
-    MidletMain.mainFrame.soft.setRightSoftPressed( true );
+    if ( popupItem == null || popupItem.isEmpty() ) {
+      /** Stay right popup closed **/
+      MidletMain.mainFrame.setEmptyPopup();
+    } else {
+      /** Showing right soft **/
+      MidletMain.mainFrame.soft.rightSoft = popupItem;
+      MidletMain.mainFrame.soft.setRightSoftPressed( true );
+    }
     /** Hiding wait screen state **/
     MidletMain.screen.setWaitScreenState( false );
   }
