@@ -28,6 +28,9 @@ public class ChatFrame extends Window {
   private TextBox textBox;
   /** Static tab labels **/
   private static Label tabLabelBuddyOffline;
+  /** Constants **/
+  private static final String URL_SYMBOLS = "%/?&=$-_.+!*'(),0123456789abcdefghij"
+          + "klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   public ChatFrame() {
     super( MidletMain.screen );
@@ -318,6 +321,46 @@ public class ChatFrame extends Window {
               concat( "[/c][/b][/i]" );
     } else {
       message = "[c=red][b]".concat( Localization.getMessage( "INVALID_MESSAGE_RECEIVED" ) ).concat( "[/b][/c]" );
+    }
+    /** Searching for link inside message **/
+    /** Checking for link is present at all **/
+    if ( message.indexOf( "http://" ) != -1
+            || message.indexOf( "https://" ) != -1
+            || message.indexOf( "www." ) != -1 ) {
+      /** Searching for link entry **/
+      int linkStartIndex = -1;
+      for ( int c = 0; c < message.length(); c++ ) {
+        if ( linkStartIndex == -1 ) {
+          /** Checking for URL starts here **/
+          if ( message.startsWith( "http://", c ) ) {
+            linkStartIndex = c;
+            c += 7;
+            continue;
+          } else if ( message.startsWith( "https://", c ) ) {
+            linkStartIndex = c;
+            c += 8;
+            continue;
+          } else if ( message.startsWith( "www.", c ) ) {
+            linkStartIndex = c;
+            c += 4;
+            continue;
+          }
+        }
+        /** Link body **/
+        if ( linkStartIndex != -1 ) {
+          /** Not URL symbol **/
+          if ( URL_SYMBOLS.indexOf( message.charAt( c ) ) == -1 ) {
+            /** Highlighting URL **/
+            message = message.substring( 0, linkStartIndex ).
+                    concat( "[c=blue][i][u]" ).concat( message.substring( linkStartIndex, c ) )
+                    .concat( " [/u][/i][/c]" ).concat( message.substring( c ) );
+            /** Adding BB-tags length **/
+            c += 27;
+            /** Now, this is not URL body **/
+            linkStartIndex = -1;
+          }
+        }
+      }
     }
     return message;
   }
