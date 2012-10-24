@@ -1,0 +1,33 @@
+<iq type="set">
+<query xmlns="jabber:iq:private">
+<storage xmlns="http://tomclaw.com/mandarin/storage#notes">
+<note tags="заметка1">
+<title>Заголовок</title>
+<text>Заметка</text>
+</note>
+</storage>
+</query>
+</iq>
+
+<iq from="breuki@localhost" type="result" to="breuki@localhost/myhost"/>
+
+
+<iq type="get">
+<query xmlns="jabber:iq:private">
+<storage xmlns="http://tomclaw.com/mandarin/storage#notes">
+</storage>
+</query>
+</iq>
+
+<iq from="breuki@localhost" type="result" to="breuki@localhost/myhost">
+<query xmlns="jabber:iq:private">
+<storage xmlns="http://tomclaw.com/mandarin/storage#notes">
+<note tags="заметка1">
+<title>Заголовок</title>
+<text>Заметка</text>
+</note>
+</storage>
+</query>
+</iq>
+
+
