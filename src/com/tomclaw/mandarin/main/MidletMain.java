@@ -76,64 +76,6 @@ public class MidletMain extends MIDlet {
       /** Showing warning **/
       Handler.showDialog( "WARNING", "TEST_VERSION" );
     }
-    //  final String URL_SYMBOLS = "%/?&=$-_.+!*'(),0123456789abcdefghij"
-    //          + "klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    // final char[] URL_SYMBOLS = new char[]{ '%', '/', '?', '&', '=', '$', '-', '_', '.', '+', '!', '*', '\'', '(', ')', ',', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-    final String URL_SYMBOLS = "%/?&=$-_.+!*'(),0123456789abcdefghij"
-          + "klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    String message = "";
-    long time = System.currentTimeMillis();
-    for ( int i = 0; i < 100; i++ ) {
-      message = "Текст, в котором есть ссылка на http://google.ru и "
-              + "www.mail.ru без всякой на то рекламы. https://www.molecus.com тоже не реклама. "
-              + "Текст, в котором есть ссылка на http://google.ru и "
-              + "www.mail.ru без всякой на то рекламы. https://www.molecus.com тоже не реклама. "
-              + "Текст, в котором есть ссылка на http://google.ru и "
-              + "www.mail.ru без всякой на то рекламы. https://www.molecus.com тоже не реклама. "
-              + "Текст, в котором есть ссылка на http://google.ru и "
-              + "www.mail.ru без всякой на то рекламы. https://www.molecus.com тоже не реклама. "
-              + "Текст, в котором есть ссылка на http://google.ru и "
-              + "www.mail.ru без всякой на то рекламы. https://www.molecus.com тоже не реклама. "
-              + "Текст, в котором есть ссылка на http://google.ru и "
-              + "www.mail.ru без всякой на то рекламы. https://www.molecus.com тоже не реклама. "
-              + "Текст, в котором есть ссылка на http://google.ru и "
-              + "www.mail.ru без всякой на то рекламы. https://www.molecus.com тоже не реклама. "
-              + "Текст, в котором есть ссылка на http://google.ru и "
-              + "www.mail.ru без всякой на то рекламы. https://www.molecus.com тоже не реклама. ";
-      int linkStartIndex = -1;
-      if ( message.indexOf( "http://" ) != -1
-              || message.indexOf( "https://" ) != -1
-              || message.indexOf( "www." ) != -1 ) {
-        for ( int c = 0; c < message.length(); c++ ) {
-          if ( linkStartIndex == -1 ) {
-            if ( message.startsWith( "http://", c ) ) {
-              linkStartIndex = c;
-              c += 7;
-              continue;
-            } else if ( message.startsWith( "https://", c ) ) {
-              linkStartIndex = c;
-              c += 8;
-              continue;
-            } else if ( message.startsWith( "www.", c ) ) {
-              linkStartIndex = c;
-              c += 4;
-              continue;
-            }
-          }
-          if ( linkStartIndex != -1 ) {
-            if ( URL_SYMBOLS.indexOf( message.charAt( c ) ) == -1 ) {
-              message = message.substring( 0, linkStartIndex ).
-                      concat( "[c=blue][i][u]" ).concat( message.substring( linkStartIndex, c ) )
-                      .concat( "[/u][/i][/c]" ).concat( message.substring( c ) );
-              c += 26;
-              linkStartIndex = -1;
-            }
-          }
-        }
-      }
-    }
-    System.out.println( "time: " + ( System.currentTimeMillis() - time ) );
-    System.out.println( message );
   }
 
   public static long getLongOfStamp( String stamp, boolean isLocalized ) {

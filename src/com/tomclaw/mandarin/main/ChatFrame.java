@@ -30,7 +30,7 @@ public class ChatFrame extends Window {
   /** Static tab labels **/
   private static Label tabLabelBuddyOffline;
   /** Constants **/
-  private static final String URL_SYMBOLS = "%/?&=$-_.+!*'(),0123456789abcdefghij"
+  private static final String URL_SYMBOLS = "%/?&#=$-_.+!*'(),0123456789abcdefghij"
           + "klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   public ChatFrame() {
@@ -64,7 +64,7 @@ public class ChatFrame extends Window {
               /** Obtain link **/
               final String link = chatItem.links[c];
               /** Adding sub item **/
-              linksPopupItem.addSubItem( new PopupItem( link ) {
+              linksPopupItem.addSubItem( new PopupItem( fitTextWidth( link ) ) {
                 public void actionPerformed() {
                   try {
                     /** Going to hyperlink **/
@@ -711,5 +711,29 @@ public class ChatFrame extends Window {
       chatTab.buddyItem.updateUi();
       chatTab.updateUi();
     }
+  }
+
+  private String fitTextWidth( String text ) {
+    int width = screen.getWidth() - Theme.upSize * 4;
+    if ( Theme.font.stringWidth( text ) > width ) {
+      String buffer;
+      int middle = 0;
+      for ( int c = 0; c < text.length(); c++ ) {
+        if ( middle == 0 ) {
+          buffer = text.substring( 0, c ).concat( "..." );
+          if ( Theme.font.stringWidth( buffer ) >= width / 2 ) {
+            middle = c - 1;
+          }
+        } else {
+          buffer = text.substring( text.length() - ( c - middle ) );
+          if ( Theme.font.stringWidth( buffer ) >= width / 2 ) {
+            return text.substring( 0, middle ).concat( "..." )
+                    .concat( text.substring(
+                    ( text.length() - ( c - middle ) ) - 1 ) );
+          }
+        }
+      }
+    }
+    return text;
   }
 }
