@@ -26,8 +26,12 @@ public class ChatFrame extends Window {
   private Tab chatTabs;
   private Pane chatPane;
   private TextBox textBox;
+  private PopupItem linksPopupItem;
   /** Static tab labels **/
   private static Label tabLabelBuddyOffline;
+  /** Constants **/
+  private static final String URL_SYMBOLS = "%/?&#=$-_.+!*'(),0123456789abcdefghij"
+          + "klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   public ChatFrame() {
     super( MidletMain.screen );
@@ -38,7 +42,51 @@ public class ChatFrame extends Window {
         MidletMain.screen.setActiveWindow( MidletMain.mainFrame );
       }
     };
-    soft.leftSoft = new PopupItem( Localization.getMessage( "MENU" ) );
+    soft.leftSoft = new PopupItem( Localization.getMessage( "MENU" ) ) {
+      public void actionPerformed() {
+        /** Creating popup item **/
+        if ( linksPopupItem == null ) {
+          linksPopupItem = new PopupItem( Localization.getMessage( "GOTO_LINK" ) );
+        } else if ( !linksPopupItem.isEmpty() ) {
+          /** Removing all items **/
+          linksPopupItem.subPopup.items.removeAllElements();
+        }
+        /** Checking for any item is focused **/
+        if ( !chatPane.items.isEmpty() && chatPane.psvLstFocusedIndex >= 0
+                && chatPane.psvLstFocusedIndex < chatPane.items.size() ) {
+          /** Obtain chat item **/
+          ChatItem chatItem = ( ( ChatItem ) chatPane.items.elementAt(
+                  chatPane.psvLstFocusedIndex ) );
+          /** Checking for chat item and links is not null **/
+          if ( chatItem != null && chatItem.links != null ) {
+            /** Cycling all links **/
+            for ( int c = 0; c < chatItem.links.length; c++ ) {
+              /** Obtain link **/
+              final String link = chatItem.links[c];
+              /** Adding sub item **/
+              linksPopupItem.addSubItem( new PopupItem( fitTextWidth( link ) ) {
+                public void actionPerformed() {
+                  try {
+                    /** Going to hyperlink **/
+                    MidletMain.midletMain.platformRequest( link );
+                  } catch ( Throwable ex ) {
+                    LogUtil.outMessage( "Unable to go to " + link + " cause " + ex.getMessage() );
+                  }
+                }
+              } );
+            }
+          }
+        }
+        /** Checking for no links **/
+        if ( linksPopupItem.isEmpty() ) {
+          /** Removing goto popup item **/
+          soft.leftSoft.subPopup.items.removeElement( linksPopupItem );
+        } else if ( !soft.leftSoft.subPopup.items.contains( linksPopupItem ) ) {
+          /** Inserting sub popup **/
+          soft.leftSoft.subPopup.items.insertElementAt( linksPopupItem, 1 );
+        }
+      }
+    };
     soft.leftSoft.addSubItem( new PopupItem( Localization.getMessage( "WRITE" ) ) {
       public void actionPerformed() {
         /** Obtain selected chat tab **/
@@ -323,6 +371,66 @@ public class ChatFrame extends Window {
   }
 
   /**
+   * Searching for link inside message
+   * @param message
+   * @return Links array ( String[] )
+   */
+  public void checkForLinks( ChatItem chatItem ) {
+    String message = chatItem.text;
+    /** Checking for link is present at all **/
+    if ( message.indexOf( "http://" ) != -1
+            || message.indexOf( "https://" ) != -1
+            || message.indexOf( "www." ) != -1 ) {
+      Vector links = new Vector();
+      String link;
+      /** Searching for link entry **/
+      int linkStartIndex = -1;
+      for ( int c = 0; c < message.length(); c++ ) {
+        if ( linkStartIndex == -1 ) {
+          /** Checking for URL starts here **/
+          if ( message.startsWith( "http://", c ) ) {
+            linkStartIndex = c;
+            c += 7;
+            continue;
+          } else if ( message.startsWith( "https://", c ) ) {
+            linkStartIndex = c;
+            c += 8;
+            continue;
+          } else if ( message.startsWith( "www.", c ) ) {
+            linkStartIndex = c;
+            c += 4;
+            continue;
+          }
+        }
+        /** Link body **/
+        if ( linkStartIndex != -1 ) {
+          /** Not URL symbol **/
+          if ( URL_SYMBOLS.indexOf( message.charAt( c ) ) == -1 ) {
+            /** Highlighting URL **/
+            link = message.substring( linkStartIndex, c );
+            message = message.substring( 0, linkStartIndex ).
+                    concat( "[c=blue][i][u]" ).concat( link )
+                    .concat( " [/u][/i][/c]" ).concat( message.substring( c ) );
+            /** Adding link into vector **/
+            links.addElement( link );
+            /** Adding BB-tags length **/
+            c += 27;
+            /** Now, this is not URL body **/
+            linkStartIndex = -1;
+          }
+        }
+      }
+      /** Creating links array **/
+      chatItem.links = new String[ links.size() ];
+      /** copying links into array **/
+      links.copyInto( chatItem.links );
+      chatItem.text = message;
+    } else {
+      chatItem.links = null;
+    }
+  }
+
+  /**
    * Adds chat item to the specified chat tab
    * Returns true if specified chat tab is active
    * @param chatTab
@@ -336,15 +444,9 @@ public class ChatFrame extends Window {
     if ( chatTab.isMucTab() && nickName.length() == 0 ) {
       nickName = Localization.getMessage( "ROOM_SYSTEM" );
     }
-    /** Calculating time **/
-    long time;
-    if ( stamp == null ) {
-      /** Current time **/
-      time = TimeUtil.getCurrentTimeGMT();
-    } else {
-      /** Time from stamp by XEP-0082 **/
-      time = TimeUtil.getUtcTimeLong( stamp, true );
-    }
+    /** Calculating time (current or from stamp by XEP-0082 **/
+    long time = ( stamp == null ) ? TimeUtil.getCurrentTimeGMT()
+            : TimeUtil.getUtcTimeLong( stamp, true );
     /** Creating chat item instance **/
     ChatItem chatItem = new com.tomclaw.tcuilite.ChatItem( chatPane, message );
     chatItem.dlvStatus = isIncoming ? ChatItem.DLV_STATUS_INCOMING : ChatItem.DLV_STATUS_NOT_SENT;
@@ -353,6 +455,8 @@ public class ChatFrame extends Window {
     chatItem.buddyNick = nickName;
     chatItem.buddyId = isIncoming ? chatTab.buddyItem.getJid() : AccountRoot.getClearJid();
     chatItem.itemDateTime = TimeUtil.getTimeString( time, false );
+    /** Checking for links n message **/
+    checkForLinks( chatItem );
     /** Adding chat item **/
     chatTab.addChatItem( chatItem );
     /** Checking for focus **/
@@ -607,5 +711,29 @@ public class ChatFrame extends Window {
       chatTab.buddyItem.updateUi();
       chatTab.updateUi();
     }
+  }
+
+  private String fitTextWidth( String text ) {
+    int width = screen.getWidth() - Theme.upSize * 4;
+    if ( Theme.font.stringWidth( text ) > width ) {
+      String buffer;
+      int middle = 0;
+      for ( int c = 0; c < text.length(); c++ ) {
+        if ( middle == 0 ) {
+          buffer = text.substring( 0, c ).concat( "..." );
+          if ( Theme.font.stringWidth( buffer ) >= width / 2 ) {
+            middle = c - 1;
+          }
+        } else {
+          buffer = text.substring( text.length() - ( c - middle ) );
+          if ( Theme.font.stringWidth( buffer ) >= width / 2 ) {
+            return text.substring( 0, middle ).concat( "..." )
+                    .concat( text.substring(
+                    ( text.length() - ( c - middle ) ) - 1 ) );
+          }
+        }
+      }
+    }
+    return text;
   }
 }

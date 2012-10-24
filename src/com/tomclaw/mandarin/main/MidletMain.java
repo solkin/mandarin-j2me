@@ -76,7 +76,6 @@ public class MidletMain extends MIDlet {
       /** Showing warning **/
       Handler.showDialog( "WARNING", "TEST_VERSION" );
     }
-    getLongOfStamp( "2010-07-20T21:56:15-05:00", true );
   }
 
   public static long getLongOfStamp( String stamp, boolean isLocalized ) {
