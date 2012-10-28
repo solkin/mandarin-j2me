@@ -634,9 +634,12 @@ public class ChatFrame extends Window {
   public void updateBuddyItems() {
     LogUtil.outMessage( "Updating buddy items" );
     ChatTab chatTab;
+    int chatCount;
     for ( int c = 0; c < chatTabs.items.size(); c++ ) {
       chatTab = ( ChatTab ) chatTabs.items.elementAt( c );
       BuddyItem buddyItem = MidletMain.mainFrame.buddyList.getBuddyItem( chatTab.buddyItem.getJid() );
+      /** Obtain chat buddy item instance opened chat count **/
+      chatCount = chatTab.buddyItem.getOpenedDialogsCount();
       /** Checking for buddy item existance **/
       if ( buddyItem == null ) {
         /** Have no more this item **/
@@ -649,8 +652,12 @@ public class ChatFrame extends Window {
         /** Applying updated buddy item **/
         chatTab.buddyItem = buddyItem;
       }
+      /** Update opened chat count **/
+      chatTab.buddyItem.setOpenedDialogsCount( chatCount );
       /** Creating resource **/
       chatTab.resource = buddyItem.getResource( chatTab.resource.resource );
+      /** Updating buddy item UI (cause of chat count may changed) **/
+      chatTab.buddyItem.updateUi();
     }
   }
 

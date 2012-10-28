@@ -417,4 +417,20 @@ public class BuddyItem extends GroupChild {
   public boolean getDialogOpened() {
     return ( openedDialogsCount > 0 );
   }
+
+  /**
+   * Returns opened dialogs count
+   * @return openedDialogsCount (int)
+   */
+  public int getOpenedDialogsCount() {
+    return openedDialogsCount;
+  }
+  
+  /**
+   * Setting up opened dialogs count
+   * @param openedDialogsCount 
+   */
+  public void setOpenedDialogsCount(int openedDialogsCount) {
+    this.openedDialogsCount = openedDialogsCount;
+  }
 }
