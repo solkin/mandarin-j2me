@@ -223,10 +223,22 @@ public class BuddyList extends Group {
     /** Cycling groups **/
     for ( int c = 0; c < items.size(); c++ ) {
       groupItem = ( GroupItem ) items.elementAt( c );
+      /** Checking for items present in group **/
       if ( groupItem.getChildsCount() > 0 ) {
+        /** Tyying to remove specified item **/
         groupItem.removeElement( buddyItem );
       }
     }
+  }
+  
+  
+  /**
+   * Removes group item from roster
+   * @param groupItem 
+   */
+  public void removeGroup( GroupItem groupItem ) {
+    /** Trying to remove specified group item **/
+    items.removeElement( groupItem );
   }
 
   /**

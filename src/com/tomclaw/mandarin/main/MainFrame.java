@@ -271,11 +271,6 @@ public class MainFrame extends Window {
     };
     final PopupItem hotkeysSubItem = new PopupItem( Localization.getMessage( "HOTKEYS" ) ) {
       public void actionPerformed() {
-        // BuddyItem roomItem = new BuddyItem("kkx@akl.com", "KKX", "none", true);
-        // roomItem.updateUi();
-        // MidletMain.mainFrame.buddyList.makeBuddyItemTemp( roomItem );
-        MidletMain.mainFrame.buddyList.createTempBuddyItem( "kkx@akl.com" );
-        // MidletMain.mainFrame.buddyList.roomsGroupItem.addChild( roomItem );
       }
     };
     settngPopupItem.addSubItem( accountSubItem );
@@ -347,8 +342,44 @@ public class MainFrame extends Window {
     } );
     groupPopup.addSubItem( new PopupItem( Localization.getMessage( "REMOVE" ) ) {
       public void actionPerformed() {
+          /** Checking for online **/
+        if ( Handler.sureIsOnline() ) {
+          /** Obtain group item selected **/
+          final GroupItem groupItem = buddyList.getSelectedGroupItem();
+          /** Checking selected item type **/
+          if ( groupItem != null ) {
+            final Soft dialogSoft = new Soft( screen );
+            dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
+              public void actionPerformed() {
+                /** Checking for group is empty **/
+                // TODO: And what abount temp?
+                if ( groupItem.getChildsCount() == 0 ) {
+                  /** Removing buddy locally **/
+                  MidletMain.mainFrame.buddyList.removeGroup( groupItem );
+                  /** Checking for chat frame buddy items **/
+                  MidletMain.chatFrame.updateBuddyItems();
+                } else {
+                  /** Mechanism invocation **/
+                  Mechanism.rosterRemoveRequest( groupItem.getChilds() );
+                }
+                /** Closing dialog **/
+                dialogSoft.rightSoft.actionPerformed();
+              }
+            };
+            dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
+              public void actionPerformed() {
+                MainFrame.this.closeDialog();
+              }
+            };
+            Handler.showDialog( MainFrame.this, dialogSoft,
+                    "REMOVING",
+                    Localization.getMessage( "SURE_REMOVE_GROUP" ).
+                    concat( " " ).concat( groupItem.getGroupName() ).concat( " " ).
+                    concat( Localization.getMessage( "FROM_ROSTER" ) ) );
+          }
+        }
       }
-    } );
+    });
     /** Buddy menu **/
     buddyPopup = new PopupItem( Localization.getMessage( "ELEMENT" ) ) {
       public void actionPerformed() {
@@ -599,8 +630,8 @@ public class MainFrame extends Window {
         /** Obtain buddy item selected **/
         final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
         /** Checking selected item type **/
-        if ( buddyItem != null && 
-                buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
+        if ( buddyItem != null
+                && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
           /** Showing wait screen **/
           MidletMain.screen.setWaitScreenState( true );
           /** Mechanism invocation **/
@@ -741,7 +772,9 @@ public class MainFrame extends Window {
       /** Not buddy item, but group item **/
       GroupItem groupItem = buddyList.getSelectedGroupItem();
       /** Checking for group selected **/
-      if ( groupItem != null ) {
+      if ( groupItem != null
+              && ( groupItem.internalGroupId == GroupItem.GROUP_DEFAULT_ID
+              || groupItem.internalGroupId == GroupItem.GROUP_TEMP_ID ) ) {
         /** GroupItem selected **/
         LogUtil.outMessage( "Group selected: " + groupItem.getGroupName() );
         setGroupPopup();

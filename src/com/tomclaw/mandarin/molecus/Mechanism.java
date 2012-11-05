@@ -444,6 +444,35 @@ public class Mechanism {
   }
 
   /**
+   * Removing items, provided in Vector
+   * @param items (Vector)
+   */
+  public static void rosterRemoveRequest( final Vector items ) {
+    /** Showing wait screen **/
+    MidletMain.screen.setWaitScreenState( true );
+    /** Obtain session object **/
+    final Session session = AccountRoot.getSession();
+    /** Creating XML spore **/
+    XmlSpore xmlSpore = new XmlSpore() {
+      public void onRun() throws Throwable {
+        /** Operate all items **/
+        for ( int c = 0; c < items.size(); c++ ) {
+          /** Obtain buddy item **/
+          BuddyItem buddyItem = ( BuddyItem ) items.elementAt( c );
+          /** Sending command execute request and flush only the last one **/
+          TemplateCollection.sendRosterSet(
+                  this, AccountRoot.getFullJid(), buddyItem.getJid(), null,
+                  "remove", null, ( c == items.size() - 1 ) );
+        }
+      }
+    };
+    /** Releasing XML spore **/
+    session.getSporedStream().releaseSpore( xmlSpore );
+    /** Hiding wait screen **/
+    MidletMain.screen.setWaitScreenState( false );
+  }
+
+  /**
    * Edit roster item
    * @param jid
    * @param name
@@ -460,7 +489,8 @@ public class Mechanism {
       public void onRun() throws Throwable {
         /** Sending command execute request **/
         String cookie = TemplateCollection.sendRosterSet(
-                this, AccountRoot.getFullJid(), jid, name, subscription, groups );
+                this, AccountRoot.getFullJid(), jid, name, subscription, groups,
+                true );
         QueueAction queueAction = new QueueAction() {
           public void actionPerformed( Hashtable params ) {
             /** Info received **/
