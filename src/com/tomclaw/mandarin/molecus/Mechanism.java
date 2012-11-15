@@ -452,24 +452,58 @@ public class Mechanism {
     MidletMain.screen.setWaitScreenState( true );
     /** Obtain session object **/
     final Session session = AccountRoot.getSession();
-    /** Creating XML spore **/
+    /** Preparing array to avoid vector modification, because 
+     * vector may be changed by incoming roster push **/
+    BuddyItem[] array = new BuddyItem[ items.size() ];
+    items.copyInto( array );
+    /** Roster remove cycle invocation **/
+    rosterRemoveRequestStep( session, array, 0, null );
+  }
+
+  private static void rosterRemoveRequestStep( final Session session,
+          final BuddyItem[] array, final int index, final String errors ) {
     XmlSpore xmlSpore = new XmlSpore() {
       public void onRun() throws Throwable {
-        /** Operate all items **/
-        for ( int c = 0; c < items.size(); c++ ) {
-          /** Obtain buddy item **/
-          BuddyItem buddyItem = ( BuddyItem ) items.elementAt( c );
-          /** Sending command execute request and flush only the last one **/
-          TemplateCollection.sendRosterSet(
-                  this, AccountRoot.getFullJid(), buddyItem.getJid(), null,
-                  "remove", null, ( c == items.size() - 1 ) );
-        }
+        /** Obtain buddy item **/
+        BuddyItem buddyItem = array[ index];
+        /** Sending command execute request and flush only the last one **/
+        String cookie = TemplateCollection.sendRosterSet(
+                this, AccountRoot.getFullJid(), buddyItem.getJid(), null,
+                "remove", null );
+        QueueAction queueAction = new QueueAction() {
+          public void actionPerformed( Hashtable params ) {
+            /** Info received **/
+            String errorCause = ( String ) params.get( "ERROR_CAUSE" );
+            /** Checking for error **/
+            if ( errorCause != null ) {
+              /** Checking for errors already present **/
+              if ( !StringUtil.isNullOrEmpty( errors ) ) {
+                /** Concatinating error by space **/
+                errorCause = errors.concat( " " ).concat( errorCause );
+              }
+            } else {
+              /** Saving previous errors only **/
+              errorCause = errors;
+            }
+            LogUtil.outMessage( "Roster set success" );
+            /** Checking for item is last in vector **/
+            if ( index >= array.length - 1 ) {
+              /** Hiding wait screen **/
+              MidletMain.screen.setWaitScreenState( false );
+              /** Handling error **/
+              // Handler.showErrors( errorCause );
+            } else {
+              /** Removing next items in array **/
+              rosterRemoveRequestStep( session, array, index + 1, errorCause );
+            }
+          }
+        };
+        queueAction.setCookie( cookie );
+        Queue.pushQueueAction( queueAction );
       }
     };
     /** Releasing XML spore **/
     session.getSporedStream().releaseSpore( xmlSpore );
-    /** Hiding wait screen **/
-    MidletMain.screen.setWaitScreenState( false );
   }
 
   /**
@@ -489,8 +523,7 @@ public class Mechanism {
       public void onRun() throws Throwable {
         /** Sending command execute request **/
         String cookie = TemplateCollection.sendRosterSet(
-                this, AccountRoot.getFullJid(), jid, name, subscription, groups,
-                true );
+                this, AccountRoot.getFullJid(), jid, name, subscription, groups );
         QueueAction queueAction = new QueueAction() {
           public void actionPerformed( Hashtable params ) {
             /** Info received **/
@@ -1197,7 +1230,7 @@ public class Mechanism {
                   };
                   /** Showing dialog **/
                   Handler.showDialog( MidletMain.screen.activeWindow, dialogSoft,
-                          "WARNING", Localization.getMessage( dialogDescr ) );
+                          Localization.getMessage( "WARNING" ), Localization.getMessage( dialogDescr ) );
                 }
               };
               /** Checking form for ROOM_NAME and ROOM_DESC fields **/

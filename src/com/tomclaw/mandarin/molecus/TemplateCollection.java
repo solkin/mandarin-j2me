@@ -484,8 +484,7 @@ public class TemplateCollection {
    * @throws IOException 
    */
   public static String sendRosterSet( XmlOutputStream xmlWriter, String from,
-          String jid, String name, String subscription, String[] groups,
-          boolean isFlush ) throws IOException {
+          String jid, String name, String subscription, String[] groups ) throws IOException {
     /** Generating request cookie **/
     String cookie = AccountRoot.generateCookie();
     xmlWriter.startTag( TAG_IQ );
@@ -520,10 +519,8 @@ public class TemplateCollection {
     xmlWriter.endTag();
     xmlWriter.endTag();
     xmlWriter.endTag();
-    /** Checking for flush value **/
-    if ( isFlush ) {
-      xmlWriter.flush();
-    }
+    /** Flushing **/
+    xmlWriter.flush();
     return cookie;
   }
 

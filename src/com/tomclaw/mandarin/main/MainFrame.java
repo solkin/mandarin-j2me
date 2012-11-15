@@ -372,7 +372,7 @@ public class MainFrame extends Window {
               }
             };
             Handler.showDialog( MainFrame.this, dialogSoft,
-                    "REMOVING",
+                    Localization.getMessage( "REMOVING" ),
                     Localization.getMessage( "SURE_REMOVE_GROUP" ).
                     concat( " " ).concat( groupItem.getGroupName() ).concat( " " ).
                     concat( Localization.getMessage( "FROM_ROSTER" ) ) );
@@ -440,7 +440,7 @@ public class MainFrame extends Window {
               }
             };
             Handler.showDialog( MainFrame.this, dialogSoft,
-                    "REMOVING",
+                    Localization.getMessage( "REMOVING" ),
                     Localization.getMessage( "SURE_REMOVE_BUDDY" ).
                     concat( " " ).concat( buddyItem.getJid() ).concat( " " ).
                     concat( Localization.getMessage( "FROM_ROSTER" ) ) );
@@ -575,7 +575,7 @@ public class MainFrame extends Window {
                     }
                   };
                   Handler.showDialog( MainFrame.this, dialogSoft,
-                          "DESTROYING",
+                          Localization.getMessage( "DESTROYING" ),
                           Localization.getMessage( "MAYBE_DESTROY_ROOM" ).
                           concat( " " ).concat( ( ( RoomItem ) buddyItem ).getRoomTitle() ).concat( " " ).
                           concat( Localization.getMessage( "FROM_SERVER" ) ) );
@@ -614,7 +614,7 @@ public class MainFrame extends Window {
               }
             };
             Handler.showDialog( MainFrame.this, dialogSoft,
-                    "REMOVING",
+                    Localization.getMessage( "REMOVING" ),
                     Localization.getMessage( "SURE_REMOVE_ROOM" ).
                     concat( " \"" ).concat( buddyItem.getNickName() ).concat( "\" " ).
                     concat( Localization.getMessage( "FROM_BOOKMARKS" ) ) );
@@ -714,7 +714,8 @@ public class MainFrame extends Window {
                 MainFrame.this.closeDialog();
               }
             };
-            Handler.showDialog( MainFrame.this, dialogSoft, "DESTROYING",
+            Handler.showDialog( MainFrame.this, dialogSoft, 
+                    Localization.getMessage( "DESTROYING" ),
                     Localization.getMessage( "SURE_DESTROY_ROOM" ).
                     concat( " " ).concat( ( ( RoomItem ) buddyItem ).getRoomTitle() ).concat( " " ).
                     concat( Localization.getMessage( "FROM_SERVER" ) ) );
@@ -771,10 +772,10 @@ public class MainFrame extends Window {
     if ( buddyItem == null ) {
       /** Not buddy item, but group item **/
       GroupItem groupItem = buddyList.getSelectedGroupItem();
-      /** Checking for group selected **/
+      /** Checking for selected group type **/
       if ( groupItem != null
-              && ( groupItem.internalGroupId == GroupItem.GROUP_DEFAULT_ID
-              || groupItem.internalGroupId == GroupItem.GROUP_TEMP_ID ) ) {
+              && ( groupItem.internalGroupId != GroupItem.GROUP_SERVICES_ID
+              || groupItem.internalGroupId != GroupItem.GROUP_ROOMS_ID ) ) {
         /** GroupItem selected **/
         LogUtil.outMessage( "Group selected: " + groupItem.getGroupName() );
         setGroupPopup();

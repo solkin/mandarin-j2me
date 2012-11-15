@@ -92,7 +92,7 @@ public class RoomVisitorsEditFrame extends Window {
             }
           };
           Handler.showDialog( RoomVisitorsEditFrame.this, dialogSoft,
-                  "REMOVING",
+                  Localization.getMessage( "REMOVING" ),
                   Localization.getMessage( "SURE" ).concat( " " ).
                   concat( Localization.getMessage( "REMOVE_".
                   concat( affiliation.toUpperCase() ) ) ).concat( " " ).
@@ -123,7 +123,7 @@ public class RoomVisitorsEditFrame extends Window {
                     concat( ": " ).concat( visitor.reason );
           }
           Handler.showDialog( RoomVisitorsEditFrame.this, dialogSoft,
-                  "MORE_INFO", moreInfoMessage );
+                  Localization.getMessage( "MORE_INFO" ), moreInfoMessage );
         }
       }
     } );
@@ -154,7 +154,7 @@ public class RoomVisitorsEditFrame extends Window {
       }
     };
     Handler.showDialog( RoomVisitorsEditFrame.this, dialogSoft,
-            "REMOVING",
+            Localization.getMessage( "REMOVING" ),
             Localization.getMessage( "SURE" ).concat( " " ).
             concat( Localization.getMessage( "ADD_".
             concat( affiliation.toUpperCase() ) ) ).concat( " " ).
