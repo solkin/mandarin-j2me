@@ -941,7 +941,7 @@ public class Handler {
       }
     };
     /** Setting up messages **/
-    String title = Localization.getMessage( actionType.concat( "_TITILE" ) );
+    String title = Localization.getMessage( actionType.concat( "_TITLE" ) );
     String message = Localization.getMessage(
             actionType.concat( "_MESSAGE" ) ).concat( ": " ).concat( jid ).
             concat( "\n" ).

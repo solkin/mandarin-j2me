@@ -342,44 +342,72 @@ public class MainFrame extends Window {
     } );
     groupPopup.addSubItem( new PopupItem( Localization.getMessage( "REMOVE" ) ) {
       public void actionPerformed() {
-          /** Checking for online **/
+        /** Checking for online **/
         if ( Handler.sureIsOnline() ) {
           /** Obtain group item selected **/
           final GroupItem groupItem = buddyList.getSelectedGroupItem();
           /** Checking selected item type **/
           if ( groupItem != null ) {
-            final Soft dialogSoft = new Soft( screen );
-            dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
-              public void actionPerformed() {
-                /** Checking for group is empty **/
-                // TODO: And what abount temp?
-                if ( groupItem.getChildsCount() == 0 ) {
-                  /** Removing buddy locally **/
-                  MidletMain.mainFrame.buddyList.removeGroup( groupItem );
-                  /** Checking for chat frame buddy items **/
-                  MidletMain.chatFrame.updateBuddyItems();
-                } else {
-                  /** Mechanism invocation **/
-                  Mechanism.rosterRemoveRequest( groupItem.getChilds() );
+            /** Checking for group is empty **/
+            if ( groupItem.getChildsCount() == 0 ) {
+              /** Group is empty **/
+              final Soft dialogSoft = new Soft( screen );
+              dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
+                public void actionPerformed() {
+                  /** Inverting flag in settings **/
+                  com.tomclaw.mandarin.core.Settings.hideEmptyGroups =
+                          !com.tomclaw.mandarin.core.Settings.hideEmptyGroups;
+                  /** Applying settings **/
+                  buddyList.updateSettings();
+                  /** Saving updated settings **/
+                  com.tomclaw.mandarin.core.Settings.saveAll();
+                  Storage.save();
+                  /** Hiding dialog **/
+                  dialogSoft.rightSoft.actionPerformed();
                 }
-                /** Closing dialog **/
-                dialogSoft.rightSoft.actionPerformed();
-              }
-            };
-            dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
-              public void actionPerformed() {
-                MainFrame.this.closeDialog();
-              }
-            };
-            Handler.showDialog( MainFrame.this, dialogSoft,
-                    Localization.getMessage( "REMOVING" ),
-                    Localization.getMessage( "SURE_REMOVE_GROUP" ).
-                    concat( " " ).concat( groupItem.getGroupName() ).concat( " " ).
-                    concat( Localization.getMessage( "FROM_ROSTER" ) ) );
+              };
+              dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
+                public void actionPerformed() {
+                  MainFrame.this.closeDialog();
+                }
+              };
+              Handler.showDialog( MainFrame.this, dialogSoft,
+                      Localization.getMessage( "INFO" ),
+                      Localization.getMessage( "GROUP_IS_EMPTY" ) );
+            } else {
+              /** Group is not empty **/
+              final Soft dialogSoft = new Soft( screen );
+              dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
+                public void actionPerformed() {
+                  /** Checking for group is temporary **/
+                  if ( groupItem.internalGroupId == GroupItem.GROUP_TEMP_ID ) {
+                    /** Removing all items **/
+                    groupItem.getChilds().removeAllElements();
+                    /** Updating opened chats **/
+                    MidletMain.chatFrame.updateBuddyItems();
+                  } else {
+                    /** Mechanism invocation **/
+                    Mechanism.rosterRemoveRequest( groupItem.getChilds() );
+                  }
+                  /** Closing dialog **/
+                  dialogSoft.rightSoft.actionPerformed();
+                }
+              };
+              dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
+                public void actionPerformed() {
+                  MainFrame.this.closeDialog();
+                }
+              };
+              Handler.showDialog( MainFrame.this, dialogSoft,
+                      Localization.getMessage( "REMOVING" ),
+                      Localization.getMessage( "SURE_REMOVE_GROUP" ).
+                      concat( " " ).concat( groupItem.getGroupName() ).concat( " " ).
+                      concat( Localization.getMessage( "FROM_ROSTER" ) ) );
+            }
           }
         }
       }
-    });
+    } );
     /** Buddy menu **/
     buddyPopup = new PopupItem( Localization.getMessage( "ELEMENT" ) ) {
       public void actionPerformed() {
@@ -714,7 +742,7 @@ public class MainFrame extends Window {
                 MainFrame.this.closeDialog();
               }
             };
-            Handler.showDialog( MainFrame.this, dialogSoft, 
+            Handler.showDialog( MainFrame.this, dialogSoft,
                     Localization.getMessage( "DESTROYING" ),
                     Localization.getMessage( "SURE_DESTROY_ROOM" ).
                     concat( " " ).concat( ( ( RoomItem ) buddyItem ).getRoomTitle() ).concat( " " ).
@@ -773,9 +801,10 @@ public class MainFrame extends Window {
       /** Not buddy item, but group item **/
       GroupItem groupItem = buddyList.getSelectedGroupItem();
       /** Checking for selected group type **/
+      LogUtil.outMessage( "Internal group id: " + groupItem.internalGroupId );
       if ( groupItem != null
               && ( groupItem.internalGroupId != GroupItem.GROUP_SERVICES_ID
-              || groupItem.internalGroupId != GroupItem.GROUP_ROOMS_ID ) ) {
+              && groupItem.internalGroupId != GroupItem.GROUP_ROOMS_ID ) ) {
         /** GroupItem selected **/
         LogUtil.outMessage( "Group selected: " + groupItem.getGroupName() );
         setGroupPopup();

@@ -490,8 +490,11 @@ public class Mechanism {
             if ( index >= array.length - 1 ) {
               /** Hiding wait screen **/
               MidletMain.screen.setWaitScreenState( false );
-              /** Handling error **/
-              // Handler.showErrors( errorCause );
+              /** Checking for errors **/
+              if ( !StringUtil.isNullOrEmpty( errorCause ) ) {
+                /** Handling error **/
+                Handler.showError( "GROUP_REMOVE_ERRORS" );
+              }
             } else {
               /** Removing next items in array **/
               rosterRemoveRequestStep( session, array, index + 1, errorCause );
