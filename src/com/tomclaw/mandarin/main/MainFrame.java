@@ -338,6 +338,16 @@ public class MainFrame extends Window {
     };
     groupPopup.addSubItem( new PopupItem( Localization.getMessage( "RENAME" ) ) {
       public void actionPerformed() {
+        /** Checking for online **/
+        if ( Handler.sureIsOnline() ) {
+          /** Obtain group item selected **/
+          final GroupItem groupItem = buddyList.getSelectedGroupItem();
+          /** Checking selected item type **/
+          if ( groupItem != null ) {
+            /** Showing group edit frame **/
+            MidletMain.screen.setActiveWindow( new GroupEditFrame( groupItem ) );
+          }
+        }
       }
     } );
     groupPopup.addSubItem( new PopupItem( Localization.getMessage( "REMOVE" ) ) {
