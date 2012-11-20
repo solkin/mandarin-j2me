@@ -444,6 +444,144 @@ public class Mechanism {
   }
 
   /**
+   * Removing items, provided in Vector
+   * @param items (Vector)
+   */
+  public static void rosterRemoveRequest( final Vector items ) {
+    /** Showing wait screen **/
+    MidletMain.screen.setWaitScreenState( true );
+    /** Obtain session object **/
+    final Session session = AccountRoot.getSession();
+    /** Preparing array to avoid vector modification, because 
+     * vector may be changed by incoming roster push **/
+    BuddyItem[] array = new BuddyItem[ items.size() ];
+    items.copyInto( array );
+    /** Roster remove cycle invocation **/
+    rosterRemoveRequestStep( session, array, 0, null );
+  }
+
+  private static void rosterRemoveRequestStep( final Session session,
+          final BuddyItem[] array, final int index, final String errors ) {
+    XmlSpore xmlSpore = new XmlSpore() {
+      public void onRun() throws Throwable {
+        /** Obtain buddy item **/
+        BuddyItem buddyItem = array[ index];
+        /** Sending command execute request and flush only the last one **/
+        String cookie = TemplateCollection.sendRosterSet(
+                this, AccountRoot.getFullJid(), buddyItem.getJid(), null,
+                "remove", null );
+        QueueAction queueAction = new QueueAction() {
+          public void actionPerformed( Hashtable params ) {
+            /** Info received **/
+            String errorCause = ( String ) params.get( "ERROR_CAUSE" );
+            /** Checking for error **/
+            if ( errorCause != null ) {
+              /** Checking for errors already present **/
+              if ( !StringUtil.isNullOrEmpty( errors ) ) {
+                /** Concatinating error by space **/
+                errorCause = errors.concat( " " ).concat( errorCause );
+              }
+            } else {
+              /** Saving previous errors only **/
+              errorCause = errors;
+            }
+            LogUtil.outMessage( "Roster set success" );
+            /** Checking for item is last in vector **/
+            if ( index >= array.length - 1 ) {
+              /** Hiding wait screen **/
+              MidletMain.screen.setWaitScreenState( false );
+              /** Checking for errors **/
+              if ( !StringUtil.isNullOrEmpty( errorCause ) ) {
+                /** Handling error **/
+                Handler.showError( "GROUP_REMOVE_ERRORS" );
+              }
+            } else {
+              /** Removing next items in array **/
+              rosterRemoveRequestStep( session, array, index + 1, errorCause );
+            }
+          }
+        };
+        queueAction.setCookie( cookie );
+        Queue.pushQueueAction( queueAction );
+      }
+    };
+    /** Releasing XML spore **/
+    session.getSporedStream().releaseSpore( xmlSpore );
+  }
+
+  /**
+   * Renaming group items, provided in Vector
+   * @param nameBefore
+   * @param nameAfter
+   * @param items 
+   */
+  public static void rosterRenameRequest( final String nameBefore,
+          final String[] namesAfter, final Vector items ) {
+    /** Showing wait screen **/
+    MidletMain.screen.setWaitScreenState( true );
+    /** Obtain session object **/
+    final Session session = AccountRoot.getSession();
+    /** Preparing array to avoid vector modification, because 
+     * vector may be changed by incoming roster push **/
+    BuddyItem[] array = new BuddyItem[ items.size() ];
+    items.copyInto( array );
+    /** Roster rename cycle invocation **/
+    rosterRenameRequestStep( session, nameBefore, namesAfter, array, 0, null );
+  }
+
+  private static void rosterRenameRequestStep( final Session session,
+          final String nameBefore, final String[] namesAfter,
+          final BuddyItem[] array, final int index, final String errors ) {
+    XmlSpore xmlSpore = new XmlSpore() {
+      public void onRun() throws Throwable {
+        /** Obtain buddy item **/
+        BuddyItem buddyItem = array[ index ];
+        /** Sending command execute request and flush only the last one **/
+        String cookie = TemplateCollection.sendRosterSet(
+                this, AccountRoot.getFullJid(), buddyItem.getJid(), 
+                buddyItem.getNickName(), buddyItem.getSubscription(), 
+                Handler.getGroupsToRename( buddyItem, nameBefore, namesAfter ) );
+        QueueAction queueAction = new QueueAction() {
+          public void actionPerformed( Hashtable params ) {
+            /** Info received **/
+            String errorCause = ( String ) params.get( "ERROR_CAUSE" );
+            /** Checking for error **/
+            if ( errorCause != null ) {
+              /** Checking for errors already present **/
+              if ( !StringUtil.isNullOrEmpty( errors ) ) {
+                /** Concatinating error by space **/
+                errorCause = errors.concat( " " ).concat( errorCause );
+              }
+            } else {
+              /** Saving previous errors only **/
+              errorCause = errors;
+            }
+            LogUtil.outMessage( "Roster set success" );
+            /** Checking for item is last in vector **/
+            if ( index >= array.length - 1 ) {
+              /** Hiding wait screen **/
+              MidletMain.screen.setWaitScreenState( false );
+              /** Checking for errors **/
+              if ( !StringUtil.isNullOrEmpty( errorCause ) ) {
+                /** Handling error **/
+                Handler.showError( "GROUP_RENAME_ERRORS" );
+              }
+            } else {
+              /** Renaming next items in array **/
+              rosterRenameRequestStep( session, nameBefore, namesAfter, array,
+                      index + 1, errorCause );
+            }
+          }
+        };
+        queueAction.setCookie( cookie );
+        Queue.pushQueueAction( queueAction );
+      }
+    };
+    /** Releasing XML spore **/
+    session.getSporedStream().releaseSpore( xmlSpore );
+  }
+
+  /**
    * Edit roster item
    * @param jid
    * @param name
@@ -1167,7 +1305,7 @@ public class Mechanism {
                   };
                   /** Showing dialog **/
                   Handler.showDialog( MidletMain.screen.activeWindow, dialogSoft,
-                          "WARNING", Localization.getMessage( dialogDescr ) );
+                          Localization.getMessage( "WARNING" ), Localization.getMessage( dialogDescr ) );
                 }
               };
               /** Checking form for ROOM_NAME and ROOM_DESC fields **/

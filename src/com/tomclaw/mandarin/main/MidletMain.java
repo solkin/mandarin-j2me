@@ -74,7 +74,7 @@ public class MidletMain extends MIDlet {
     /** Checking for main frame object **/
     if ( mainFrame.getGObject().equals( mainFrame.blank ) ) {
       /** Showing warning **/
-      Handler.showDialog( "WARNING", "TEST_VERSION" );
+      Handler.showWarning( "TEST_VERSION" );
     }
   }
 

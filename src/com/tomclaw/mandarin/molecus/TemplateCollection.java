@@ -479,6 +479,7 @@ public class TemplateCollection {
    * @param name
    * @param subscription
    * @param groups
+   * @param isFlush
    * @return
    * @throws IOException 
    */
@@ -518,6 +519,7 @@ public class TemplateCollection {
     xmlWriter.endTag();
     xmlWriter.endTag();
     xmlWriter.endTag();
+    /** Flushing **/
     xmlWriter.flush();
     return cookie;
   }

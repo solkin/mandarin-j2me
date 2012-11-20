@@ -223,7 +223,7 @@ public class Handler {
             if ( params.containsKey( "STATUS_101" ) ) {
               /** Inform user that his or her affiliation 
                * changed while not in the room **/
-              showDialog( "INFO", "AFFL_WAS_CHANGED" );
+              showInfo( "AFFL_WAS_CHANGED" );
             }
             if ( params.containsKey( "STATUS_102" ) ) {
               /** Inform occupants that room now shows unavailable members **/
@@ -755,6 +755,12 @@ public class Handler {
   public static String[] getServiceItems( String serviceHost ) {
     return MidletMain.mainFrame.buddyList.getServiceItems( serviceHost );
   }
+  
+  public static String[] getGroupsToRename(final BuddyItem buddyItem, 
+          final String groupNameBefore, final String[] groupNamesAfter) {
+    return MidletMain.mainFrame.buddyList.getGroupsToRename(buddyItem, 
+          groupNameBefore, groupNamesAfter);
+  }
 
   /**
    * Sends pong to ping initiator
@@ -941,7 +947,7 @@ public class Handler {
       }
     };
     /** Setting up messages **/
-    String title = actionType.concat( "_TITILE" );
+    String title = Localization.getMessage( actionType.concat( "_TITLE" ) );
     String message = Localization.getMessage(
             actionType.concat( "_MESSAGE" ) ).concat( ": " ).concat( jid ).
             concat( "\n" ).
@@ -994,6 +1000,16 @@ public class Handler {
   public static void sendTime() {
   }
 
+  public static void showInfo( String infoCause ) {
+    /** Showing dialog **/
+    showDialog( Localization.getMessage( "INFO" ), Localization.getMessage( infoCause ) );
+  }
+
+  public static void showWarning( String warningCause ) {
+    /** Showing dialog **/
+    showDialog( Localization.getMessage( "WARNING" ), Localization.getMessage( warningCause ) );
+  }
+
   public static void showError( String errorCause ) {
     /** Checking error **/
     if ( errorCause.equals( "" ) ) {
@@ -1002,7 +1018,7 @@ public class Handler {
       errorCause = "CAUSE_UNKNOWN";
     }
     /** Showing dialog **/
-    showDialog( "ERROR", errorCause );
+    showDialog( Localization.getMessage( "ERROR" ), Localization.getMessage( errorCause ) );
   }
 
   /**
@@ -1010,7 +1026,7 @@ public class Handler {
    * @param errorCause
    * @param window 
    */
-  public static void showDialog( String title, String message ) {
+  private static void showDialog( String title, String message ) {
     /** Obtain window **/
     final Window window = MidletMain.screen.activeWindow;
     /** Hiding wait screen state **/
@@ -1023,12 +1039,12 @@ public class Handler {
       }
     };
     /** Showing dialog **/
-    showDialog( window, dialogSoft, title, Localization.getMessage( message ) );
+    showDialog( window, dialogSoft, title, message );
   }
 
   /**
    * Showing frame dialog for specified window, soft, 
-   * title (not localized) and message (localized)
+   * title (localized) and message (localized)
    * @param window
    * @param dialogSoft
    * @param title
@@ -1040,7 +1056,7 @@ public class Handler {
     MidletMain.screen.setWaitScreenState( false );
     /** Creating soft and dialog **/
     Dialog resultDialog = new Dialog( MidletMain.screen, dialogSoft,
-            Localization.getMessage( title ), message );
+            title, message );
     /** Showing new dialog **/
     window.showDialog( resultDialog );
   }

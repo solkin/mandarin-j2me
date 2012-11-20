@@ -271,11 +271,6 @@ public class MainFrame extends Window {
     };
     final PopupItem hotkeysSubItem = new PopupItem( Localization.getMessage( "HOTKEYS" ) ) {
       public void actionPerformed() {
-        // BuddyItem roomItem = new BuddyItem("kkx@akl.com", "KKX", "none", true);
-        // roomItem.updateUi();
-        // MidletMain.mainFrame.buddyList.makeBuddyItemTemp( roomItem );
-        MidletMain.mainFrame.buddyList.createTempBuddyItem( "kkx@akl.com" );
-        // MidletMain.mainFrame.buddyList.roomsGroupItem.addChild( roomItem );
       }
     };
     settngPopupItem.addSubItem( accountSubItem );
@@ -343,10 +338,84 @@ public class MainFrame extends Window {
     };
     groupPopup.addSubItem( new PopupItem( Localization.getMessage( "RENAME" ) ) {
       public void actionPerformed() {
+        /** Checking for online **/
+        if ( Handler.sureIsOnline() ) {
+          /** Obtain group item selected **/
+          final GroupItem groupItem = buddyList.getSelectedGroupItem();
+          /** Checking selected item type **/
+          if ( groupItem != null ) {
+            /** Showing group edit frame **/
+            MidletMain.screen.setActiveWindow( new GroupEditFrame( groupItem ) );
+          }
+        }
       }
     } );
     groupPopup.addSubItem( new PopupItem( Localization.getMessage( "REMOVE" ) ) {
       public void actionPerformed() {
+        /** Checking for online **/
+        if ( Handler.sureIsOnline() ) {
+          /** Obtain group item selected **/
+          final GroupItem groupItem = buddyList.getSelectedGroupItem();
+          /** Checking selected item type **/
+          if ( groupItem != null ) {
+            /** Checking for group is empty **/
+            if ( groupItem.getChildsCount() == 0 ) {
+              /** Group is empty **/
+              final Soft dialogSoft = new Soft( screen );
+              dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
+                public void actionPerformed() {
+                  /** Inverting flag in settings **/
+                  com.tomclaw.mandarin.core.Settings.hideEmptyGroups =
+                          !com.tomclaw.mandarin.core.Settings.hideEmptyGroups;
+                  /** Applying settings **/
+                  buddyList.updateSettings();
+                  /** Saving updated settings **/
+                  com.tomclaw.mandarin.core.Settings.saveAll();
+                  Storage.save();
+                  /** Hiding dialog **/
+                  dialogSoft.rightSoft.actionPerformed();
+                }
+              };
+              dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
+                public void actionPerformed() {
+                  MainFrame.this.closeDialog();
+                }
+              };
+              Handler.showDialog( MainFrame.this, dialogSoft,
+                      Localization.getMessage( "INFO" ),
+                      Localization.getMessage( "GROUP_IS_EMPTY" ) );
+            } else {
+              /** Group is not empty **/
+              final Soft dialogSoft = new Soft( screen );
+              dialogSoft.leftSoft = new PopupItem( Localization.getMessage( "YES" ) ) {
+                public void actionPerformed() {
+                  /** Checking for group is temporary **/
+                  if ( groupItem.internalGroupId == GroupItem.GROUP_TEMP_ID ) {
+                    /** Removing all items **/
+                    groupItem.getChilds().removeAllElements();
+                    /** Updating opened chats **/
+                    MidletMain.chatFrame.updateBuddyItems();
+                  } else {
+                    /** Mechanism invocation **/
+                    Mechanism.rosterRemoveRequest( groupItem.getChilds() );
+                  }
+                  /** Closing dialog **/
+                  dialogSoft.rightSoft.actionPerformed();
+                }
+              };
+              dialogSoft.rightSoft = new PopupItem( Localization.getMessage( "NO" ) ) {
+                public void actionPerformed() {
+                  MainFrame.this.closeDialog();
+                }
+              };
+              Handler.showDialog( MainFrame.this, dialogSoft,
+                      Localization.getMessage( "REMOVING" ),
+                      Localization.getMessage( "SURE_REMOVE_GROUP" ).
+                      concat( " " ).concat( groupItem.getGroupName() ).concat( " " ).
+                      concat( Localization.getMessage( "FROM_ROSTER" ) ) );
+            }
+          }
+        }
       }
     } );
     /** Buddy menu **/
@@ -409,7 +478,7 @@ public class MainFrame extends Window {
               }
             };
             Handler.showDialog( MainFrame.this, dialogSoft,
-                    "REMOVING",
+                    Localization.getMessage( "REMOVING" ),
                     Localization.getMessage( "SURE_REMOVE_BUDDY" ).
                     concat( " " ).concat( buddyItem.getJid() ).concat( " " ).
                     concat( Localization.getMessage( "FROM_ROSTER" ) ) );
@@ -544,7 +613,7 @@ public class MainFrame extends Window {
                     }
                   };
                   Handler.showDialog( MainFrame.this, dialogSoft,
-                          "DESTROYING",
+                          Localization.getMessage( "DESTROYING" ),
                           Localization.getMessage( "MAYBE_DESTROY_ROOM" ).
                           concat( " " ).concat( ( ( RoomItem ) buddyItem ).getRoomTitle() ).concat( " " ).
                           concat( Localization.getMessage( "FROM_SERVER" ) ) );
@@ -583,7 +652,7 @@ public class MainFrame extends Window {
               }
             };
             Handler.showDialog( MainFrame.this, dialogSoft,
-                    "REMOVING",
+                    Localization.getMessage( "REMOVING" ),
                     Localization.getMessage( "SURE_REMOVE_ROOM" ).
                     concat( " \"" ).concat( buddyItem.getNickName() ).concat( "\" " ).
                     concat( Localization.getMessage( "FROM_BOOKMARKS" ) ) );
@@ -599,8 +668,8 @@ public class MainFrame extends Window {
         /** Obtain buddy item selected **/
         final BuddyItem buddyItem = buddyList.getSelectedBuddyItem();
         /** Checking selected item type **/
-        if ( buddyItem != null && 
-                buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
+        if ( buddyItem != null
+                && buddyItem.getInternalType() == BuddyItem.TYPE_ROOM_ITEM ) {
           /** Showing wait screen **/
           MidletMain.screen.setWaitScreenState( true );
           /** Mechanism invocation **/
@@ -683,7 +752,8 @@ public class MainFrame extends Window {
                 MainFrame.this.closeDialog();
               }
             };
-            Handler.showDialog( MainFrame.this, dialogSoft, "DESTROYING",
+            Handler.showDialog( MainFrame.this, dialogSoft,
+                    Localization.getMessage( "DESTROYING" ),
                     Localization.getMessage( "SURE_DESTROY_ROOM" ).
                     concat( " " ).concat( ( ( RoomItem ) buddyItem ).getRoomTitle() ).concat( " " ).
                     concat( Localization.getMessage( "FROM_SERVER" ) ) );
@@ -740,8 +810,11 @@ public class MainFrame extends Window {
     if ( buddyItem == null ) {
       /** Not buddy item, but group item **/
       GroupItem groupItem = buddyList.getSelectedGroupItem();
-      /** Checking for group selected **/
-      if ( groupItem != null ) {
+      /** Checking for selected group type **/
+      LogUtil.outMessage( "Internal group id: " + groupItem.internalGroupId );
+      if ( groupItem != null
+              && ( groupItem.internalGroupId != GroupItem.GROUP_SERVICES_ID
+              && groupItem.internalGroupId != GroupItem.GROUP_ROOMS_ID ) ) {
         /** GroupItem selected **/
         LogUtil.outMessage( "Group selected: " + groupItem.getGroupName() );
         setGroupPopup();

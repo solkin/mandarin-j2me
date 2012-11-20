@@ -8,6 +8,7 @@ import com.tomclaw.tcuilite.GroupChild;
 import com.tomclaw.tcuilite.GroupEvent;
 import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
+import com.tomclaw.utils.StringUtil;
 import java.util.Vector;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
@@ -218,15 +219,63 @@ public class BuddyList extends Group {
     return anArray;
   }
 
+  public String[] getGroupsToRename( final BuddyItem buddyItem,
+          final String groupNameBefore, final String[] groupNamesAfter ) {
+    Vector groupItems = new Vector();
+    GroupItem groupItem;
+    /** Cycling groups **/
+    for ( int c = 0; c < items.size(); c++ ) {
+      groupItem = ( GroupItem ) items.elementAt( c );
+      /** Checking for group child count **/
+      if ( groupItem.getChildsCount() > 0 ) {
+        /** Checking for item is in group **/
+        if ( groupItem.isContainBuddy( buddyItem ) ) {
+          /** Checking for this is group, we are wanna rename **/
+          if ( groupItem.getGroupName().equals( groupNameBefore ) ) {
+            /** Adding all new groups **/
+            for ( int i = 0; i < groupNamesAfter.length; i++ ) {
+              /** Checking for item is empty **/
+              if ( !StringUtil.isNullOrEmpty( groupNamesAfter[i] ) ) {
+                /** Checking for such group already present **/
+                if ( !groupItems.contains( groupNamesAfter[i] ) ) {
+                  /** Adding new group names **/
+                  groupItems.addElement( groupNamesAfter[i] );
+                }
+              }
+            }
+          } else {
+            /** Adding original group name **/
+            groupItems.addElement( groupItem.getGroupName() );
+          }
+        }
+      }
+    }
+    String[] anArray = new String[ groupItems.size() ];
+    /** Copying array from Vector **/
+    groupItems.copyInto( anArray );
+    return anArray;
+  }
+
   public void removeBuddyFromGroups( BuddyItem buddyItem ) {
     GroupItem groupItem;
     /** Cycling groups **/
     for ( int c = 0; c < items.size(); c++ ) {
       groupItem = ( GroupItem ) items.elementAt( c );
+      /** Checking for items present in group **/
       if ( groupItem.getChildsCount() > 0 ) {
+        /** Tyying to remove specified item **/
         groupItem.removeElement( buddyItem );
       }
     }
+  }
+
+  /**
+   * Removes group item from roster
+   * @param groupItem 
+   */
+  public void removeGroup( GroupItem groupItem ) {
+    /** Trying to remove specified group item **/
+    items.removeElement( groupItem );
   }
 
   /**
