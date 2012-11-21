@@ -78,62 +78,6 @@ public class MidletMain extends MIDlet {
     }
   }
 
-  public static long getLongOfStamp( String stamp, boolean isLocalized ) {
-    /** Time from stamp by XEP-0082 **/
-    int tIndex = stamp.indexOf( 'T' );
-    /** Checking for date and time **/
-    if ( tIndex != -1 ) {
-      String date = stamp.substring( 0, tIndex );
-      /** Calculating time **/
-      int yIndex = date.indexOf( '-' );
-      int rYears = Integer.parseInt( date.substring( 0, yIndex ) );
-      int mIndex = date.indexOf( '-', yIndex + 1 );
-      int rMonths = Integer.parseInt( date.substring( yIndex + 1, mIndex ) );
-      int rDays = Integer.parseInt( date.substring( mIndex + 1 ) );
-      LogUtil.outMessage( "Real years: " + rYears );
-      LogUtil.outMessage( "Real months: " + rMonths );
-      LogUtil.outMessage( "Real days: " + rDays );
-      String time = stamp.substring( tIndex + 1 );
-      LogUtil.outMessage( "Date: " + date );
-      LogUtil.outMessage( "Time: " + time );
-      int zIndex = Math.max( time.indexOf( '+' ), time.indexOf( '-' ) );
-      zIndex = Math.max( zIndex, time.indexOf( 'Z' ) );
-      /** Checking for time zone **/
-      if ( zIndex != -1 ) {
-        String clearTime = time.substring( 0, zIndex );
-        String timeZone = time.substring( zIndex );
-        LogUtil.outMessage( "Clear time: " + clearTime );
-        LogUtil.outMessage( "Time zone: " + timeZone );
-        /** Calculating time **/
-        int hIndex = clearTime.indexOf( ':' );
-        int rHours = Integer.parseInt( clearTime.substring( 0, hIndex ) );
-        mIndex = clearTime.indexOf( ':', hIndex + 1 );
-        int rMinutes = Integer.parseInt( clearTime.substring( hIndex + 1, mIndex ) );
-        int rSeconds = Integer.parseInt( clearTime.substring( mIndex + 1 ) );
-        LogUtil.outMessage( "Real hours: " + rHours );
-        LogUtil.outMessage( "Real minutes: " + rMinutes );
-        LogUtil.outMessage( "Real seconds: " + rSeconds );
-        long timeLong = TimeUtil.createTimeLong( rYears, rMonths, rDays, rHours, rMinutes, rSeconds );
-        /** Checking for UTC **/
-        if ( !timeZone.equals( "Z" ) && !isLocalized ) {
-          boolean isPlus = ( timeZone.charAt( 0 ) == '+' );
-          int dIndex = timeZone.indexOf( ':' );
-          /** Checking for delimiter **/
-          if ( dIndex != -1 ) {
-            timeLong -= ( ( ( isPlus ? 1 : -1 )
-                    * Integer.parseInt( timeZone.substring( 1, dIndex ) ) ) * 60
-                    + Integer.parseInt( timeZone.substring( dIndex + 1 ) ) ) * 60;
-          }
-        } else {
-          timeLong += TimeUtil.getGmtOffset();
-        }
-        LogUtil.outMessage( "timeLong: " + timeLong );
-        LogUtil.outMessage( "Time real: " + TimeUtil.getUtcTimeString( timeLong ) );
-      }
-    }
-    return 0;
-  }
-
   public void pauseApp() {
     LogUtil.outMessage( "pauseApp invoked" );
     notifyPaused();

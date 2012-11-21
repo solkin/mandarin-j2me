@@ -87,8 +87,8 @@ public class RoomMoreFrame extends Window {
             }
           };
           /** Showing message **/
-          Handler.showDialog( RoomMoreFrame.this, t_soft, 
-                  Localization.getMessage( "SOMETHING_NEED" ), 
+          Handler.showDialog( RoomMoreFrame.this, t_soft,
+                  Localization.getMessage( "SOMETHING_NEED" ),
                   Localization.getMessage( "ROOM_PASS_PROT" ) );
         } else {
           mechanismInvokation( null );

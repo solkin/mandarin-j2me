@@ -336,7 +336,7 @@ public class MainFrame extends Window {
         updatePopup();
       }
     };
-    groupPopup.addSubItem( new PopupItem( Localization.getMessage( "RENAME" ) ) {
+    groupPopup.addSubItem( new PopupItem( Localization.getMessage( "EDIT" ) ) {
       public void actionPerformed() {
         /** Checking for online **/
         if ( Handler.sureIsOnline() ) {

@@ -375,7 +375,7 @@ public class BuddyItem extends GroupChild {
       }
     }
     /** Applying left images **/
-    imageLeftIndex = new int[]{ chatImage, protocolOffset + getStatusIndex() };
+    imageLeftIndex = new int[] { chatImage, protocolOffset + getStatusIndex() };
     /** Right icons **/
     int subscriptionImage = -1;
     /** Checking for subscription is not null-type and not service 
@@ -395,7 +395,7 @@ public class BuddyItem extends GroupChild {
       subscriptionImage = IMG_SUBSCRIPTION_ERROR;
     }
     /** Applying right images **/
-    imageRightIndex = new int[]{ subscriptionImage };
+    imageRightIndex = new int[] { subscriptionImage };
   }
 
   public int getInternalType() {
@@ -425,12 +425,12 @@ public class BuddyItem extends GroupChild {
   public int getOpenedDialogsCount() {
     return openedDialogsCount;
   }
-  
+
   /**
    * Setting up opened dialogs count
    * @param openedDialogsCount 
    */
-  public void setOpenedDialogsCount(int openedDialogsCount) {
+  public void setOpenedDialogsCount( int openedDialogsCount ) {
     this.openedDialogsCount = openedDialogsCount;
   }
 }

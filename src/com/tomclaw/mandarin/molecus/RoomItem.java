@@ -175,7 +175,7 @@ public class RoomItem extends BuddyItem {
     }
     return visitors;
   }
-  
+
   /**
    * Clones all room parameters into specified room item
    * @param roomItem 

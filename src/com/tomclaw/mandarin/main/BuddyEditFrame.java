@@ -23,7 +23,7 @@ public class BuddyEditFrame extends Window {
     /** Previous window **/
     s_prevWindow = MidletMain.mainFrame;
     /** Header **/
-    header = new Header( Localization.getMessage( 
+    header = new Header( Localization.getMessage(
             buddyItem.getTemp() ? "BUDDY_SAVE" : "BUDDY_EDIT" ).
             concat( ": " ).concat( buddyItem.getUserName() ) );
     /** Soft **/

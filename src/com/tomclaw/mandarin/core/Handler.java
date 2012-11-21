@@ -755,11 +755,11 @@ public class Handler {
   public static String[] getServiceItems( String serviceHost ) {
     return MidletMain.mainFrame.buddyList.getServiceItems( serviceHost );
   }
-  
-  public static String[] getGroupsToRename(final BuddyItem buddyItem, 
-          final String groupNameBefore, final String[] groupNamesAfter) {
-    return MidletMain.mainFrame.buddyList.getGroupsToRename(buddyItem, 
-          groupNameBefore, groupNamesAfter);
+
+  public static String[] getGroupsToRename( final BuddyItem buddyItem,
+          final String groupNameBefore, final String[] groupNamesAfter ) {
+    return MidletMain.mainFrame.buddyList.getGroupsToRename( buddyItem,
+            groupNameBefore, groupNamesAfter );
   }
 
   /**

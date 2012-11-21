@@ -95,15 +95,22 @@ public class GroupEditFrame extends Window {
     nameField.setFocused( true );
     pane.addItem( nameField );
     /** Object group **/
-    Label label = new Label( Localization.getMessage( "MERGE_GROUPS" ) );
-    pane.addItem( label );
     groupsCheck = new ObjectGroup();
+    boolean isFirstGroup = true;
     for ( int c = 0; c < MidletMain.mainFrame.buddyList.items.size(); c++ ) {
       /** Obtain group from roster **/
       GroupItem t_groupItem = ( GroupItem ) MidletMain.mainFrame.buddyList.items.elementAt( c );
       /** Checking for default group id **/
       if ( ( t_groupItem.internalGroupId == GroupItem.GROUP_DEFAULT_ID )
               && !t_groupItem.getGroupName().equals( groupItem.getGroupName() ) ) {
+        /** Checking for this is first group will be added **/
+        if ( isFirstGroup ) {
+          /** Adding comment label **/
+          Label label = new Label( Localization.getMessage( "MERGE_GROUPS" ) );
+          pane.addItem( label );
+          /** Inverting flag **/
+          isFirstGroup = false;
+        }
         /** Creating check object **/
         Check check = new Check( t_groupItem.getGroupName(), false );
         /** Adding check to object group and pane **/

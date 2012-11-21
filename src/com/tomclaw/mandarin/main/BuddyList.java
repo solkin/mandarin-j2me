@@ -31,12 +31,12 @@ public class BuddyList extends Group {
     minWeight = -4;
     updateSettings();
     /** Left images **/
-    imageLeftFileHash = new int[]{
+    imageLeftFileHash = new int[] {
       com.tomclaw.mandarin.core.Settings.IMG_CHAT.hashCode(),
       com.tomclaw.mandarin.core.Settings.IMG_STATUS.hashCode()
     };
     /** Right images **/
-    imageRightFileHash = new int[]{
+    imageRightFileHash = new int[] {
       com.tomclaw.mandarin.core.Settings.IMG_SUBSCRIPTION.hashCode()
     };
     /** Action **/
@@ -244,8 +244,11 @@ public class BuddyList extends Group {
               }
             }
           } else {
-            /** Adding original group name **/
-            groupItems.addElement( groupItem.getGroupName() );
+            /** Checking for group is not already present in groups **/
+            if ( !groupItems.contains( groupItem.getGroupName() ) ) {
+              /** Adding original group name **/
+              groupItems.addElement( groupItem.getGroupName() );
+            }
           }
         }
       }

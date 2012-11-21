@@ -538,8 +538,8 @@ public class Mechanism {
         BuddyItem buddyItem = array[ index ];
         /** Sending command execute request and flush only the last one **/
         String cookie = TemplateCollection.sendRosterSet(
-                this, AccountRoot.getFullJid(), buddyItem.getJid(), 
-                buddyItem.getNickName(), buddyItem.getSubscription(), 
+                this, AccountRoot.getFullJid(), buddyItem.getJid(),
+                buddyItem.getNickName(), buddyItem.getSubscription(),
                 Handler.getGroupsToRename( buddyItem, nameBefore, namesAfter ) );
         QueueAction queueAction = new QueueAction() {
           public void actionPerformed( Hashtable params ) {

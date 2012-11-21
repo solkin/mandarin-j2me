@@ -60,7 +60,7 @@ public class TemplateCollection {
   public static final String VAL_MEMBER = "member";
   public static final String VAL_OUTCAST = "outcast";
   public static final String VAL_NONE = "none";
-  public static final String[] FEATURES = new String[]{
+  public static final String[] FEATURES = new String[] {
     "http://jabber.org/protocol/disco#info",
     "http://jabber.org/protocol/caps",
     "http://jabber.org/protocol/muc",
@@ -928,7 +928,7 @@ public class TemplateCollection {
     }
     String version = MidletMain.version + " "
             + MidletMain.type + "-build " + MidletMain.build;
-    String[][] fields = new String[][]{
+    String[][] fields = new String[][] {
       { "FORM_TYPE", "urn:xmpp:dataforms:softwareinfo" },
       { "os", platform },
       { "os_version", configuration },
