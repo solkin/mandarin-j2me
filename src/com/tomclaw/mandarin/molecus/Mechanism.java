@@ -316,7 +316,10 @@ public class Mechanism {
                 /** Commands not supported, showing popup **/
                 Handler.showMainFrameElementPopup( popupItem );
               }
+              return;
             }
+            /** Showing error **/
+            Handler.showError( errorCause );
           }
         };
         queueAction.setCookie( cookie );

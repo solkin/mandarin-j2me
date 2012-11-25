@@ -4,7 +4,9 @@ import com.tomclaw.mandarin.core.Settings;
 import com.tomclaw.mandarin.main.BuddyList;
 import com.tomclaw.tcuilite.ChatItem;
 import com.tomclaw.tcuilite.GroupChild;
+import com.tomclaw.tcuilite.localization.Localization;
 import com.tomclaw.utils.LogUtil;
+import com.tomclaw.utils.StringUtil;
 
 /**
  * Solkin Igor Viktorovich, TomClaw Software, 2003-2012
@@ -84,7 +86,20 @@ public class BuddyItem extends GroupChild {
    */
   public final void setNickName( String nickName ) {
     if ( nickName == null ) {
-      nickName = getUserName();
+      /** Obtain last domain in upper case **/
+      int lastDomainIndex = getJid().indexOf( '.' );
+      String lastDomain = null;
+      if ( lastDomainIndex > 0 ) {
+        lastDomain = getJid().substring( 0, lastDomainIndex ).toUpperCase();
+      }
+      /** Checking for service name is supported **/
+      if ( !StringUtil.isNullOrEmpty( lastDomain ) && !Localization.getMessage( lastDomain )
+              .equals( Localization._DEFAULT_STRING ) ) {
+        nickName = Localization.getMessage( lastDomain );
+      } else {
+        /** Setting default name - username **/
+        nickName = getUserName();
+      }
     }
     nick = nickName;
   }
@@ -348,6 +363,21 @@ public class BuddyItem extends GroupChild {
       if ( roomVisitorsCount > 0 ) {
         /** Modifying title **/
         title += " (" + roomVisitorsCount + " чел.)";
+      }
+    } else if ( getInternalType() == TYPE_SERVICE_ITEM ) {
+      /** Obtain last domain index **/
+      int lastDomainIndex = getJid().indexOf( '.' );
+      /** Checking for name is empty **/
+      if ( StringUtil.isNullOrEmpty( getNickName() )
+              || getNickName().equals( getJid() ) ) {
+        /** Setting up title as last domain name **/
+        title = getJid().substring( 0, lastDomainIndex );
+        title = String.valueOf( title.charAt( 0 ) ).toUpperCase().concat( title.substring( 1 ) );
+      }
+      /** Checking for service is third-part **/
+      if ( !getJid().endsWith( AccountRoot.getServicesHost() ) ) {
+        title += " ".concat( Localization.getMessage( "SERVICE_AT" ) )
+                .concat( " " ).concat( getJid().substring( lastDomainIndex + 1 ) );
       }
     }
     /** Left icons **/
